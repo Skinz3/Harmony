@@ -4,8 +4,8 @@ using Harmony.Notes;
 using Harmony.Sheets;
 using Microsoft.Win32;
 using NAudio.Midi;
-using Piano.Rendering;
-using Piano.SFML;
+using Harmony.GUI.Rendering;
+using Harmony.GUI.SFML;
 using SFML.Audio;
 using System;
 using System.Collections.Generic;
@@ -22,9 +22,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Key = Piano.Keys.Key;
+using Key = Harmony.GUI.Keys.Key;
 
-namespace Piano
+namespace Harmony.GUI
 {
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
@@ -62,7 +62,7 @@ namespace Piano
             Renderer.Keyboard.OnKeySelected += OnKeySelectionChanged;
             Renderer.Keyboard.OnKeyUnselected += OnKeySelectionChanged;
 
-         
+
 
             foreach (var chord in ChordsManager.GetChordNames())
             {
@@ -74,7 +74,7 @@ namespace Piano
                 instruments.Items.Add(instrument);
             }
 
-            const string defaultInstrument = "Test";
+            string defaultInstrument = instruments.Items[0].ToString();
 
             Renderer.Keyboard.SetInstrument(InstrumentsManager.GetInstrument(defaultInstrument));
             instruments.SelectedItem = defaultInstrument;
@@ -209,6 +209,11 @@ namespace Piano
         {
             if (instruments.SelectedItem != null)
                 Renderer.Keyboard.SetInstrument(InstrumentsManager.GetInstrument(instruments.SelectedItem.ToString()));
+        }
+
+        private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

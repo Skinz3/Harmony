@@ -1,6 +1,6 @@
-﻿using Piano.Keys;
-using Piano.SFML;
-using Piano.Workflow;
+﻿using Harmony.GUI.Keys;
+using Harmony.GUI.SFML;
+using Harmony.GUI.Workflow;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Piano.Rendering
+namespace Harmony.GUI.Rendering
 {
     public class PianoRenderer : Renderer
     {

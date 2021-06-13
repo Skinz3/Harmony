@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Piano.SFML
+namespace Harmony.GUI.SFML
 {
     public class DrawingSurface : UserControl
     {

@@ -1,7 +1,7 @@
 ﻿using Harmony.Sheets;
-using Piano.Keys;
-using Piano.Rendering;
-using Piano.SFML;
+using Harmony.GUI.Keys;
+using Harmony.GUI.Rendering;
+using Harmony.GUI.SFML;
 using SFML.Graphics;
 using SFML.System;
 using System;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Piano.Workflow
+namespace Harmony.GUI.Workflow
 {
     public class FlowNote : IDrawable
     {

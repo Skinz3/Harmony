@@ -1,6 +1,6 @@
 ﻿using Harmony.Instruments;
 using Harmony.Notes;
-using Piano.SFML;
+using Harmony.GUI.SFML;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Piano.Keys
+namespace Harmony.GUI.Keys
 {
     public class PianoKeyboard : IDrawable
     {

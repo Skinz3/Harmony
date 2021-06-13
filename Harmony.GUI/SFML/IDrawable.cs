@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Piano.SFML
+namespace Harmony.GUI.SFML
 {
     public interface IDrawable
     {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Piano.SFML
+namespace Harmony.GUI.SFML
 {
     public class CircularBuffer<T> : ICollection<T>, IEnumerable<T>, ICollection, IEnumerable
     {

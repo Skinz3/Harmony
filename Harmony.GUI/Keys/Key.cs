@@ -1,8 +1,8 @@
 ﻿using Harmony.Notes;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
-using Piano.Rendering;
-using Piano.SFML;
+using Harmony.GUI.Rendering;
+using Harmony.GUI.SFML;
 using SFML.Audio;
 using SFML.Graphics;
 using SFML.System;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Piano.Keys
+namespace Harmony.GUI.Keys
 {
     public class Key : IDrawable
     {

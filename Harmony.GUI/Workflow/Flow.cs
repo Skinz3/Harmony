@@ -1,8 +1,8 @@
 ﻿using Harmony.Extensions;
 using Harmony.Sheets;
 using NAudio.Midi;
-using Piano.Keys;
-using Piano.SFML;
+using Harmony.GUI.Keys;
+using Harmony.GUI.SFML;
 using SFML.Graphics;
 using SFML.System;
 using System;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Piano.Workflow
+namespace Harmony.GUI.Workflow
 {
     public class Flow : IDrawable
     {
