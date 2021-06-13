@@ -7,9 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow"   Width="1917" Height="1038" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Grid>
-        <WindowsFormsHost Name="host" HorizontalAlignment="Left" Height="813" VerticalAlignment="Top" Width="1899" Panel.ZIndex="-22" Margin="0,194,0,0"/>
-        <Label FontFamily="Candara Light"  Content="Chord : " HorizontalAlignment="Left" VerticalAlignment="Top" Width="64"/>
-        <TextBox Name="chordName" TextChanged="chordName_TextChanged" HorizontalAlignment="Left" Height="23" Margin="49,3,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="165"/>
-        <TextBlock Name="c" HorizontalAlignment="Left" Margin="10,167,0,0" TextWrapping="Wrap" Text="Chord : " VerticalAlignment="Top" FontFamily="Candara Light" FontSize="18"/>
+        <WindowsFormsHost Name="host" HorizontalAlignment="Left" Width="1899" Panel.ZIndex="-22" Margin="0,194,0,0.2"/>
+        <TextBlock Name="c" HorizontalAlignment="Left" Margin="12,167,0,0" TextWrapping="Wrap" Text="Chord : " VerticalAlignment="Top" FontFamily="Candara Light" FontSize="14"/>
+        <Button Content="PlayMidi" HorizontalAlignment="Left" Margin="1664,60,0,0" VerticalAlignment="Top" Width="189" Height="76" Click="Button_Click"/>
+        <Button Content="Play" HorizontalAlignment="Left" Margin="184,10,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="Button_Click_1"/>
+        <ListBox SelectionChanged="chords_SelectionChanged" Name="chords" HorizontalAlignment="Left" Height="130" Margin="12,32,0,0" VerticalAlignment="Top" Width="167"/>
+        <TextBox TextChanged="chord_TextChanged" Name="chord" HorizontalAlignment="Left" Height="23" Margin="12,4,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="167"/>
     </Grid>
 </Window>

@@ -35,6 +35,7 @@ namespace Harmony.Chords
         {
             Chords = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(File.ReadAllText(filePath));
         }
+
         public static Chord FindChord(IEnumerable<Note> notes)
         {
             Chord result = null;
@@ -53,9 +54,29 @@ namespace Harmony.Chords
             return result;
         }
 
-        private static string[] GetChordNames()
+        public static string[] GetChordNames()
         {
             return Chords.Keys.ToArray();
+        }
+        public static void Add()
+        {
+            foreach (var chord in Chords.Take(12).ToArray())
+            {
+                string chordName = chord.Key + "maj9";
+
+                List<string> finalNotes = chord.Value.ToList();
+
+                var fundamental = NotesManager.GetNote(finalNotes[0], 4);
+
+
+                finalNotes.Add(NotesManager.AddTone(fundamental, 5.5f).Symbol);
+                finalNotes.Add(NotesManager.AddTone(fundamental, 7f).Symbol);
+
+
+                Chords.Add(chordName, finalNotes.ToArray());
+            }
+
+            File.WriteAllText("chords.json", JsonConvert.SerializeObject(Chords));
         }
         public static Chord BuildChord(string chord, int octave)
         {

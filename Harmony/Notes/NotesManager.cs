@@ -47,6 +47,10 @@ namespace Harmony.Notes
             }
             return _notes[index];
         }
+        public static Note GetNote(int number)
+        {
+            return _notes[number];
+        }
         public static Note GetNote(string symbol,int octave)
         {
             return _notes.Values.FirstOrDefault(x => x.Symbol == symbol && x.Octave == octave);
