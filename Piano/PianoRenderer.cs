@@ -40,11 +40,11 @@ namespace Piano.Rendering
 
             Footer = new RectangleShape();
             Footer.Size = new Vector2f(Window.Size.X, Window.Size.Y);
-            Footer.FillColor = Color.White;
+            Footer.FillColor = ClearColor;
             Footer.Position = new Vector2f(0, 811);
         }
 
-        public override Color ClearColor => Color.White;
+        public override Color ClearColor => new Color(63, 63, 70);
 
         public override void Draw()
         {

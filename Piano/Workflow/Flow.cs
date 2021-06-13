@@ -44,7 +44,7 @@ namespace Piano.Workflow
             this.Background = new RectangleShape();
             this.Background.Position = new Vector2f(8, 0);
             this.Background.Size = new Vector2f(keyboard.GetSize().X, SizeY);
-            this.Background.FillColor = PianoKeyboard.BlackColor;
+            this.Background.FillColor = Constants.BlackKeyColor;
             this.Keyboard = keyboard;
             this.Notes = new List<FlowNote>();
             CreateVertexes();
@@ -75,11 +75,7 @@ namespace Piano.Workflow
 
             }
 
-            foreach (var note in Notes)
-            {
-                note.Step(2f);
-            }
-
+           
 
             foreach (var note in Notes.ToArray())
             {
@@ -90,14 +86,19 @@ namespace Piano.Workflow
                     key.Play(note.SheetNote.Velocity);
                     note.Played = true;
 
-                  
+
                 }
                 if (note.Shape.Position.Y > SizeY)
                 {
-                    Keyboard.UnselectKey(note.SheetNote.Number);
+                    var key = Keyboard.GetKey(note.SheetNote.Number);
+                    Keyboard.UnselectKey(key);
+                    key.Stop();
                     Notes.Remove(note);
-                   
                 }
+
+                note.Step(2f);
+
+                
             }
 
 

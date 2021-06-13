@@ -103,6 +103,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Constants.cs" />
     <Compile Include="Workflow\FlowNote.cs" />
     <Compile Include="Keys\PianoKeyboard.cs" />
     <Compile Include="Keys\Key.cs" />
@@ -162,6 +163,9 @@
       <Project>{A3FF4884-E1B6-4AC1-B1AC-1E3AAA144658}</Project>
       <Name>Harmony</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="separator-web.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

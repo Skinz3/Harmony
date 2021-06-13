@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Piano", "Piano\Piano.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harmony", "Harmony\Harmony.csproj", "{A3FF4884-E1B6-4AC1-B1AC-1E3AAA144658}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{623A595E-504B-479E-A4E2-0F8EC302CAFF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{A3FF4884-E1B6-4AC1-B1AC-1E3AAA144658}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3FF4884-E1B6-4AC1-B1AC-1E3AAA144658}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3FF4884-E1B6-4AC1-B1AC-1E3AAA144658}.Release|Any CPU.Build.0 = Release|Any CPU
-		{623A595E-504B-479E-A4E2-0F8EC302CAFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{623A595E-504B-479E-A4E2-0F8EC302CAFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{623A595E-504B-479E-A4E2-0F8EC302CAFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{623A595E-504B-479E-A4E2-0F8EC302CAFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

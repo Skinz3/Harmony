@@ -44,5 +44,9 @@ namespace Harmony.Instruments
             return Instruments[name];
         }
 
+        public static IEnumerable<string> GetInstrumentNames()
+        {
+            return Instruments.Keys;
+        }
     }
 }

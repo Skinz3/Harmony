@@ -24,10 +24,6 @@ namespace Piano.Keys
 
         public event KeySelectionDelegate OnKeyUnselected;
 
-        public static readonly Color BlackColor = new Color(70, 70, 70);
-
-        public static readonly Color WhiteColor = Color.White;
-
         public static readonly Vector2f BlackSize = new Vector2f(18, 80);
 
         public static readonly Vector2f WhiteSize = new Vector2f(36, 130);
@@ -142,7 +138,15 @@ namespace Piano.Keys
         }
         public void SelectKey(Key key)
         {
-            key.Fill(new Color(100, 149, 237));
+            if (!key.Note.Sharp)
+            {
+                key.Fill(Constants.WhiteKeySelectedColor);
+            }
+            else
+            {
+                key.Fill(Constants.BlackKeySelectedColor);
+            }
+
             SelectedKeys.Add(key);
             OnKeySelected?.Invoke(key);
 

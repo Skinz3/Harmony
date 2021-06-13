@@ -35,7 +35,11 @@ namespace Piano.Workflow
             get;
             set;
         }
-
+        public float Duration
+        {
+            get;
+            set;
+        }
         public FlowNote(SheetNote note, bool sharp, Vector2f position, float sizeY)
         {
             if (sizeY < 0)
@@ -43,6 +47,7 @@ namespace Piano.Workflow
                 sizeY = 5;
             }
             this.SheetNote = note;
+            this.Duration = note.End - note.Start;
 
             Vector2f rectangleSize = new Vector2f();
             float radius = 0;
@@ -74,7 +79,7 @@ namespace Piano.Workflow
 
             if (!sharp)
             {
-                this.Shape.Position += new Vector2f(PianoKeyboard.BlackSize.X/2f, 0);
+                this.Shape.Position += new Vector2f(PianoKeyboard.BlackSize.X / 2f, 0);
             }
 
             if (!sharp)
@@ -90,6 +95,9 @@ namespace Piano.Workflow
         }
         public void Step(float speed)
         {
+            if (Played)
+                Duration -= (1 / 60f);
+
             Shape.Position += new Vector2f(0, speed);
         }
         public void Draw(RenderWindow window)

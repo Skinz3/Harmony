@@ -1,4 +1,6 @@
 ﻿using Harmony.Notes;
+using NAudio.Wave;
+using NAudio.Wave.SampleProviders;
 using Piano.Rendering;
 using Piano.SFML;
 using SFML.Audio;
@@ -15,8 +17,6 @@ namespace Piano.Keys
 {
     public class Key : IDrawable
     {
-        private const bool UseRoundedRectangles = false;
-
         public Note Note
         {
             get;
@@ -32,55 +32,22 @@ namespace Piano.Keys
             get;
             set;
         }
-        private string SoundPath
-        {
-            get;
-            set;
-        }
+
         public Key(Note note, Vector2f position, Vector2f size)
         {
-
             this.Note = note;
-
-            if (UseRoundedRectangles)
-            {
-                if (note.Sharp)
-                {
-                    this.Rectangle = new RoundedRectangleShape(size, 10, 20);
-                }
-                else
-                {
-                    this.Rectangle = new RoundedRectangleShape(size, 5, 10);
-                }
-            }
-            else
-            {
-                this.Rectangle = new RectangleShape(size);
-            }
-
-
+            this.Rectangle = new RectangleShape(size);
             this.Rectangle.Position = position;
-
-            if (note.Sharp)
-            {
-                Rectangle.FillColor = PianoKeyboard.BlackColor;
-            }
-            else
-            {
-                Rectangle.FillColor = PianoKeyboard.WhiteColor;
-            }
-
+            Rectangle.FillColor = note.Sharp ? Constants.BlackKeyColor : Constants.WhiteKeyColor;
             Rectangle.OutlineColor = Color.Black;
             Rectangle.OutlineThickness = 0.9f;
+
 
         }
         public void SetSound(string path)
         {
-            this.SoundPath = path;
-            SoundBuffer buffer = new SoundBuffer(path);
-            this.Sound = new Sound();
-            this.Sound.SoundBuffer = buffer;
-            Sound.RelativeToListener = true;
+            SoundBuffer buffer = new SoundBuffer(File.ReadAllBytes(path));
+            Sound = new Sound(buffer);
         }
         public void Draw(RenderWindow window)
         {
@@ -103,15 +70,12 @@ namespace Piano.Keys
 
         public void Play(float volume)
         {
-            if (Sound != null)
-            {
-                if (Sound.Status == SoundStatus.Playing)
-                {
-                    Sound.Stop();
-                    Sound.PlayingOffset = Time.Zero;
-                }
-                Sound.Play();
-            }
+            Sound.Volume = volume;
+            Sound.Play();
+        }
+        public void Stop()
+        {
+
         }
         public bool Contains(Vector2f point)
         {
@@ -125,11 +89,11 @@ namespace Piano.Keys
         {
             if (Note.Sharp)
             {
-                Rectangle.FillColor = PianoKeyboard.BlackColor;
+                Rectangle.FillColor = Constants.BlackKeyColor;
             }
             else
             {
-                Rectangle.FillColor = PianoKeyboard.WhiteColor;
+                Rectangle.FillColor = Constants.WhiteKeyColor;
             }
         }
 

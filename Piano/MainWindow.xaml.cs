@@ -2,6 +2,7 @@
 using Harmony.Instruments;
 using Harmony.Notes;
 using Harmony.Sheets;
+using Microsoft.Win32;
 using NAudio.Midi;
 using Piano.Rendering;
 using Piano.SFML;
@@ -61,12 +62,22 @@ namespace Piano
             Renderer.Keyboard.OnKeySelected += OnKeySelectionChanged;
             Renderer.Keyboard.OnKeyUnselected += OnKeySelectionChanged;
 
-            Renderer.Keyboard.SetInstrument(InstrumentsManager.GetInstrument("Piano2"));
+         
 
             foreach (var chord in ChordsManager.GetChordNames())
             {
                 chords.Items.Add(chord);
             }
+
+            foreach (var instrument in InstrumentsManager.GetInstrumentNames())
+            {
+                instruments.Items.Add(instrument);
+            }
+
+            const string defaultInstrument = "Test";
+
+            Renderer.Keyboard.SetInstrument(InstrumentsManager.GetInstrument(defaultInstrument));
+            instruments.SelectedItem = defaultInstrument;
 
             var timer = new HighPrecisionTimer((int)(1000 / FramePerSecond));
             timer.Tick += Timer_Tick;
@@ -93,7 +104,7 @@ namespace Piano
         private void Keyboard_OnKeyPressed(Key key)
         {
             float offset = -6f;
-            SheetNote sheetNote = new SheetNote(key.Note.Number, offset, offset + 4f, 100f);
+            SheetNote sheetNote = new SheetNote(key.Note.Number, offset, offset + 1.5f, 100f);
             Renderer.Flow.AddNote(sheetNote, 4f);
         }
 
@@ -108,12 +119,7 @@ namespace Piano
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Sheet sheet = new Sheet("chopin.mid");
-            sheet.Open();
-            Renderer.Flow.Play(sheet);
-        }
+
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -185,6 +191,24 @@ namespace Piano
             {
                 chords.Items.Add(result);
             }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "MIDI files (*.mid)|*.mid";
+            if (dialog.ShowDialog().Value)
+            {
+                Sheet sheet = new Sheet(dialog.FileName);
+                sheet.Open();
+                Renderer.Flow.Play(sheet);
+            }
+        }
+
+        private void instruments_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (instruments.SelectedItem != null)
+                Renderer.Keyboard.SetInstrument(InstrumentsManager.GetInstrument(instruments.SelectedItem.ToString()));
         }
     }
 }
