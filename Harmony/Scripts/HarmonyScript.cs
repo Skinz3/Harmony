@@ -18,11 +18,7 @@ namespace Harmony.Scripts
             set;
         }
 
-        public List<Unit> Units
-        {
-            get;
-            private set;
-        }
+       
         public Dictionary<string, string> Attributes
         {
             get;
@@ -31,7 +27,6 @@ namespace Harmony.Scripts
         public HarmonyScript(string path)
         {
             this.Filepath = path;
-            this.Units = new List<Unit>();
             this.Attributes = new Dictionary<string, string>();
         }
         public bool Read()
@@ -51,12 +46,10 @@ namespace Harmony.Scripts
 
             HarmonyParser.CompilationUnitContext ectx = parser.compilationUnit();
 
-            UnitListener listener = new UnitListener(this);
-
-            ectx.EnterRule(listener);
+         //   ectx.EnterRule(listener);
 
             return true;
         }
-      
+
     }
 }

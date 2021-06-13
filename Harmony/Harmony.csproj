@@ -80,6 +80,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Antlr\HarmonyLexer.cs" />
+    <Compile Include="Antlr\HarmonyParser.cs" />
+    <Compile Include="Antlr\HarmonyParserBaseListener.cs" />
+    <Compile Include="Antlr\HarmonyParserListener.cs" />
     <Compile Include="Chords\Chord.cs" />
     <Compile Include="Chords\ChordsManager.cs" />
     <Compile Include="Chords\Notepad.cs" />
@@ -97,6 +101,8 @@
     <Compile Include="Sheets\SheetNote.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Antlr\HarmonyLexer.tokens" />
+    <None Include="Antlr\HarmonyParser.tokens" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
