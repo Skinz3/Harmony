@@ -39,8 +39,6 @@ namespace Harmony.GUI
         }
         private const double FramePerSecond = 60d;
 
-
-
         public MainWindow()
         {
 
@@ -104,7 +102,7 @@ namespace Harmony.GUI
         private void Keyboard_OnKeyPressed(Key key)
         {
             float offset = -6f;
-            SheetNote sheetNote = new SheetNote(key.Note.Number, offset, offset + 1.5f, 100f);
+            SheetNote sheetNote = new SheetNote(key.Note.Number, offset, offset + 3f, 100f);
             Renderer.Flow.AddNote(sheetNote, 4f);
         }
 
@@ -193,7 +191,7 @@ namespace Harmony.GUI
             }
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void OpenMidiClick(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "MIDI files (*.mid)|*.mid";
@@ -214,6 +212,18 @@ namespace Harmony.GUI
         private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void OpenScriptClick(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "MIDI files (*.mid)|*.mid";
+            if (dialog.ShowDialog().Value)
+            {
+                Sheet sheet = new Sheet(dialog.FileName);
+                sheet.Open();
+                Renderer.Flow.Play(sheet);
+            }
         }
     }
 }

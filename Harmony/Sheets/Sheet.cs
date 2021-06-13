@@ -1,4 +1,5 @@
-﻿using NAudio.Midi;
+﻿using Harmony.Scripts;
+using NAudio.Midi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,31 +15,32 @@ namespace Harmony.Sheets
             get;
             private set;
         }
-        private MidiFile File
+        public float TotalDuration
         {
             get;
             set;
         }
-        public float TotalDuration
+        public Sheet()
         {
-            get;
-            private set;
-        }
-        public Sheet(string midiFilePath)
-        {
-            this.File = new MidiFile(midiFilePath);
             this.Notes = new List<SheetNote>();
         }
-        public void Open()
+
+        public static Sheet FromScript(HarmonyScript script)
         {
-            File.Events.MidiFileType = 0;
+            return script.BuildSheet();
+        }
+        public static Sheet FromMIDI(MidiFile file)
+        {
+            Sheet result = new Sheet();
+
+            file.Events.MidiFileType = 0;
 
             // Have just one collection for both non-note-off and tempo change events
             List<MidiEvent> midiEvents = new List<MidiEvent>();
 
-            for (int n = 0; n < File.Tracks; n++)
+            for (int n = 0; n < file.Tracks; n++)
             {
-                foreach (var midiEvent in File.Events[n])
+                foreach (var midiEvent in file.Events[n])
                 {
                     //  if (!MidiEvent.IsNoteOff(midiEvent))
                     {
@@ -92,7 +94,7 @@ namespace Harmony.Sheets
                 if (tempoEvent != null)
                 {
                     // Recalculate microseconds per tick
-                    currentMicroSecondsPerTick = (decimal)tempoEvent.MicrosecondsPerQuarterNote / (decimal)File.DeltaTicksPerQuarterNote;
+                    currentMicroSecondsPerTick = (decimal)tempoEvent.MicrosecondsPerQuarterNote / (decimal)file.DeltaTicksPerQuarterNote;
 
                     // Remove the tempo event to make events and timings match - index-wise
                     // Do not add to the eventTimes
@@ -107,7 +109,7 @@ namespace Harmony.Sheets
 
             var endTrackEvent = eventsTimes.Keys.OfType<MetaEvent>().FirstOrDefault(x => x.MetaEventType == MetaEventType.EndTrack);
 
-            this.TotalDuration = (float)eventsTimes[endTrackEvent];
+            result.TotalDuration = (float)eventsTimes[endTrackEvent];
 
             eventsTimes = eventsTimes.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 
@@ -123,8 +125,11 @@ namespace Harmony.Sheets
                 }
 
                 SheetNote note = new SheetNote(noteOnEvent.NoteNumber - 20, start, end, noteOnEvent.Velocity);
-                Notes.Add(note);
+                result.Notes.Add(note);
             }
+
+            return result;
         }
+
     }
 }

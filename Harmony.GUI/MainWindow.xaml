@@ -11,8 +11,8 @@
         <Menu DockPanel.Dock="Top" Margin="0,30,0,0" Height="23" Background="#FF3F3F46">
 
             <MenuItem  Header="_File" Foreground="#FFF1F1F1" FontFamily="/Piano;component/#Caviar Dreams" Height="23" Width="36">
-                <MenuItem   Header="_Open Midi" Background="#FF3F3F46" Foreground="White" FontFamily="/Piano;component/#Caviar Dreams" Click="MenuItem_Click"  />
-
+                <MenuItem   Header="_Open Midi" Background="#FF3F3F46" Foreground="White" FontFamily="/Piano;component/#Caviar Dreams" Click="OpenMidiClick"  />
+                <MenuItem   Header="_Open Script" Background="#FF3F3F46" Foreground="White" FontFamily="/Piano;component/#Caviar Dreams" Click="OpenScriptClick"  />
             </MenuItem>
         </Menu>
         <Grid Background="#FF303036">

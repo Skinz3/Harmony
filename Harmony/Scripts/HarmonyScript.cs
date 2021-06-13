@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using Harmony.Sheets;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,6 +30,9 @@ namespace Harmony.Scripts
             this.Filepath = path;
             this.Attributes = new Dictionary<string, string>();
         }
+
+     
+
         public bool Read()
         {
             if (!File.Exists(Filepath))
@@ -49,6 +53,12 @@ namespace Harmony.Scripts
          //   ectx.EnterRule(listener);
 
             return true;
+        }
+
+        public Sheet BuildSheet()
+        {
+            Sheet sheet = new Sheet();
+            return sheet;
         }
 
     }
