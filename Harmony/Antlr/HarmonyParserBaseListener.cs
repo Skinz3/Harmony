@@ -48,17 +48,17 @@ public partial class HarmonyParserBaseListener : IHarmonyParserListener {
 	public virtual void ExitCompilationUnit([NotNull] HarmonyParser.CompilationUnitContext context) { }
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="HarmonyParser.attribute"/>.
+	/// Enter a parse tree produced by <see cref="HarmonyParser.attributes"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterAttribute([NotNull] HarmonyParser.AttributeContext context) { }
+	public virtual void EnterAttributes([NotNull] HarmonyParser.AttributesContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="HarmonyParser.attribute"/>.
+	/// Exit a parse tree produced by <see cref="HarmonyParser.attributes"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitAttribute([NotNull] HarmonyParser.AttributeContext context) { }
+	public virtual void ExitAttributes([NotNull] HarmonyParser.AttributesContext context) { }
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.unitDeclaration"/>.
@@ -100,6 +100,19 @@ public partial class HarmonyParserBaseListener : IHarmonyParserListener {
 	public virtual void ExitStatement([NotNull] HarmonyParser.StatementContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.noteStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterNoteStatement([NotNull] HarmonyParser.NoteStatementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.noteStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitNoteStatement([NotNull] HarmonyParser.NoteStatementContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.note"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -111,6 +124,19 @@ public partial class HarmonyParserBaseListener : IHarmonyParserListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitNote([NotNull] HarmonyParser.NoteContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.number"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterNumber([NotNull] HarmonyParser.NumberContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.number"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitNumber([NotNull] HarmonyParser.NumberContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

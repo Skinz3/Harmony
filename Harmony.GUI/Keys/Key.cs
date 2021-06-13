@@ -32,8 +32,11 @@ namespace Harmony.GUI.Keys
             get;
             set;
         }
-
-      
+        private Sound Sound2
+        {
+            get;
+            set;
+        }
 
         public Key(Note note, Vector2f position, Vector2f size)
         {
@@ -46,10 +49,12 @@ namespace Harmony.GUI.Keys
 
 
         }
+
         public void SetSound(string path)
         {
             SoundBuffer buffer = new SoundBuffer(File.ReadAllBytes(path));
             Sound = new Sound(buffer);
+            Sound2 = new Sound(buffer);
         }
         public void Draw(RenderWindow window)
         {
@@ -68,12 +73,30 @@ namespace Harmony.GUI.Keys
             }
             window.Draw(Rectangle);
             window.Draw(text);
-        }
 
+        }
         public void Play(float volume)
         {
-            Sound.Volume = volume;
-            Sound.Play();
+            if (Sound.Status == SoundStatus.Playing && Sound2.Status != SoundStatus.Playing)
+            {
+                Sound.Volume = 0;
+                Sound2.Volume = volume;
+                Sound2.Play();
+            }
+            else
+            {
+                Sound.Volume = volume;
+                Sound.Play();
+            }
+        }
+        public void DestroySound()
+        {
+            if (Sound != null)
+            {
+                Sound.SoundBuffer.Dispose();
+                Sound.Dispose();
+                Sound2.Dispose();
+            }
         }
         public void Stop()
         {

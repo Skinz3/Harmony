@@ -19,7 +19,12 @@ namespace Harmony.Scripts
             set;
         }
 
-       
+        public Sheet Sheet
+        {
+            get;
+            private set;
+        }
+
         public Dictionary<string, string> Attributes
         {
             get;
@@ -31,7 +36,6 @@ namespace Harmony.Scripts
             this.Attributes = new Dictionary<string, string>();
         }
 
-     
 
         public bool Read()
         {
@@ -48,18 +52,18 @@ namespace Harmony.Scripts
             var commonTokenStream = new CommonTokenStream(lexer);
             var parser = new HarmonyParser(commonTokenStream);
 
+            this.Sheet = new Sheet();
+
             HarmonyParser.CompilationUnitContext ectx = parser.compilationUnit();
 
-         //   ectx.EnterRule(listener);
+            ScriptListener listener = new ScriptListener(this);
+
+            ectx.EnterRule(listener);
 
             return true;
         }
 
-        public Sheet BuildSheet()
-        {
-            Sheet sheet = new Sheet();
-            return sheet;
-        }
+        
 
     }
 }

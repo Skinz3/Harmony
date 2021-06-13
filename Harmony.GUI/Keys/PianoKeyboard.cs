@@ -120,6 +120,8 @@ namespace Harmony.GUI.Keys
 
             foreach (var key in Keys.Values)
             {
+                key.DestroySound();
+
                 InstrumentNote instrumentNote = Instrument.GetNote(key.Note.ToString());
 
                 if (instrumentNote != null)

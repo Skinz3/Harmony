@@ -32,7 +32,6 @@ namespace Harmony.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-
         private PianoRenderer Renderer
         {
             get;
@@ -217,13 +216,20 @@ namespace Harmony.GUI
         private void OpenScriptClick(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "MIDI files (*.mid)|*.mid";
+            dialog.Filter = "Harmony Scripts (*.hm)|*.hm";
             if (dialog.ShowDialog().Value)
             {
                 HarmonyScript script = new HarmonyScript(dialog.FileName);
-                Sheet sheet = Sheet.FromScript(script);
-                Renderer.Flow.Play(sheet);
+                script.Read();
+                Renderer.Flow.Play(script.Sheet);
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Renderer.Flow.Notes.Clear();
+
+            Renderer.Keyboard.UnselectAll();
         }
     }
 }

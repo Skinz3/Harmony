@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harmony.Antlr", "Harmony.An
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harmony.GUI", "Harmony.GUI\Harmony.GUI.csproj", "{00FCF894-2567-4D81-BF46-76B59EA5C371}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundBug", "SoundBug\SoundBug.csproj", "{60C3F790-2F0C-4A8A-9E9F-F98771A5F7D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harmony.Compiler", "Harmony.Compiler\Harmony.Compiler.csproj", "{FA9B3073-D8FD-4F19-945D-77207E1D59A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{00FCF894-2567-4D81-BF46-76B59EA5C371}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00FCF894-2567-4D81-BF46-76B59EA5C371}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00FCF894-2567-4D81-BF46-76B59EA5C371}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60C3F790-2F0C-4A8A-9E9F-F98771A5F7D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60C3F790-2F0C-4A8A-9E9F-F98771A5F7D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60C3F790-2F0C-4A8A-9E9F-F98771A5F7D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60C3F790-2F0C-4A8A-9E9F-F98771A5F7D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA9B3073-D8FD-4F19-945D-77207E1D59A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA9B3073-D8FD-4F19-945D-77207E1D59A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA9B3073-D8FD-4F19-945D-77207E1D59A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA9B3073-D8FD-4F19-945D-77207E1D59A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

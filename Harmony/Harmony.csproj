@@ -96,7 +96,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scales\Scale.cs" />
     <Compile Include="Scales\ScalesManager.cs" />
+    <Compile Include="Scripts\AntlrExtensions.cs" />
     <Compile Include="Scripts\HarmonyScript.cs" />
+    <Compile Include="Scripts\ScriptListener.cs" />
+    <Compile Include="Scripts\StatementListener.cs" />
     <Compile Include="Sheets\Sheet.cs" />
     <Compile Include="Sheets\SheetNote.cs" />
   </ItemGroup>

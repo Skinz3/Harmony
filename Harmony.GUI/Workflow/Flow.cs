@@ -97,7 +97,6 @@ namespace Harmony.GUI.Workflow
                 }
 
                 note.Step(2f);
-
                 
             }
 

@@ -42,15 +42,15 @@ public interface IHarmonyParserListener : IParseTreeListener {
 	void ExitCompilationUnit([NotNull] HarmonyParser.CompilationUnitContext context);
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="HarmonyParser.attribute"/>.
+	/// Enter a parse tree produced by <see cref="HarmonyParser.attributes"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterAttribute([NotNull] HarmonyParser.AttributeContext context);
+	void EnterAttributes([NotNull] HarmonyParser.AttributesContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="HarmonyParser.attribute"/>.
+	/// Exit a parse tree produced by <see cref="HarmonyParser.attributes"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitAttribute([NotNull] HarmonyParser.AttributeContext context);
+	void ExitAttributes([NotNull] HarmonyParser.AttributesContext context);
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.unitDeclaration"/>.
@@ -86,6 +86,17 @@ public interface IHarmonyParserListener : IParseTreeListener {
 	void ExitStatement([NotNull] HarmonyParser.StatementContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.noteStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNoteStatement([NotNull] HarmonyParser.NoteStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.noteStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNoteStatement([NotNull] HarmonyParser.NoteStatementContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.note"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -95,4 +106,15 @@ public interface IHarmonyParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitNote([NotNull] HarmonyParser.NoteContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.number"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNumber([NotNull] HarmonyParser.NumberContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.number"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNumber([NotNull] HarmonyParser.NumberContext context);
 }

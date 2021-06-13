@@ -25,6 +25,7 @@
             <TextBlock Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="238,92,0,0" TextWrapping="Wrap" Text="Instrument:" VerticalAlignment="Top" FontFamily="/Piano;component/#Caviar Dreams" FontSize="14"/>
             <TextBlock Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="10,-48,0,0" TextWrapping="Wrap" Text="Harmony" VerticalAlignment="Top" FontFamily="/Piano;component/#Caviar Dreams" FontSize="14"/>
             <TextBlock MouseDown="TextBlock_MouseDown" Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="1891,-56,0,0" TextWrapping="Wrap" Text="x" VerticalAlignment="Top" FontFamily="/Piano;component/#Caviar Dreams" FontSize="25" TextAlignment="Center"  Width="25" Height="32"/>
+            <Button Content="Flush" HorizontalAlignment="Left" Margin="1739,171,0,0" VerticalAlignment="Top" Width="168" Height="22" Click="Button_Click" BorderBrush="#FF3F3F46" Foreground="White" Background="#FF3F3F46" FontFamily="/Piano;component/#Caviar Dreams"/>
 
         </Grid>
 

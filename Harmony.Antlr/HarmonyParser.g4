@@ -3,11 +3,14 @@ parser grammar HarmonyParser;
 options { tokenVocab=HarmonyLexer; }
 
 compilationUnit
-    : attribute* unitDeclaration* EOF
+    : attributes unitDeclaration* EOF
     ;
 
-attribute
-    : name=IDENTIFIER ':' value=IDENTIFIER
+attributes
+    : ('Name' ':' name=IDENTIFIER) 
+      ('Author' ':' author=IDENTIFIER)
+      ('Duration' ':' duration=number)
+      ('Tempo' ':' tempo=DECIMAL_LITERAL)
     ;
 
 unitDeclaration
@@ -18,11 +21,21 @@ block
     : '{' statement* '}'
     ;
 
-
 statement
-    : note
+    : noteStatement
+    ;
+
+noteStatement
+    : (NOTE note startTime=number ',' duration=number ',' velocity=number)
     ;
 
 note
-    : NOTE IDENTIFIER FLOAT_LITERAL
+    : IDENTIFIER
     ;
+
+number
+    : DECIMAL_LITERAL | FLOAT_LITERAL
+    ;
+
+
+ 

@@ -25,10 +25,7 @@ namespace Harmony.Sheets
             this.Notes = new List<SheetNote>();
         }
 
-        public static Sheet FromScript(HarmonyScript script)
-        {
-            return script.BuildSheet();
-        }
+        
         public static Sheet FromMIDI(MidiFile file)
         {
             Sheet result = new Sheet();
@@ -124,6 +121,10 @@ namespace Harmony.Sheets
                     end = (float)eventsTimes[noteOnEvent.OffEvent];
                 }
 
+                if (noteOnEvent.Velocity == 0)
+                {
+                    continue;
+                }
                 SheetNote note = new SheetNote(noteOnEvent.NoteNumber - 20, start, end, noteOnEvent.Velocity);
                 result.Notes.Add(note);
             }
