@@ -23,6 +23,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Key = Harmony.GUI.Keys.Key;
+using Harmony.Scripts;
 
 namespace Harmony.GUI
 {
@@ -197,8 +198,7 @@ namespace Harmony.GUI
             dialog.Filter = "MIDI files (*.mid)|*.mid";
             if (dialog.ShowDialog().Value)
             {
-                Sheet sheet = new Sheet(dialog.FileName);
-                sheet.Open();
+                Sheet sheet = Sheet.FromMIDI(new MidiFile(dialog.FileName));
                 Renderer.Flow.Play(sheet);
             }
         }
@@ -220,8 +220,8 @@ namespace Harmony.GUI
             dialog.Filter = "MIDI files (*.mid)|*.mid";
             if (dialog.ShowDialog().Value)
             {
-                Sheet sheet = new Sheet(dialog.FileName);
-                sheet.Open();
+                HarmonyScript script = new HarmonyScript(dialog.FileName);
+                Sheet sheet = Sheet.FromScript(script);
                 Renderer.Flow.Play(sheet);
             }
         }

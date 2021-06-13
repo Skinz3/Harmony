@@ -33,6 +33,8 @@ namespace Harmony.GUI.Keys
             set;
         }
 
+      
+
         public Key(Note note, Vector2f position, Vector2f size)
         {
             this.Note = note;
