@@ -44,7 +44,8 @@ namespace Harmony.Scripts
         public override void EnterAttributes([NotNull] HarmonyParser.AttributesContext context)
         {
             File.Sheet.TotalDuration = context.duration.Get<float>();
-           
+            File.Sheet.Name = context.name.Text + " (script)";
+
             base.EnterAttributes(context);
         }
     }

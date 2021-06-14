@@ -60,7 +60,7 @@ namespace Harmony.GUI
             Renderer.Keyboard.OnKeyPressed += Keyboard_OnKeyPressed;
             Renderer.Keyboard.OnKeySelected += OnKeySelectionChanged;
             Renderer.Keyboard.OnKeyUnselected += OnKeySelectionChanged;
-
+            Renderer.Flow.OnSheetPlayed += OnSheetPlayed;
 
 
             foreach (var chord in ChordsManager.GetChordNames())
@@ -83,6 +83,11 @@ namespace Harmony.GUI
 
 
 
+        }
+
+        private void OnSheetPlayed(Sheet sheet)
+        {
+            sheetName.Text = sheet.Name;
         }
 
         private void OnKeySelectionChanged(Key key)
@@ -201,7 +206,7 @@ namespace Harmony.GUI
             dialog.Filter = "MIDI files (*.mid)|*.mid";
             if (dialog.ShowDialog().Value)
             {
-                Sheet sheet = Sheet.FromMIDI(new MidiFile(dialog.FileName));
+                Sheet sheet = Sheet.FromMIDI(dialog.FileName);
                 Renderer.Flow.Play(sheet);
             }
         }
@@ -231,10 +236,15 @@ namespace Harmony.GUI
 
         private void StopClick(object sender, RoutedEventArgs e)
         {
-            Renderer.Flow.Notes.Clear();
-            Renderer.Keyboard.UnselectAll();
+            Reset();
         }
 
+        private void Reset()
+        {
+            Renderer.Flow.Notes.Clear();
+            Renderer.Keyboard.UnselectAll();
+            sheetName.Text = "No sheet loaded";
+        }
         private void PauseClick(object sender, RoutedEventArgs e)
         {
             Renderer.Flow.PixelSpeed = 0f;

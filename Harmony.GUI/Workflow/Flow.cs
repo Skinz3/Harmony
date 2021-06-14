@@ -45,6 +45,14 @@ namespace Harmony.GUI.Workflow
             get;
             set;
         }
+        public Sheet Sheet
+        {
+            get;
+            private set;
+        }
+
+        public event Action<Sheet> OnSheetPlayed;
+
         public Flow(PianoKeyboard keyboard)
         {
             this.Background = new RectangleShape();
@@ -129,6 +137,10 @@ namespace Harmony.GUI.Workflow
             {
                 AddNote(note, sheet.TotalDuration);
             }
+
+            this.Sheet = sheet;
+
+            OnSheetPlayed?.Invoke(Sheet);
         }
 
 

@@ -34,7 +34,10 @@
             <TabControl BorderThickness="0,0,0,0"  HorizontalAlignment="Left" Width="1917" Background="#FF303036" Height="205" VerticalAlignment="Bottom" BorderBrush="#FFF1F1F1">
                 <TabItem FontFamily="/Harmony.GUI;component/#Caviar Dreams"  Foreground="White" Header="Playback">
                     <Grid>
-                        <Button Click="StopClick" Content="Stop" HorizontalAlignment="Left" Width="85" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" FontFamily="/Harmony.GUI;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" Margin="5,10,0,0">
+                        <Button Click="StopClick" HorizontalAlignment="Left" Width="84" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" FontFamily="/Harmony.GUI;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" Margin="10,35,0,0">
+                            <Button.Content>
+                                <Rectangle Width="10" Height="10" Fill="White"/>
+                            </Button.Content>
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}">
                                     <Setter Property="Background" Value="#FF3F3F46"/>
@@ -55,8 +58,17 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <TextBlock Foreground="#FFF1F1F1" x:Name="c" HorizontalAlignment="Left" Margin="275,14,0,0" TextWrapping="Wrap" Text="Chord : " VerticalAlignment="Top" FontFamily="/Harmony.GUI;component/#Caviar Dreams" FontSize="13"/>
-                        <Button Click="PauseClick" Content="Pause" HorizontalAlignment="Left" Width="85" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="95,10,0,0" FontFamily="/Harmony.GUI;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.647,0.5">
+                        <Button Click="PauseClick"   HorizontalAlignment="Left" Width="86" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="190,35,0,0" FontFamily="/Harmony.GUI;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.647,0.5">
+                            <Button.Content>
+                                <Grid Width="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle  HorizontalAlignment="Left" Height="12" Width="6" Fill="White"   Stroke="#FF3F3F46" />
+                                    <Rectangle Grid.Column="1"  HorizontalAlignment="Right" Height="12" Width="6" Fill="White"   Stroke="#FF3F3F46" />
+                                </Grid>
+                            </Button.Content>
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}">
                                     <Setter Property="Background" Value="#FF3F3F46"/>
@@ -77,7 +89,11 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Button Click="PlayClick" Content="Play" HorizontalAlignment="Left" Width="85" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="185,10,0,0" FontFamily="/Harmony.GUI;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.647,0.5">
+                        <Button Click="PlayClick"  HorizontalAlignment="Left" Width="86" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="99,35,0,0" FontFamily="/Harmony.GUI;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.647,0.5">
+                            <Button.Content>
+                                <Path  Fill="White"
+                                 Data="M 0,0 L 12,7 0,14 Z"/>
+                            </Button.Content>
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}">
                                     <Setter Property="Background" Value="#FF3F3F46"/>
@@ -98,8 +114,9 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Slider HorizontalAlignment="Left" Margin="5,45,0,0" VerticalAlignment="Top" Height="36" Width="265" OpacityMask="Black"/>
-                        <TextBlock Foreground="#FFF1F1F1" HorizontalAlignment="Left" Margin="270,45,0,0" TextWrapping="Wrap" Text="00:14/2:36" VerticalAlignment="Top" FontFamily="/Harmony.GUI;component/#Caviar Dreams" FontSize="13" Width="77"/>
+                        <Slider HorizontalAlignment="Left" Margin="14,73,0,0" VerticalAlignment="Top" Height="36" Width="171" OpacityMask="Black"/>
+                        <TextBlock Foreground="#FFF1F1F1" TextAlignment="Center" HorizontalAlignment="Left" Margin="190,73,0,0" TextWrapping="Wrap" Text="00:14/2:36" VerticalAlignment="Top" FontFamily="/Harmony.GUI;component/#Caviar Dreams" FontSize="13" Width="86"/>
+                        <TextBlock FontSize="14" Name="sheetName" Foreground="#FFF1F1F1" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="No sheet loaded"  TextAlignment="Left" VerticalAlignment="Top" FontFamily="/Harmony.GUI;component/#Caviar Dreams" Width="266" Height="20"/>
 
                     </Grid>
                 </TabItem>
@@ -173,10 +190,13 @@
                                 </Style>
                             </Button.Style>
                         </Button>
+                        <TextBlock Foreground="#FFF1F1F1" x:Name="c" HorizontalAlignment="Left" Margin="377,154,0,0" TextWrapping="Wrap" Text="Chord : " VerticalAlignment="Top" FontFamily="/Harmony.GUI;component/#Caviar Dreams" FontSize="13"/>
                     </Grid>
                 </TabItem>
                 <TabItem FontFamily="/Harmony.GUI;component/#Caviar Dreams" Foreground="White"  Header="Scripts">
-                    <Grid/>
+                    <Grid>
+                        <TextBlock TextAlignment="Left" Foreground="#FFF1F1F1"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="No script loaded." VerticalAlignment="Top" FontFamily="/Harmony.GUI;component/#Caviar Dreams" FontSize="14" Width="168" Margin="10,10,0,0"/>
+                    </Grid>
                 </TabItem>
                 <TabItem FontFamily="/Harmony.GUI;component/#Caviar Dreams" Foreground="White"  Header="Options">
                     <Grid/>

@@ -2,6 +2,7 @@
 using NAudio.Midi;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,15 +21,24 @@ namespace Harmony.Sheets
             get;
             set;
         }
+        public string Name
+        {
+            get;
+            set;
+        }
         public Sheet()
         {
             this.Notes = new List<SheetNote>();
         }
 
-        
-        public static Sheet FromMIDI(MidiFile file)
+
+        public static Sheet FromMIDI(string path)
         {
+            MidiFile file = new MidiFile(path);
+
             Sheet result = new Sheet();
+
+            result.Name = Path.GetFileNameWithoutExtension(path) + " (MIDI)";
 
             file.Events.MidiFileType = 0;
 
