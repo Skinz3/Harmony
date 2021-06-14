@@ -34,6 +34,12 @@ namespace Harmony.GUI.Workflow
 
         public const float SizeY = 680;
 
+        public float PixelSpeed
+        {
+            get;
+            set;
+        } = 2f;
+
         private PianoKeyboard Keyboard
         {
             get;
@@ -67,7 +73,7 @@ namespace Harmony.GUI.Workflow
         {
             window.Draw(Background);
 
-            window.Draw(Lines, PrimitiveType.Lines);
+            window.Draw(Lines.ToArray(), PrimitiveType.Lines);
 
             foreach (var note in Notes.FindAll(x => x.Shape.Position.Y + x.Shape.Size.Y > 0))
             {
@@ -75,7 +81,7 @@ namespace Harmony.GUI.Workflow
 
             }
 
-           
+
 
             foreach (var note in Notes.ToArray())
             {
@@ -96,8 +102,8 @@ namespace Harmony.GUI.Workflow
                     Notes.Remove(note);
                 }
 
-                note.Step(2f);
-                
+                note.Step(PixelSpeed);
+
             }
 
 
@@ -106,21 +112,13 @@ namespace Harmony.GUI.Workflow
         public void AddNote(SheetNote sheetNote, float totalDuration)
         {
             var key = Keyboard.GetKey(sheetNote.Number);
-
             float ratio = sheetNote.Start / totalDuration;
-
             var totalPixelSize = PianoKeyboard.WhiteSize.Y * totalDuration;
-
-            var posY = totalPixelSize * ratio;
-
+            var posY = totalPixelSize * ratio - SizeY;
             var sizeY = (sheetNote.End - sheetNote.Start) * PianoKeyboard.WhiteSize.Y;
-
             Vector2f position = new Vector2f(key.Rectangle.Position.X, -posY);
-
             position -= new Vector2f(0, sizeY);
-
             FlowNote note = new FlowNote(sheetNote, key.Note.Sharp, position, sizeY);
-
             Notes.Add(note);
 
         }

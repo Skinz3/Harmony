@@ -24,6 +24,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Key = Harmony.GUI.Keys.Key;
 using Harmony.Scripts;
+using Harmony.GUI.Keys;
+using SFML.System;
 
 namespace Harmony.GUI
 {
@@ -41,7 +43,6 @@ namespace Harmony.GUI
 
         public MainWindow()
         {
-
             NotesManager.Initialize();
             ChordsManager.Initialize("chords.json");
             InitializeComponent();
@@ -101,7 +102,7 @@ namespace Harmony.GUI
 
         private void Keyboard_OnKeyPressed(Key key)
         {
-            float offset = -6f;
+            float offset = 0f;
             SheetNote sheetNote = new SheetNote(key.Note.Number, offset, offset + 3f, 100f);
             Renderer.Flow.AddNote(sheetNote, 4f);
         }
@@ -118,9 +119,12 @@ namespace Harmony.GUI
         }
 
 
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void OnPlayClick(object sender, RoutedEventArgs e)
         {
+
+            if (chords.SelectedItem == null)
+                return;
+
             Renderer.Keyboard.UnselectAll();
 
             var chord = ChordsManager.BuildChord(chords.SelectedItem.ToString(), 3);
@@ -130,7 +134,7 @@ namespace Harmony.GUI
                 return;
             }
 
-            float offset = -5f;
+            float offset = 0f;
 
             foreach (var note in chord.Notes)
             {
@@ -225,11 +229,47 @@ namespace Harmony.GUI
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void StopClick(object sender, RoutedEventArgs e)
         {
             Renderer.Flow.Notes.Clear();
-
             Renderer.Keyboard.UnselectAll();
+        }
+
+        private void PauseClick(object sender, RoutedEventArgs e)
+        {
+            Renderer.Flow.PixelSpeed = 0f;
+        }
+        private void PlayClick(object sender, RoutedEventArgs e)
+        {
+            Renderer.Flow.PixelSpeed = 2f;
+        }
+
+        private void TransposeDownClick(object sender, RoutedEventArgs e)
+        {
+            Renderer.Keyboard.UnselectAll();
+
+            if (Renderer.Flow.Notes.All(x => x.SheetNote.Number - 1 > 0))
+            {
+                foreach (var note in Renderer.Flow.Notes)
+                {
+                    note.SheetNote.Number -= 1;
+                    note.Shape.Position = new Vector2f(Renderer.Keyboard.GetKey(note.SheetNote.Number).Rectangle.Position.X, note.Shape.Position.Y);
+                }
+            }
+        }
+
+        private void TransposeUpClick(object sender, RoutedEventArgs e)
+        {
+            Renderer.Keyboard.UnselectAll();
+
+            if (Renderer.Flow.Notes.All(x => x.SheetNote.Number + 1 <= 88))
+            {
+                foreach (var note in Renderer.Flow.Notes)
+                {
+                    note.SheetNote.Number += 1;
+                    note.Shape.Position = new Vector2f(Renderer.Keyboard.GetKey(note.SheetNote.Number).Rectangle.Position.X, note.Shape.Position.Y);
+                }
+            }
         }
     }
 }
