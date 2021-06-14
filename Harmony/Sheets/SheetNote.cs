@@ -12,7 +12,7 @@ namespace Harmony.Sheets
         public int Number
         {
             get;
-            private set;
+            set;
         }
         public float Start
         {
