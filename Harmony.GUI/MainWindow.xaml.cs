@@ -26,6 +26,7 @@ using Key = Harmony.GUI.Keys.Key;
 using Harmony.Scripts;
 using Harmony.GUI.Keys;
 using SFML.System;
+using System.IO;
 
 namespace Harmony.GUI
 {
@@ -35,6 +36,11 @@ namespace Harmony.GUI
     public partial class MainWindow : Window
     {
         private PianoRenderer Renderer
+        {
+            get;
+            set;
+        }
+        private HarmonyScript Script
         {
             get;
             set;
@@ -206,6 +212,7 @@ namespace Harmony.GUI
             dialog.Filter = "MIDI files (*.mid)|*.mid";
             if (dialog.ShowDialog().Value)
             {
+                Reset();
                 Sheet sheet = Sheet.FromMIDI(dialog.FileName);
                 Renderer.Flow.Play(sheet);
             }
@@ -224,14 +231,25 @@ namespace Harmony.GUI
 
         private void OpenScriptClick(object sender, RoutedEventArgs e)
         {
+
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Harmony Scripts (*.hm)|*.hm";
             if (dialog.ShowDialog().Value)
             {
                 HarmonyScript script = new HarmonyScript(dialog.FileName);
-                script.Read();
-                Renderer.Flow.Play(script.Sheet);
+                LoadScript(script);
             }
+        }
+
+        private void LoadScript(HarmonyScript script)
+        {
+            Reset();
+            script.Read();
+            Renderer.Flow.Play(script.Sheet);
+            this.Script = script;
+            this.scriptStatus.Text = "Script : " + script.Sheet.Name;
+            this.notesCount.Text = "Notes Count : " + script.Sheet.Notes.Count;
+            this.totalDuration.Text = "Total Duration : " + script.Sheet.TotalDuration;
         }
 
         private void StopClick(object sender, RoutedEventArgs e)
@@ -280,6 +298,11 @@ namespace Harmony.GUI
                     note.Shape.Position = new Vector2f(Renderer.Keyboard.GetKey(note.SheetNote.Number).Rectangle.Position.X, note.Shape.Position.Y);
                 }
             }
+        }
+
+        private void ReloadScriptClick(object sender, RoutedEventArgs e)
+        {
+            LoadScript(Script);
         }
     }
 }

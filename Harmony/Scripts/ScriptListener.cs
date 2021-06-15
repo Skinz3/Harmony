@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static HarmonyParser;
 
 namespace Harmony.Scripts
 {
@@ -29,19 +30,27 @@ namespace Harmony.Scripts
             }
         }
 
-        public override void EnterUnitDeclaration([NotNull] HarmonyParser.UnitDeclarationContext context)
+        public override void EnterUnitDeclaration([NotNull] UnitDeclarationContext context)
         {
             EnterBlock(context.block());
         }
-        public override void EnterBlock([NotNull] HarmonyParser.BlockContext context)
+        public override void EnterBlock([NotNull] BlockContext context)
         {
-            foreach (var statement in context.statement())
+            foreach (var statement in context.blockStatement())
             {
-                StatementListener statementListener = new StatementListener(File);
+                StatementListener statementListener = new StatementListener();
                 statement.EnterRule(statementListener);
+
+                foreach (FunctionContext function in statement.function())
+                {
+                    FunctionListener functionListener = new FunctionListener(statementListener.Notes);
+                    function.EnterRule(functionListener);
+                }
+
+                File.Sheet.Notes.AddRange(statementListener.Notes);
             }
         }
-        public override void EnterAttributes([NotNull] HarmonyParser.AttributesContext context)
+        public override void EnterAttributes([NotNull] AttributesContext context)
         {
             File.Sheet.TotalDuration = context.duration.Get<float>();
             File.Sheet.Name = context.name.Text + " (script)";

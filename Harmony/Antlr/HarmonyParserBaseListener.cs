@@ -87,6 +87,19 @@ public partial class HarmonyParserBaseListener : IHarmonyParserListener {
 	public virtual void ExitBlock([NotNull] HarmonyParser.BlockContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.blockStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterBlockStatement([NotNull] HarmonyParser.BlockStatementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.blockStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitBlockStatement([NotNull] HarmonyParser.BlockStatementContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.statement"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -113,17 +126,95 @@ public partial class HarmonyParserBaseListener : IHarmonyParserListener {
 	public virtual void ExitNoteStatement([NotNull] HarmonyParser.NoteStatementContext context) { }
 
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="HarmonyParser.note"/>.
+	/// Enter a parse tree produced by <see cref="HarmonyParser.chordStatement"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterNote([NotNull] HarmonyParser.NoteContext context) { }
+	public virtual void EnterChordStatement([NotNull] HarmonyParser.ChordStatementContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="HarmonyParser.note"/>.
+	/// Exit a parse tree produced by <see cref="HarmonyParser.chordStatement"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitNote([NotNull] HarmonyParser.NoteContext context) { }
+	public virtual void ExitChordStatement([NotNull] HarmonyParser.ChordStatementContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.function"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterFunction([NotNull] HarmonyParser.FunctionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.function"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitFunction([NotNull] HarmonyParser.FunctionContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.propagateFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterPropagateFunction([NotNull] HarmonyParser.PropagateFunctionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.propagateFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitPropagateFunction([NotNull] HarmonyParser.PropagateFunctionContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.transposeFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterTransposeFunction([NotNull] HarmonyParser.TransposeFunctionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.transposeFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitTransposeFunction([NotNull] HarmonyParser.TransposeFunctionContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.arpeggiateFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterArpeggiateFunction([NotNull] HarmonyParser.ArpeggiateFunctionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.arpeggiateFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitArpeggiateFunction([NotNull] HarmonyParser.ArpeggiateFunctionContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.noteLiteral"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterNoteLiteral([NotNull] HarmonyParser.NoteLiteralContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.noteLiteral"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitNoteLiteral([NotNull] HarmonyParser.NoteLiteralContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.chordLiteral"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterChordLiteral([NotNull] HarmonyParser.ChordLiteralContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.chordLiteral"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitChordLiteral([NotNull] HarmonyParser.ChordLiteralContext context) { }
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.number"/>.

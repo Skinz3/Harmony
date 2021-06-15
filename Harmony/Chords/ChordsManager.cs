@@ -78,6 +78,7 @@ namespace Harmony.Chords
 
             File.WriteAllText("chords.json", JsonConvert.SerializeObject(Chords));
         }
+        
         public static Chord BuildChord(string chord, int octave)
         {
             foreach (var chordOverride in ChordsOverride)
@@ -91,7 +92,6 @@ namespace Harmony.Chords
             {
                 chord = bassRegex.Groups[1].Value;
             }
-
 
             if (!Chords.ContainsKey(chord))
             {

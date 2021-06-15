@@ -4,12 +4,14 @@ UNIT : 'unit';
 NOTE : 'note';
 CHORD : 'chord';
 
-ATR_NAME : 'Name';
-ATR_TEMPO : 'Tempo';
-ATR_DURATION : 'Duration';
-ATR_AUTHOR : 'Author';
+ATR_NAME : 'name';
+ATR_TEMPO : 'tempo';
+ATR_DURATION : 'duration';
+ATR_AUTHOR : 'author';
 
-
+TRANSPOSE : 'transpose';
+PROPAGATE : 'propagate';
+ARPEGGIATE : 'arpeggiate';
 
 LPAREN:             '(';
 RPAREN:             ')';
@@ -20,12 +22,13 @@ DOT:                '.';
 SEMI:               ';';
 COLON :             ':';
 SHARP :             '#';
+FUNC :              '->';
 
 WS:  [ \t\r\n\u000C]+ -> channel(HIDDEN);
 
 IDENTIFIER: Letter SHARP? LetterOrDigit*;
 
-DECIMAL_LITERAL:    ('0' | [1-9] (Digits? | '_'+ Digits)) [lL]?;
+DECIMAL_LITERAL:   '-'? ('0' | [1-9] (Digits? | '_'+ Digits)) [lL]?;
 
 FLOAT_LITERAL:  (Digits '.' Digits? | '.' Digits) 
              ;

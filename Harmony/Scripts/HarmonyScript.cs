@@ -13,10 +13,10 @@ namespace Harmony.Scripts
     {
         public const string Extension = ".hm";
 
-        private string Filepath
+        public string Filepath
         {
             get;
-            set;
+            private set;
         }
 
         public Sheet Sheet

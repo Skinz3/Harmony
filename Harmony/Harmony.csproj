@@ -97,6 +97,7 @@
     <Compile Include="Scales\Scale.cs" />
     <Compile Include="Scales\ScalesManager.cs" />
     <Compile Include="Scripts\AntlrExtensions.cs" />
+    <Compile Include="Scripts\FunctionListener.cs" />
     <Compile Include="Scripts\HarmonyScript.cs" />
     <Compile Include="Scripts\ScriptListener.cs" />
     <Compile Include="Scripts\StatementListener.cs" />

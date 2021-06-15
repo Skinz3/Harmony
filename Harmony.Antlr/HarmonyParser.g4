@@ -2,15 +2,19 @@ parser grammar HarmonyParser;
 
 options { tokenVocab=HarmonyLexer; }
 
+//==========================================================
+// Unit
+//==========================================================
+
 compilationUnit
     : attributes unitDeclaration* EOF
     ;
 
 attributes
-    : ('Name' ':' name=IDENTIFIER) 
-      ('Author' ':' author=IDENTIFIER)
-      ('Duration' ':' duration=number)
-      ('Tempo' ':' tempo=DECIMAL_LITERAL)
+    : ('name' ':' name=IDENTIFIER) 
+      ('author' ':' author=IDENTIFIER)
+      ('duration' ':' duration=number)
+      ('tempo' ':' tempo=DECIMAL_LITERAL)
     ;
 
 unitDeclaration
@@ -18,18 +22,64 @@ unitDeclaration
     ;
 
 block
-    : '{' statement* '}'
+    : '{' (blockStatement)* '}'
     ;
+
+blockStatement
+    : statement('->'function)*
+    ;
+
+
+
+//==========================================================
+// Statements
+//==========================================================
 
 statement
     : noteStatement
+    | chordStatement
     ;
 
 noteStatement
-    : (NOTE note startTime=number ',' duration=number ',' velocity=number)
+    : (NOTE  noteLiteral '('  startTime=number ',' duration=number ',' velocity=number  ')' )
     ;
 
-note
+chordStatement
+    : (CHORD  chordLiteral '('  startTime=number ',' duration=number ',' velocity=number  ',' octave=DECIMAL_LITERAL ')' )
+    ;
+
+//==========================================================
+// Functions
+//==========================================================
+
+function
+    : transposeFunction
+    | propagateFunction
+    | arpeggiateFunction
+    ;
+
+propagateFunction:
+    PROPAGATE'('amount=DECIMAL_LITERAL')'
+    ;
+
+transposeFunction:
+    TRANSPOSE'('value=DECIMAL_LITERAL')'
+    ;
+
+arpeggiateFunction:
+    ARPEGGIATE'('offset=number')'
+    ;
+
+
+//==========================================================
+// Literals
+//==========================================================
+
+noteLiteral
+    : IDENTIFIER
+    ;
+
+chordLiteral
     : IDENTIFIER
     ;
 

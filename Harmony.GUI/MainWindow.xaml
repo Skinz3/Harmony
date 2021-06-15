@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+       
        
         xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
         xmlns:local="clr-namespace:Harmony.GUI"
@@ -195,7 +195,32 @@
                 </TabItem>
                 <TabItem FontFamily="/Harmony.GUI;component/#Caviar Dreams" Foreground="White"  Header="Scripts">
                     <Grid>
-                        <TextBlock TextAlignment="Left" Foreground="#FFF1F1F1"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="No script loaded." VerticalAlignment="Top" FontFamily="/Harmony.GUI;component/#Caviar Dreams" FontSize="14" Width="168" Margin="10,10,0,0"/>
+                        <TextBlock Name="scriptStatus" TextAlignment="Left" Foreground="#FFF1F1F1"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="No script loaded." VerticalAlignment="Top" FontFamily="/Harmony.GUI;component/#Caviar Dreams" FontSize="14" Width="419" Margin="20,10,0,0"/>
+                        <Canvas Name="scriptCanvas" HorizontalAlignment="Left" Height="138" Margin="10,31,0,0" VerticalAlignment="Top" Width="542">
+                            <TextBlock x:Name="totalDuration" TextAlignment="Left" Foreground="#FFF1F1F1"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Total Duration : " VerticalAlignment="Top" FontFamily="/Harmony.GUI;component/#Caviar Dreams" FontSize="14" Width="168" Canvas.Left="10" Canvas.Top="10"/>
+                            <TextBlock x:Name="notesCount" TextAlignment="Left" Foreground="#FFF1F1F1"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Notes Count : " VerticalAlignment="Top" FontFamily="/Harmony.GUI;component/#Caviar Dreams" FontSize="14" Width="168" Canvas.Top="31" Canvas.Left="10"/>
+                            <Button Click="ReloadScriptClick" Content="Reload" HorizontalAlignment="Left" Width="106" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" FontFamily="/Harmony.GUI;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="2.059,2.792" Canvas.Left="10" Canvas.Top="58">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Setter Property="Background" Value="#FF3F3F46"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border Background="{TemplateBinding Background}">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#FF5F5F68"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Canvas>
                     </Grid>
                 </TabItem>
                 <TabItem FontFamily="/Harmony.GUI;component/#Caviar Dreams" Foreground="White"  Header="Options">
@@ -203,6 +228,7 @@
                 </TabItem>
 
             </TabControl>
+
 
         </Grid>
 

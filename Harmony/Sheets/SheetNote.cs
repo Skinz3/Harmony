@@ -17,12 +17,12 @@ namespace Harmony.Sheets
         public float Start
         {
             get;
-            private set;
+            set;
         }
         public float End
         {
             get;
-            private set;
+            set;
         }
         public float Velocity
         {
