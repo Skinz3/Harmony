@@ -1,6 +1,6 @@
 ﻿using Harmony.Chords;
+using Harmony.Compiler.Errors;
 using Harmony.Notes;
-using Harmony.Scripts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +18,34 @@ namespace Harmony.Compiler
 
             HarmonyScript script = new HarmonyScript(@"C:\Users\Skinz\Desktop\Harmony\Harmony.GUI\bin\Debug\Test\test.hm");
             script.Read();
-            Console.WriteLine("Compile end.");
+
+            foreach (var error in script.Errors)
+            {
+                switch (error.Type)
+                {
+                    case ErrorType.Syntaxic:
+                        Log(error.ToString(), ConsoleColor.Yellow);
+                        break;
+                    case ErrorType.Semantic:
+                        Log(error.ToString(), ConsoleColor.DarkYellow);
+                        break;
+                    case ErrorType.Other:
+                        Log(error.ToString(), ConsoleColor.Red);
+                        break;
+                }
+            }
+
+
+            if (script.Errors.Count == 0)
+            {
+                Log("Compile sucessful.",ConsoleColor.Green);
+            }
             Console.ReadLine();
+        }
+        static void Log(string message, ConsoleColor color = ConsoleColor.White)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(message);
         }
     }
 }

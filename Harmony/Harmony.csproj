@@ -87,6 +87,11 @@
     <Compile Include="Chords\Chord.cs" />
     <Compile Include="Chords\ChordsManager.cs" />
     <Compile Include="Chords\Notepad.cs" />
+    <Compile Include="Compiler\AST\Functions\ArpeggiateFunction.cs" />
+    <Compile Include="Compiler\AST\Functions\PropagateFunction.cs" />
+    <Compile Include="Compiler\AST\Functions\TransposeFunction.cs" />
+    <Compile Include="Compiler\Errors\SourceError.cs" />
+    <Compile Include="Compiler\Listeners\UnitListener.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Instruments\Instrument.cs" />
     <Compile Include="Instruments\InstrumentsManager.cs" />
@@ -96,11 +101,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scales\Scale.cs" />
     <Compile Include="Scales\ScalesManager.cs" />
-    <Compile Include="Scripts\AntlrExtensions.cs" />
-    <Compile Include="Scripts\FunctionListener.cs" />
-    <Compile Include="Scripts\HarmonyScript.cs" />
-    <Compile Include="Scripts\ScriptListener.cs" />
-    <Compile Include="Scripts\StatementListener.cs" />
+    <Compile Include="Compiler\AntlrExtensions.cs" />
+    <Compile Include="Compiler\AST\Functions\Function.cs" />
+    <Compile Include="Compiler\AST\ICompilable.cs" />
+    <Compile Include="Compiler\AST\Statements\ChordStatement.cs" />
+    <Compile Include="Compiler\AST\Statements\NoteStatement.cs" />
+    <Compile Include="Compiler\AST\Statements\Statement.cs" />
+    <Compile Include="Compiler\AST\Unit.cs" />
+    <Compile Include="Compiler\Errors\CompilerErrors.cs" />
+    <Compile Include="Compiler\Errors\Error.cs" />
+    <Compile Include="Compiler\Errors\ErrorType.cs" />
+    <Compile Include="Compiler\Listeners\FunctionListener.cs" />
+    <Compile Include="Compiler\HarmonyScript.cs" />
+    <Compile Include="Compiler\Listeners\ScriptListener.cs" />
+    <Compile Include="Compiler\Listeners\StatementListener.cs" />
     <Compile Include="Sheets\Sheet.cs" />
     <Compile Include="Sheets\SheetNote.cs" />
   </ItemGroup>
@@ -109,6 +123,7 @@
     <None Include="Antlr\HarmonyParser.tokens" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

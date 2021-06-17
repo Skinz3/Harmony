@@ -4,6 +4,8 @@ UNIT : 'unit';
 NOTE : 'note';
 CHORD : 'chord';
 
+MAIN : 'main';
+
 ATR_NAME : 'name';
 ATR_TEMPO : 'tempo';
 ATR_DURATION : 'duration';

@@ -46,9 +46,9 @@ namespace Harmony.Chords
 
             if (chord.Key != null)
             {
-                result = new Chord();
-                result.Notes = notes.ToList();
-                result.Name = chord.Key;
+                int octave = notes.First().Octave;
+
+                result = new Chord(chord.Key, octave, notes.ToList());
             }
 
             return result;
@@ -78,7 +78,7 @@ namespace Harmony.Chords
 
             File.WriteAllText("chords.json", JsonConvert.SerializeObject(Chords));
         }
-        
+
         public static Chord BuildChord(string chord, int octave)
         {
             foreach (var chordOverride in ChordsOverride)
@@ -98,8 +98,7 @@ namespace Harmony.Chords
                 return null;
             }
 
-            Chord result = new Chord();
-            result.Name = chord;
+        
 
             List<Note> notes = new List<Note>();
 
@@ -128,8 +127,7 @@ namespace Harmony.Chords
                 notes.Add(NotesManager.GetNote(bassRegex.Groups[2].Value, octave - 1));
             }
 
-            result.Notes = notes;
-            return result;
+            return new Chord(chord, octave, notes);
 
 
         }

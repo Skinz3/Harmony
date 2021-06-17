@@ -7,7 +7,7 @@ options { tokenVocab=HarmonyLexer; }
 //==========================================================
 
 compilationUnit
-    : attributes unitDeclaration* EOF
+    : attributes unitDeclaration*  EOF
     ;
 
 attributes
@@ -18,7 +18,7 @@ attributes
     ;
 
 unitDeclaration
-    : UNIT IDENTIFIER block
+    : UNIT name=IDENTIFIER block
     ;
 
 block

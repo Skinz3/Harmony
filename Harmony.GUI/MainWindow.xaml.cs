@@ -23,10 +23,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Key = Harmony.GUI.Keys.Key;
-using Harmony.Scripts;
 using Harmony.GUI.Keys;
 using SFML.System;
 using System.IO;
+using Harmony.Compiler;
 
 namespace Harmony.GUI
 {

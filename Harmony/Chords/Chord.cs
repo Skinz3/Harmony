@@ -12,14 +12,25 @@ namespace Harmony.Chords
         public string Name
         {
             get;
-            set;
+            private set;
+        }
+        public int Octave
+        {
+            get;
+            private set;
         }
         public IEnumerable<Note> Notes
         {
             get;
-            set;
+            private set;
         }
-       
+
+        public Chord(string name, int octave, IEnumerable<Note> notes)
+        {
+            this.Name = name;
+            this.Octave = octave;
+            this.Notes = notes;
+        }
         public override string ToString()
         {
             return Name;
