@@ -113,6 +113,19 @@ public partial class HarmonyParserBaseListener : IHarmonyParserListener {
 	public virtual void ExitStatement([NotNull] HarmonyParser.StatementContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.unitStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterUnitStatement([NotNull] HarmonyParser.UnitStatementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.unitStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitUnitStatement([NotNull] HarmonyParser.UnitStatementContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.noteStatement"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -152,6 +165,19 @@ public partial class HarmonyParserBaseListener : IHarmonyParserListener {
 	public virtual void ExitFunction([NotNull] HarmonyParser.FunctionContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.playWithFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterPlayWithFunction([NotNull] HarmonyParser.PlayWithFunctionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.playWithFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitPlayWithFunction([NotNull] HarmonyParser.PlayWithFunctionContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.propagateFunction"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -189,6 +215,19 @@ public partial class HarmonyParserBaseListener : IHarmonyParserListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitArpeggiateFunction([NotNull] HarmonyParser.ArpeggiateFunctionContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.timesFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterTimesFunction([NotNull] HarmonyParser.TimesFunctionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.timesFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitTimesFunction([NotNull] HarmonyParser.TimesFunctionContext context) { }
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.noteLiteral"/>.

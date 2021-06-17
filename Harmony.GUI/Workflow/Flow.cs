@@ -34,6 +34,8 @@ namespace Harmony.GUI.Workflow
 
         public const float SizeY = 680;
 
+        public const float TimeSizeY = 150;
+
         public float PixelSpeed
         {
             get;
@@ -89,8 +91,6 @@ namespace Harmony.GUI.Workflow
 
             }
 
-
-
             foreach (var note in Notes.ToArray())
             {
                 if (!note.Played && note.Shape.Position.Y + note.Shape.Size.Y > SizeY)
@@ -123,7 +123,7 @@ namespace Harmony.GUI.Workflow
             float ratio = sheetNote.Start / totalDuration;
             var totalPixelSize = PianoKeyboard.WhiteSize.Y * totalDuration;
             var posY = totalPixelSize * ratio - SizeY;
-            var sizeY = (sheetNote.End - sheetNote.Start) * PianoKeyboard.WhiteSize.Y;
+            var sizeY = (sheetNote.End - sheetNote.Start) * TimeSizeY;
             Vector2f position = new Vector2f(key.Rectangle.Position.X, -posY);
             position -= new Vector2f(0, sizeY);
             FlowNote note = new FlowNote(sheetNote, key.Note.Sharp, position, sizeY);
@@ -140,9 +140,15 @@ namespace Harmony.GUI.Workflow
 
             this.Sheet = sheet;
 
+            this.PixelSpeed = ComputePixelSpeed(sheet.Tempo);
+
             OnSheetPlayed?.Invoke(Sheet);
         }
 
+        private float ComputePixelSpeed(int tempo)
+        {
+            return (tempo * TimeSizeY / Renderer.FrameRateLimit) / 60f;
+        }
 
     }
 }

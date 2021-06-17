@@ -88,8 +88,11 @@
     <Compile Include="Chords\ChordsManager.cs" />
     <Compile Include="Chords\Notepad.cs" />
     <Compile Include="Compiler\AST\Functions\ArpeggiateFunction.cs" />
+    <Compile Include="Compiler\AST\Functions\BassFunction.cs" />
+    <Compile Include="Compiler\AST\Functions\PlayWithFunction.cs" />
     <Compile Include="Compiler\AST\Functions\PropagateFunction.cs" />
     <Compile Include="Compiler\AST\Functions\TransposeFunction.cs" />
+    <Compile Include="Compiler\AST\Statements\UnitStatement.cs" />
     <Compile Include="Compiler\Errors\SourceError.cs" />
     <Compile Include="Compiler\Listeners\UnitListener.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
@@ -101,7 +104,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scales\Scale.cs" />
     <Compile Include="Scales\ScalesManager.cs" />
-    <Compile Include="Compiler\AntlrExtensions.cs" />
+    <Compile Include="Antlr\Extensions\AntlrExtensions.cs" />
     <Compile Include="Compiler\AST\Functions\Function.cs" />
     <Compile Include="Compiler\AST\ICompilable.cs" />
     <Compile Include="Compiler\AST\Statements\ChordStatement.cs" />

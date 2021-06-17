@@ -1,4 +1,5 @@
 ﻿using SFML.Graphics;
+using SFML.System;
 using SFML.Window;
 using System;
 using System.Collections.Generic;
@@ -6,13 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Harmony.GUI.SFML
+namespace Harmony.IDE.Rendering
 {
     public abstract class Renderer
     {
-        public const uint FrameRateLimit = 60;
-
-        protected RenderWindow Window
+        private uint FrameRateLimit
+        {
+            get;
+            set;
+        }
+        public RenderWindow Window
         {
             get;
             private set;
@@ -23,28 +27,30 @@ namespace Harmony.GUI.SFML
             get;
         }
 
-        public Renderer(VideoMode mode, string title, Styles styles = Styles.Default)
+        private ContextSettings Settings;
+
+        public Renderer(IntPtr handle, ContextSettings settings, uint frameRateLimit = 60)
         {
-            ContextSettings settings = new ContextSettings();
-            settings.AntialiasingLevel = 7;
-
-            this.Window = new RenderWindow(mode, title, styles, settings);
+            this.Settings = settings;
+            this.FrameRateLimit = frameRateLimit;
+            this.Window = new RenderWindow(handle, this.Settings);
             Initialize();
-        }
-        public Renderer(IntPtr handle)
-        {
-            ContextSettings settings = new ContextSettings();
-            settings.AntialiasingLevel = 7;
-
-
-            this.Window = new RenderWindow(handle, settings);
-            Initialize();
+            BindEvents();
         }
 
-        private void Initialize()
+        public void RecreateWindow(IntPtr handle)
+        {
+            Window.Close();
+            Window = new RenderWindow(handle, this.Settings);
+            BindEvents();
+            Initialize();
+        }
+
+        public void Initialize()
         {
             Window.SetFramerateLimit(FrameRateLimit);
         }
+
 
         public void Display()
         {
@@ -65,10 +71,8 @@ namespace Harmony.GUI.SFML
 
         public abstract void Draw();
 
-        public RenderWindow GetWindow()
-        {
-            return this.Window;
-        }
+        public abstract void BindEvents();
+
 
     }
 }

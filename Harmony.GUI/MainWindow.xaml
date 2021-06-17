@@ -9,7 +9,7 @@
         xmlns:local="clr-namespace:Harmony.GUI"
         xmlns:UI="clr-namespace:Harmony.GUI" x:Class="Harmony.GUI.MainWindow"
         mc:Ignorable="d"
-        Title="Harmony"   Width="1917" Height="1130"  WindowStyle="None" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="NoResize">
+        Title="Harmony" Width="1917" Height="1130" WindowStyle="None" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="NoResize">
 
 
 

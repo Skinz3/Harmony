@@ -30,7 +30,6 @@ blockStatement
     ;
 
 
-
 //==========================================================
 // Statements
 //==========================================================
@@ -38,8 +37,13 @@ blockStatement
 statement
     : noteStatement
     | chordStatement
+    | unitStatement
     ;
 
+
+unitStatement
+    : name=IDENTIFIER
+    ;
 noteStatement
     : (NOTE  noteLiteral '('  startTime=number ',' duration=number ',' velocity=number  ')' )
     ;
@@ -49,6 +53,11 @@ chordStatement
     ;
 
 //==========================================================
+// Statements
+//==========================================================
+
+
+//==========================================================
 // Functions
 //==========================================================
 
@@ -56,8 +65,13 @@ function
     : transposeFunction
     | propagateFunction
     | arpeggiateFunction
+    | playWithFunction
+    | timesFunction
     ;
 
+playWithFunction:
+    PLAYWITH'('blockStatement')'
+    ;
 propagateFunction:
     PROPAGATE'('amount=DECIMAL_LITERAL')'
     ;
@@ -68,6 +82,10 @@ transposeFunction:
 
 arpeggiateFunction:
     ARPEGGIATE'('offset=number')'
+    ;
+
+timesFunction:
+    TIMES'('amount=DECIMAL_LITERAL')'
     ;
 
 

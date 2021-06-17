@@ -26,6 +26,11 @@ namespace Harmony.Sheets
             get;
             set;
         }
+        public int Tempo
+        {
+            get;
+            set;
+        }
         public Sheet()
         {
             this.Notes = new List<SheetNote>();
@@ -35,7 +40,7 @@ namespace Harmony.Sheets
         public static Sheet FromMIDI(string path)
         {
             MidiFile file = new MidiFile(path);
-
+            
             Sheet result = new Sheet();
 
             result.Name = Path.GetFileNameWithoutExtension(path) + " (MIDI)";
@@ -138,6 +143,8 @@ namespace Harmony.Sheets
                 SheetNote note = new SheetNote(noteOnEvent.NoteNumber - 20, start, end, noteOnEvent.Velocity);
                 result.Notes.Add(note);
             }
+
+            result.Tempo = 60;
 
             return result;
         }
