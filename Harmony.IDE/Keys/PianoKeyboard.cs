@@ -61,10 +61,10 @@ namespace Harmony.IDE.Keys
             get;
             set;
         }
-        private Vector2f Position
+        public Vector2f Position
         {
             get;
-            set;
+            private set;
         }
         private Instrument Instrument
         {

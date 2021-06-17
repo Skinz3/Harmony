@@ -13,7 +13,7 @@ namespace Harmony.IDE
 {
     public class HarmonyRenderer : Renderer
     {
-        private PianoKeyboard Keyboard
+        public PianoKeyboard Keyboard
         {
             get;
             set;
@@ -38,7 +38,18 @@ namespace Harmony.IDE
         private void MouseWheelScrolled(object sender, MouseWheelScrollEventArgs e)
         {
             var view = this.Window.GetView();
-            view.Center = new Vector2f(view.Center.X, view.Center.Y - e.Delta * 20);
+
+            float delta = e.Delta * 20;
+
+            if (delta < 0)
+            {
+                if (view.Center.Y + (view.Size.Y/2) - delta>  this.Keyboard.Position.Y + PianoKeyboard.WhiteSize.Y)
+                {
+                    return;
+                }
+            }
+
+            view.Center = new Vector2f(view.Center.X, view.Center.Y - delta);
             Window.SetView(view);
         }
 

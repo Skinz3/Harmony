@@ -21,6 +21,7 @@ using Harmony.IDE.Rendering;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Document;
+using Harmony.IDE.Keys;
 
 namespace Harmony.IDE
 {
@@ -64,7 +65,10 @@ namespace Harmony.IDE
         {
             if (host.Visibility == Visibility.Visible)
             {
+                var oldY = Renderer.Window.GetView().Center.Y;
+
                 Renderer.RecreateWindow(host.Child.Handle);
+                Try(oldY);
             }
         }
 
@@ -101,14 +105,25 @@ namespace Harmony.IDE
 
             host.Height = (relativePoint.Y);
 
-            var positionY = Renderer.Window.GetView().Center.Y;
+            var oldY = Renderer.Window.GetView().Center.Y;
 
             Renderer.RecreateWindow(host.Child.Handle);
 
-            var v = Renderer.Window.GetView();
-            v.Center = new SFML.System.Vector2f(v.Center.X, (float)(positionY));
-            Renderer.Window.SetView(v);
+            Try(oldY);
 
+
+        }
+        private void Try(float oldY)
+        {
+            var view = Renderer.Window.GetView();
+            float v1 = Renderer.Keyboard.Position.Y + (PianoKeyboard.WhiteSize.Y);
+
+            float v2 = v1 -view.Size.Y / 2;
+
+            v2 -= oldY;
+
+            view.Center = new SFML.System.Vector2f(view.Center.X, v2);
+            Renderer.Window.SetView(view);
         }
     }
 }
