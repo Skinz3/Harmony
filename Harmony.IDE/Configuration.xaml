@@ -1,0 +1,46 @@
+﻿<Window x:Class="Harmony.IDE.Configuration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Harmony.IDE"
+        mc:Ignorable="d"
+        Title="Configuration"  WindowStyle="None" WindowStartupLocation="CenterScreen"  ResizeMode="NoResize" Background="#FF303036" Width="772" Height="526">
+    <Grid>
+
+        <Rectangle Stroke="#FF303036" StrokeThickness="2" Fill="#FF3F3F46" HorizontalAlignment="Left" Height="526" VerticalAlignment="Top" Width="772"/>
+        <Rectangle Name="headerBar"  Fill="#FF303036" HorizontalAlignment="Left" Height="30" Stroke="#FF303036" VerticalAlignment="Top" Width="772"/>
+
+        <Label Content="Preferences" Foreground="#FFF1F1F1" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="15" FontFamily="Consolas"/>
+        <TextBlock MouseDown="ExitClick" Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="743,1,0,0" TextWrapping="Wrap" Text="x" VerticalAlignment="Top" FontFamily="Consolas" FontSize="20" TextAlignment="Center"  Width="29" Height="29"/>
+        <CheckBox  x:Name="drawMeta"  Content="Draw Key Informations" Foreground="#FFF1F1F1" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="187" Background="White" BorderBrush="#FF3F3F46" FontFamily="Consolas"/>
+
+    </Grid>
+    <Window.Resources>
+        <!-- Buttons -->
+
+        <SolidColorBrush x:Key="ButtonBackground" Color="#FF3F3F46" />
+        <SolidColorBrush x:Key="ButtonForeground" Color="#FFF1F1F1" />
+        <SolidColorBrush x:Key="ButtonHover" Color="#FF5F5F68" />
+
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="{StaticResource ButtonForeground}"/>
+            <Setter Property="Background" Value="{StaticResource ButtonBackground}"/>
+            <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource ButtonHover}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+</Window>

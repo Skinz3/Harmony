@@ -2,6 +2,7 @@
 
   * Harmony is a tool written in C# .NET designed to write piano pieces.
     ![alt text](https://i.imgur.com/Z2Dw8m9.png)
+    ![alt text](https://i.imgur.com/UlLyU7T.png)
     
   > You can download release on this repo. Stable 1.1
     
