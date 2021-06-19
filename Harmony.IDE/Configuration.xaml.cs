@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Harmony.Instruments;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,12 @@ namespace Harmony.IDE
         {
             InitializeComponent();
             headerBar.MouseDown += (s, e) => DragMove();
+
+            foreach (var instrument in InstrumentsManager.GetInstrumentNames())
+            {
+                instruments.Items.Add(instrument);
+            }
+
         }
 
         private void ExitClick(object sender, MouseButtonEventArgs e)

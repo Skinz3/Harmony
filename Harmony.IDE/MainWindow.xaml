@@ -9,22 +9,22 @@
     <DockPanel Background="#FF303036">
 
         <Menu DockPanel.Dock="Top" Margin="0,30,0,0" Height="28" Background="#FF3F3F46">
-            <MenuItem HorizontalContentAlignment="Center"  Header="_File" Foreground="#FFF1F1F1" Height="28" Width="42" FontFamily="Consolas">
-                <MenuItem  HorizontalContentAlignment="Center" Header="_New" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="Consolas"  />
-                <MenuItem  HorizontalContentAlignment="Center" Header="_Open" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="Consolas" Click="OpenClick"  />
-                <MenuItem  HorizontalContentAlignment="Center" Header="_Save" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="Consolas"  />
-                <MenuItem  HorizontalContentAlignment="Center" Header="_Save as" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="Consolas"  />
+            <MenuItem HorizontalContentAlignment="Center"  Header="_File" Foreground="#FFF1F1F1" Height="28" Width="42" FontFamily="/Harmony.IDE;component/#Caviar Dreams">
+                <MenuItem  HorizontalContentAlignment="Center" Header="_New" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams"  />
+                <MenuItem  HorizontalContentAlignment="Center" Header="_Open" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="OpenClick"  />
+                <MenuItem  HorizontalContentAlignment="Center" Header="_Save" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams"  />
+                <MenuItem  HorizontalContentAlignment="Center" Header="_Save as" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams"  />
             </MenuItem>
-            <MenuItem  HorizontalContentAlignment="Center" Header="_Edit" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="Consolas" />
-            <MenuItem  HorizontalContentAlignment="Center" Header="_Options" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="Consolas">
-                <MenuItem  HorizontalContentAlignment="Center" Header="_Preferences" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="Consolas" Click="PreferencesClick"  />
+            <MenuItem  HorizontalContentAlignment="Center" Header="_Edit" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" />
+            <MenuItem  HorizontalContentAlignment="Center" Header="_Options" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams">
+                <MenuItem  HorizontalContentAlignment="Center" Header="_Preferences" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="PreferencesClick"  />
             </MenuItem>
 
         </Menu>
 
         <Grid >
             <TextBlock MouseDown="ExitClick" Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="1892,-56,0,0" TextWrapping="Wrap" Text="x" VerticalAlignment="Top" FontFamily="Consolas" FontSize="20" TextAlignment="Center"  Width="25" Height="27"/>
-            <TextBlock Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="5,-53,0,0" TextWrapping="Wrap" Text="Harmony" VerticalAlignment="Top" FontSize="17" TextDecorations="{x:Null}" FontFamily="Consolas"/>
+            <TextBlock Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="5,-53,0,0" TextWrapping="Wrap" Text="Harmony" VerticalAlignment="Top" FontSize="17" TextDecorations="{x:Null}" FontFamily="/Harmony.IDE;component/#Caviar Dreams"/>
 
 
 
@@ -65,8 +65,8 @@
                     <Path  Fill="#FFF1F1F1"
                         Data="M 0,0 L 12,7 0,14 Z"/>
                 </Button>
-                <CheckBox  Name="drawMeta" Click="CheckBox_Click" Content="Draw Key Informations" Foreground="#e8e8e8" HorizontalAlignment="Left" Margin="1453,39,0,0" Grid.Row="2" VerticalAlignment="Top" Width="160" Background="#FFF1F1F1" BorderBrush="#FF3F3F46" FontFamily="Consolas"/>
-                <Button Content="Test"  HorizontalAlignment="Left" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="1517,167,0,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="1.82,4.292" Grid.Row="2" Click="Button_Click">
+                <CheckBox  Name="drawMeta" Click="CheckBox_Click" Content="Draw Key Informations" Foreground="#e8e8e8" HorizontalAlignment="Left" Margin="1453,48,0,0" Grid.Row="2" VerticalAlignment="Top" Width="160" Background="#FFF1F1F1" BorderBrush="#FF3F3F46" FontFamily="/Harmony.IDE;component/#Caviar Dreams"/>
+                <Button Content="Test"  HorizontalAlignment="Left" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="1517,167,0,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="1.82,4.292" Grid.Row="2" Click="Button_Click" FontFamily="/Harmony.IDE;component/#Caviar Dreams">
 
                 </Button>
             </Grid>
