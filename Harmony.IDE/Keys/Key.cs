@@ -19,65 +19,77 @@ namespace Harmony.IDE.Keys
             get;
             private set;
         }
-        public Shape Rectangle
+        public RectangleShape Rectangle
         {
             get;
             private set;
         }
-        private Sound Sound
+        private RectangleShape AdditionalRectangle
         {
             get;
             set;
         }
-
-        public Key(Note note, Vector2f position, Vector2f size)
+        private Text Text
+        {
+            get;
+            set;
+        }
+        public bool DrawMetadata
+        {
+            get;
+            set;
+        }
+        public Key(Note note, Vector2f position)
         {
             this.Note = note;
-            this.Rectangle = new RectangleShape(size);
+            this.Rectangle = new RectangleShape();
             this.Rectangle.Position = position;
+
+            Rectangle.Size = note.Sharp ? Constants.BlackSize : Constants.WhiteSize;
             Rectangle.FillColor = note.Sharp ? Constants.BlackKeyColor : Constants.WhiteKeyColor;
             Rectangle.OutlineColor = Color.Black;
             Rectangle.OutlineThickness = 0.9f;
 
+            if (Note.Sharp)
+            {
+                AdditionalRectangle = new RectangleShape();
+                AdditionalRectangle.Size = new Vector2f(Rectangle.Size.X, Rectangle.Size.Y / 2f);
+                AdditionalRectangle.Position = Rectangle.Position;
+                AdditionalRectangle.FillColor = new Color((byte)(Constants.BlackKeyColor.R + Constants.BlackKeyLightDelta)
+            , (byte)(Constants.BlackKeyColor.G + Constants.BlackKeyLightDelta), (byte)(Constants.BlackKeyColor.B + Constants.BlackKeyLightDelta));
+            }
 
-        }
 
-        public void SetSound(string path)
-        {
-            SoundBuffer buffer = new SoundBuffer(File.ReadAllBytes(path));
-            Sound = new Sound(buffer);
-        }
-        public void Draw(RenderWindow window)
-        {
-            Text text = new Text(Note.ToString(), HarmonyRenderer.Font, 12);
-            text.Position = this.Rectangle.Position + new Vector2f(2, +50);
+            Text = new Text(Note.ToString(), Constants.Font, 12);
+            Text.Position = this.Rectangle.Position + new Vector2f(2, +50);
 
             if (Note.Sharp)
             {
-                text.Rotation = 180 + 90;
-                text.FillColor = Color.White;
+                Text.Rotation = 180 + 90;
+                Text.FillColor = Color.White;
             }
             else
             {
-                text.FillColor = Color.Black;
-                text.Position += new Vector2f(8, +60);
+                Text.FillColor = Color.Black;
+                Text.Position += new Vector2f(8, +60);
             }
-            window.Draw(Rectangle);
-            window.Draw(text);
+        }
 
-        }
-        public void Play(float volume)
+        public void Draw(RenderWindow window)
         {
-            Sound.Volume = volume;
-            Sound.Play();
-        }
-        public void DestroySound()
-        {
-            if (Sound != null)
+
+            window.Draw(Rectangle);
+
+            if (AdditionalRectangle != null)
             {
-                Sound.SoundBuffer.Dispose();
-                Sound.Dispose();
+                window.Draw(AdditionalRectangle);
             }
+
+            if (DrawMetadata)
+            {
+                window.Draw(Text);
+            }
+
         }
         public void Stop()
         {
@@ -90,12 +102,20 @@ namespace Harmony.IDE.Keys
         public void Fill(Color color)
         {
             Rectangle.FillColor = color;
+
+            if (AdditionalRectangle != null)
+            {
+                AdditionalRectangle.FillColor = new Color((byte)(color.R + Constants.BlackKeyLightDelta), (byte)(color.G + Constants.BlackKeyLightDelta), (byte)(color.B + Constants.BlackKeyLightDelta));
+            }
         }
         public void UnFill()
         {
             if (Note.Sharp)
             {
                 Rectangle.FillColor = Constants.BlackKeyColor;
+                AdditionalRectangle.FillColor = new Color((byte)(Constants.BlackKeyColor.R + Constants.BlackKeyLightDelta)
+            , (byte)(Constants.BlackKeyColor.G + Constants.BlackKeyLightDelta), (byte)(Constants.BlackKeyColor.B + Constants.BlackKeyLightDelta));
+
             }
             else
             {

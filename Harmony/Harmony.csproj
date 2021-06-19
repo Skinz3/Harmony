@@ -95,6 +95,7 @@
     <Compile Include="Compiler\AST\Statements\UnitStatement.cs" />
     <Compile Include="Compiler\Errors\SourceError.cs" />
     <Compile Include="Compiler\Listeners\UnitListener.cs" />
+    <Compile Include="DP\WIPManager.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Instruments\Instrument.cs" />
     <Compile Include="Instruments\InstrumentsManager.cs" />

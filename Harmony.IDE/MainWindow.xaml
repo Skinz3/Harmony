@@ -9,19 +9,22 @@
     <DockPanel Background="#FF303036">
 
         <Menu DockPanel.Dock="Top" Margin="0,30,0,0" Height="28" Background="#FF3F3F46">
-            <MenuItem HorizontalContentAlignment="Center"  Header="_File" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Height="28" Width="42">
-                <MenuItem  HorizontalContentAlignment="Center" Header="_New" Background="#FF3F3F46" Foreground="White" FontFamily="/Harmony.IDE;component/#Caviar Dreams"  />
-                <MenuItem  HorizontalContentAlignment="Center" Header="_Open" Background="#FF3F3F46" Foreground="White" FontFamily="/Harmony.IDE;component/#Caviar Dreams"  />
-                <MenuItem  HorizontalContentAlignment="Center" Header="_Save" Background="#FF3F3F46" Foreground="White" FontFamily="/Harmony.IDE;component/#Caviar Dreams"  />
-                <MenuItem  HorizontalContentAlignment="Center" Header="_Save as" Background="#FF3F3F46" Foreground="White" FontFamily="/Harmony.IDE;component/#Caviar Dreams"  />
+            <MenuItem HorizontalContentAlignment="Center"  Header="_File" Foreground="#FFF1F1F1" Height="28" Width="42" FontFamily="Consolas">
+                <MenuItem  HorizontalContentAlignment="Center" Header="_New" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="Consolas"  />
+                <MenuItem  HorizontalContentAlignment="Center" Header="_Open" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="Consolas" Click="OpenClick"  />
+                <MenuItem  HorizontalContentAlignment="Center" Header="_Save" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="Consolas"  />
+                <MenuItem  HorizontalContentAlignment="Center" Header="_Save as" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="Consolas"  />
             </MenuItem>
-            <MenuItem  HorizontalContentAlignment="Center" Header="_Options" Background="#FF3F3F46" Foreground="White" FontFamily="/Harmony.IDE;component/#Caviar Dreams" />
+            <MenuItem  HorizontalContentAlignment="Center" Header="_Edit" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="Consolas" />
+            <MenuItem  HorizontalContentAlignment="Center" Header="_Options" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="Consolas">
+                <MenuItem  HorizontalContentAlignment="Center" Header="_Preferences" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="Consolas" Click="PreferencesClick"  />
+            </MenuItem>
 
         </Menu>
 
         <Grid >
-            <TextBlock MouseDown="TextBlock_MouseDown" Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="1891,-58,0,0" TextWrapping="Wrap" Text="x" VerticalAlignment="Top" FontFamily="/Piano;component/#Caviar Dreams" FontSize="25" TextAlignment="Center"  Width="25" Height="32"/>
-            <TextBlock Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="10,-48,0,0" TextWrapping="Wrap" Text="Harmony" VerticalAlignment="Top" FontFamily="/Piano;component/#Caviar Dreams" FontSize="14"/>
+            <TextBlock MouseDown="ExitClick" Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="1892,-56,0,0" TextWrapping="Wrap" Text="x" VerticalAlignment="Top" FontFamily="Consolas" FontSize="20" TextAlignment="Center"  Width="25" Height="27"/>
+            <TextBlock Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="5,-53,0,0" TextWrapping="Wrap" Text="Harmony" VerticalAlignment="Top" FontSize="17" TextDecorations="{x:Null}" FontFamily="Consolas"/>
 
 
 
@@ -31,36 +34,40 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="10" />
-                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
 
                 <WindowsFormsHost Grid.Row="0" x:Name="host"/>
 
-                <GridSplitter Name="splitter" DragCompleted="GridSplitter_DragCompleted"   DragStarted="GridSplitter_DragStarted" Background="#FF3F3F46" Grid.Row="1" HorizontalAlignment="Stretch" />
+                <GridSplitter Name="splitter" DragCompleted="GridSplitter_DragCompleted"   DragStarted="GridSplitter_DragStarted" Background="#FF303036" Grid.Row="1" HorizontalAlignment="Stretch" />
 
                 <avalonEdit:TextEditor HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden" ShowLineNumbers="True" Foreground="#FFF1F1F1"  Grid.Row="2" xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"  Name="textEditor" Background="#FF3F3F46"  FontFamily="Consolas"  FontSize="10pt" Margin="0,0,477,0" />
 
                 <Button HorizontalAlignment="Left" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" FontFamily="/Harmony.GUI;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" Margin="1453,10,0,0" Grid.Row="2">
                     <Button.Content>
-                        <Rectangle Width="10" Height="10" Fill="White"/>
+                        <Rectangle Width="10" Height="10" Fill="#FFF1F1F1"/>
                     </Button.Content>
                 </Button>
-                <Button   HorizontalAlignment="Left" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="1563,10,0,0" FontFamily="/Harmony.GUI;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.647,0.5" Grid.Row="2">
+                <Button   HorizontalAlignment="Left" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="1563,10,0,0" FontFamily="/Harmony.GUI;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.647,0.5" Grid.Row="2" Click="PauseClick">
                     <Button.Content>
                         <Grid Width="12">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Rectangle  HorizontalAlignment="Left" Height="12" Width="6" Fill="White"   Stroke="#FF3F3F46" />
+                            <Rectangle  HorizontalAlignment="Left" Height="12" Width="6" Fill="#FFF1F1F1"   Stroke="#FF3F3F46" />
                             <Rectangle Grid.Column="1"  HorizontalAlignment="Right" Height="12" Width="6" Fill="White"   Stroke="#FF3F3F46" />
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button  HorizontalAlignment="Left" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="1508,10,0,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.647,0.5" Grid.Row="2">
-                    <Path  Fill="White"
+                <Button  HorizontalAlignment="Left" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="1508,10,0,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Grid.Row="2" Click="PlayClick">
+                    <Path  Fill="#FFF1F1F1"
                         Data="M 0,0 L 12,7 0,14 Z"/>
+                </Button>
+                <CheckBox  Name="drawMeta" Click="CheckBox_Click" Content="Draw Key Informations" Foreground="#e8e8e8" HorizontalAlignment="Left" Margin="1453,39,0,0" Grid.Row="2" VerticalAlignment="Top" Width="160" Background="#FFF1F1F1" BorderBrush="#FF3F3F46" FontFamily="Consolas"/>
+                <Button Content="Test"  HorizontalAlignment="Left" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="1517,167,0,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="1.82,4.292" Grid.Row="2" Click="Button_Click">
+
                 </Button>
             </Grid>
         </Grid>
@@ -71,7 +78,7 @@
         <SolidColorBrush x:Key="ButtonBackground" Color="#FF3F3F46" />
         <SolidColorBrush x:Key="ButtonForeground" Color="#FFF1F1F1" />
         <SolidColorBrush x:Key="ButtonHover" Color="#FF5F5F68" />
-        
+
         <Style TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="{StaticResource ButtonForeground}"/>
             <Setter Property="Background" Value="{StaticResource ButtonBackground}"/>
@@ -113,7 +120,7 @@
             </GradientBrush.GradientStops>
         </LinearGradientBrush>
 
-           
+
 
         <Style TargetType="ScrollViewer">
             <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -596,6 +603,105 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
+
+
+
+
+
+
+        <!-- Checkbox -->
+
+
+        <LinearGradientBrush x:Key="PressedBorderBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#444" Offset="0.0"/>
+                    <GradientStop Color="#888" Offset="1.0"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+
+        <Style x:Key="CheckBoxFocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border>
+                            <Rectangle 
+            Margin="15,0,0,0"
+            StrokeThickness="1"
+            Stroke="#FF898989"
+           />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+        <SolidColorBrush x:Key="CheckboxChecked" Color="White" />
+
+        <SolidColorBrush x:Key="CheckboxBorder" Color="#AAA" />
+
+        <SolidColorBrush x:Key="DarkBrush" Color="#878787" />
+
+        <SolidColorBrush x:Key="CheckboxNormal" Color="#FF3F3F46" />
+
+        <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="#EEE" />
+
+        <SolidColorBrush x:Key="DisabledBorderBrush" Color="#AAA" />
+
+        <Style x:Key="{x:Type CheckBox}" TargetType="CheckBox">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="FocusVisualStyle"    Value="{StaticResource CheckBoxFocusVisual}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <BulletDecorator Background="Transparent">
+                            <BulletDecorator.Bullet>
+                                <Border x:Name="Border"  
+              Width="12" 
+              Height="12" 
+              CornerRadius="0" 
+              Background="{StaticResource CheckboxNormal}"
+              BorderThickness="1"
+              BorderBrush="{StaticResource CheckboxBorder}">
+                                    <Rectangle Fill="{StaticResource CheckboxChecked}" x:Name="CheckMark" Width="10" Height="10">
+
+                                    </Rectangle>
+                                </Border>
+                            </BulletDecorator.Bullet>
+                            <ContentPresenter Margin="4,0,0,0"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            RecognizesAccessKey="True"/>
+                        </BulletDecorator>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="false">
+                                <Setter TargetName="CheckMark" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource DarkBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource PressedBrush}" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource PressedBorderBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource DisabledBackgroundBrush}" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DisabledBorderBrush}" />
+                                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
     </Window.Resources>
 
 </Window>

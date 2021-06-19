@@ -1,4 +1,5 @@
-﻿using Harmony.IDE.Rendering;
+﻿using Harmony.IDE.Audio;
+using Harmony.IDE.Rendering;
 using Harmony.Instruments;
 using Harmony.Notes;
 using SFML.Graphics;
@@ -24,24 +25,20 @@ namespace Harmony.IDE.Keys
 
         public event KeySelectionDelegate OnKeyUnselected;
 
-        public static readonly Vector2f BlackSize = new Vector2f(18, 80);
-
-        public static readonly Vector2f WhiteSize = new Vector2f(36, 130);
-
         public static readonly Dictionary<NoteId, float> KeysOffsets = new Dictionary<NoteId, float>()
         {
-            { NoteId.A, WhiteSize.X/2 -BlackSize.X/2 },
-            { NoteId.ASharp,WhiteSize.X/2+BlackSize.X/2 },
-            { NoteId.B,BlackSize.X/2},
-            { NoteId.C,WhiteSize.X },
-            { NoteId.CSharp,WhiteSize.X - BlackSize.X/2 },
-            { NoteId.D,BlackSize.X/2 },
-            { NoteId.DSharp,WhiteSize.X -BlackSize.X/2 },
-            { NoteId.E,BlackSize.X/2 },
-            { NoteId.F,WhiteSize.X },
-            { NoteId.FSharp,WhiteSize.X -BlackSize.X/2 },
-            { NoteId.G,BlackSize.X/2f},
-            { NoteId.GSharp,WhiteSize.X -BlackSize.X/2f },
+            { NoteId.A, Constants.WhiteSize.X/2 -Constants.BlackSize.X/2 },
+            { NoteId.ASharp,Constants.WhiteSize.X/2+Constants.BlackSize.X/2 },
+            { NoteId.B,Constants.BlackSize.X/2},
+            { NoteId.C,Constants.WhiteSize.X },
+            { NoteId.CSharp,Constants.WhiteSize.X - Constants.BlackSize.X/2 },
+            { NoteId.D,Constants.BlackSize.X/2 },
+            { NoteId.DSharp,Constants.WhiteSize.X -Constants.BlackSize.X/2 },
+            { NoteId.E,Constants.BlackSize.X/2 },
+            { NoteId.F,Constants.WhiteSize.X },
+            { NoteId.FSharp,Constants.WhiteSize.X -Constants.BlackSize.X/2 },
+            { NoteId.G,Constants.BlackSize.X/2f},
+            { NoteId.GSharp,Constants.WhiteSize.X -Constants.BlackSize.X/2f },
         };
 
         public List<Key> SelectedKeys
@@ -66,12 +63,14 @@ namespace Harmony.IDE.Keys
             get;
             private set;
         }
-        private Instrument Instrument
+
+        public InstrumentPlayer InstrumentPlayer
         {
             get;
-            set;
+            private set;
         }
-        public PianoKeyboard(Window renderWindow, Vector2f position)
+
+        public PianoKeyboard(Vector2f position)
         {
             this.Position = position;
 
@@ -83,16 +82,13 @@ namespace Harmony.IDE.Keys
 
             foreach (var note in NotesManager.GetNotes())
             {
-                Vector2f size = note.Sharp ? BlackSize : WhiteSize;
-
                 keyPosition += new Vector2f(KeysOffsets[note.Id], 0);
-
-                Key key = new Key(note, keyPosition, size);
-
+                Key key = new Key(note, keyPosition);
                 Keys.Add(note.Number, key);
             }
 
-            renderWindow.MouseButtonPressed += RenderWindow_MouseButtonPressed;
+            this.InstrumentPlayer = new InstrumentPlayer();
+
         }
 
         public void SelectKey(int number)
@@ -114,29 +110,14 @@ namespace Harmony.IDE.Keys
             }
         }
 
-        public void SetInstrument(Instrument instrument)
-        {
-            this.Instrument = instrument;
 
-            foreach (var key in Keys.Values)
-            {
-                key.DestroySound();
-
-                InstrumentNote instrumentNote = Instrument.GetNote(key.Note.ToString());
-
-                if (instrumentNote != null)
-                {
-                    key.SetSound(instrumentNote.WavFile);
-                }
-            }
-        }
         public Key GetKey(int number)
         {
             return Keys[number];
         }
         public Vector2f GetSize()
         {
-            return new Vector2f(WhiteSize.X * Keys.Values.Where(x => !x.Note.Sharp).Count() + 2, WhiteSize.Y);
+            return new Vector2f(Constants.WhiteSize.X * Keys.Values.Where(x => !x.Note.Sharp).Count() + 2, Constants.WhiteSize.Y);
         }
         public void SelectKey(Key key)
         {
@@ -158,13 +139,27 @@ namespace Harmony.IDE.Keys
             key.UnFill();
             SelectedKeys.Remove(key);
             OnKeyUnselected?.Invoke(key);
-
         }
-        private void RenderWindow_MouseButtonPressed(object sender, MouseButtonEventArgs e)
+        public void OnMouseButtonPressed(object sender, MouseButtonEventArgs e)
         {
             if (e.Button == Mouse.Button.Left && HoveredKey != null)
             {
                 OnKeyPressed?.Invoke(HoveredKey);
+            }
+        }
+
+        public void DisplayKeyMetadata()
+        {
+            foreach (var key in Keys)
+            {
+                key.Value.DrawMetadata = true;
+            }
+        }
+        public void HideKeyMetadata()
+        {
+            foreach (var key in Keys)
+            {
+                key.Value.DrawMetadata = false;
             }
         }
 
@@ -185,7 +180,6 @@ namespace Harmony.IDE.Keys
 
             IEnumerable<Key> orderedKeys = Keys.Values.OrderByDescending(x => !x.Note.Sharp);
 
-
             foreach (var key in orderedKeys)
             {
                 key.Draw(window);
@@ -200,14 +194,10 @@ namespace Harmony.IDE.Keys
 
             HoveredKey = orderedKeys.FirstOrDefault(x => x.Contains(position));
 
-
-            if (!IsSelected(HoveredKey))
+            if (HoveredKey != null && !IsSelected(HoveredKey))
             {
-                HoveredKey?.Fill(new Color(118, 167, 255));
+                HoveredKey.Fill(Constants.KeyHoverColor);
             }
-
-
-
 
         }
     }

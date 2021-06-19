@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Harmony.DP;
 
 namespace Harmony.GUI.Keys
 {
@@ -49,7 +50,7 @@ namespace Harmony.GUI.Keys
 
 
         }
-
+        [WIP("find a real solution")]
         public void SetSound(string path)
         {
             SoundBuffer buffer = new SoundBuffer(File.ReadAllBytes(path));

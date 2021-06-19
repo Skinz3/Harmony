@@ -77,7 +77,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Audio\InstrumentPlayer.cs" />
+    <Compile Include="Audio\SheetPlayer.cs" />
+    <Compile Include="Configuration.xaml.cs">
+      <DependentUpon>Configuration.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="Workflow\Flow.cs" />
+    <Compile Include="Workflow\FlowNote.cs" />
     <Compile Include="HarmonyRenderer.cs" />
     <Compile Include="Keys\Key.cs" />
     <Compile Include="Keys\PianoKeyboard.cs" />
@@ -85,10 +92,15 @@
     <Compile Include="Rendering\DrawingSurface.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Workflow\FlowCamera.cs" />
     <Compile Include="Rendering\HighPrecisionTimer.cs" />
     <Compile Include="Rendering\IDrawable.cs" />
     <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\RoundedRectangleShape.cs" />
+    <Page Include="Configuration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -131,9 +143,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Fonts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Harmony\Harmony.csproj">
       <Project>{A3FF4884-E1B6-4AC1-B1AC-1E3AAA144658}</Project>

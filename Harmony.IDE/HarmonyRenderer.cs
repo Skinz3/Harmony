@@ -1,5 +1,8 @@
-﻿using Harmony.IDE.Keys;
+﻿using Harmony.IDE.Audio;
+using Harmony.IDE.Keys;
 using Harmony.IDE.Rendering;
+using Harmony.IDE.Workflow;
+using Harmony.Sheets;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -18,46 +21,60 @@ namespace Harmony.IDE
             get;
             set;
         }
-        public HarmonyRenderer(IntPtr handle, ContextSettings settings) : base(handle, settings)
-        {
-            this.Keyboard = new PianoKeyboard(Window, new Vector2f(0, Window.Size.Y));
-        }
-
-        public override Color ClearColor => new Color(48, 48, 54);
-
-        public static Font Font
+        public FlowCamera Camera
         {
             get;
-            internal set;
+            private set;
         }
+        public Flow Flow
+        {
+            get;
+            private set;
+        }
+
+        public HarmonyRenderer(IntPtr handle, ContextSettings settings) : base(handle, settings, Constants.FramerateLimit)
+        {
+            this.Keyboard = new PianoKeyboard(new Vector2f(Constants.BlackSize.X, Window.Size.Y));
+            this.Flow = new Flow(Keyboard);
+            this.Camera = new FlowCamera(Window.GetView(), Keyboard.Position, Flow);
+            Keyboard.OnKeyPressed += OnKeyPressed;
+        }
+
+        private void OnKeyPressed(Key key)
+        {
+            Keyboard.InstrumentPlayer.Play(key.Note.Number, 100f);
+        }
+
+        public override Color ClearColor => new Color(63, 63, 70);
 
         public override void Draw()
         {
+            Flow.Draw(Window);
             Keyboard.Draw(Window);
         }
         private void MouseWheelScrolled(object sender, MouseWheelScrollEventArgs e)
         {
-            var view = this.Window.GetView();
-
-            float delta = e.Delta * 20;
-
-            if (delta < 0)
-            {
-                if (view.Center.Y + (view.Size.Y/2) - delta>  this.Keyboard.Position.Y + PianoKeyboard.WhiteSize.Y)
-                {
-                    return;
-                }
-            }
-
-            view.Center = new Vector2f(view.Center.X, view.Center.Y - delta);
-            Window.SetView(view);
+            Camera.Scroll(e.Delta);
+            Window.SetView(Camera.View);
         }
 
-        public override void BindEvents()
+        public void Load(Sheet sheet)
         {
-            this.Window.MouseWheelScrolled += MouseWheelScrolled;
+            this.Keyboard.UnselectAll();
+            this.Flow.Load(sheet); 
         }
 
-
+        public void RecreateWindow(IntPtr handle)
+        {
+            Window.Close();
+            Window = new RenderWindow(handle, this.Settings);
+            Camera.View = Window.GetView();
+            this.Window.MouseWheelScrolled += MouseWheelScrolled;
+            this.Window.MouseButtonPressed += Keyboard.OnMouseButtonPressed;
+            Initialize();
+            Camera.Restore();
+            Window.SetView(Camera.View);
+        }
+      
     }
 }

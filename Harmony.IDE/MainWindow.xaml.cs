@@ -22,6 +22,9 @@ using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Document;
 using Harmony.IDE.Keys;
+using Key = Harmony.IDE.Keys.Key;
+using Harmony.Sheets;
+using Harmony.DP;
 
 namespace Harmony.IDE
 {
@@ -31,10 +34,15 @@ namespace Harmony.IDE
     /// </summary>
     public partial class MainWindow : Window
     {
-
         private const int FramePerSecond = 60;
 
         private HarmonyRenderer Renderer
+        {
+            get;
+            set;
+        }
+
+        private Configuration ConfigurationWindow
         {
             get;
             set;
@@ -44,31 +52,34 @@ namespace Harmony.IDE
         {
             InitializeComponent();
             NotesManager.Initialize();
-
+            InstrumentsManager.Initialize();
             AvalonUtils.ApplySyntaxRules("harmony.xshd", textEditor);
             this.Loaded += OnLoad;
-
-
         }
 
         private void OnLoad(object sender, RoutedEventArgs e)
         {
             host.Child = new DrawingSurface();
             host.SizeChanged += Host_SizeChanged;
-            Renderer = new HarmonyRenderer(host.Child.Handle, new SFML.Window.ContextSettings());
+
+            var settings = new SFML.Window.ContextSettings();
+            settings.AntialiasingLevel = 7;
+
+            Renderer = new HarmonyRenderer(host.Child.Handle, settings);
+
+            Renderer.Keyboard.InstrumentPlayer.DefineInstrument(InstrumentsManager.GetInstrument("Reverb Concert Grand"));
+
             var timer = new HighPrecisionTimer((int)(1000d / FramePerSecond));
             timer.Tick += OnTick;
         }
+
 
 
         private void Host_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (host.Visibility == Visibility.Visible)
             {
-                var oldY = Renderer.Window.GetView().Center.Y;
-
                 Renderer.RecreateWindow(host.Child.Handle);
-                Try(oldY);
             }
         }
 
@@ -83,18 +94,15 @@ namespace Harmony.IDE
             }
         }
 
-        private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ExitClick(object sender, MouseButtonEventArgs e)
         {
             Environment.Exit(0);
         }
-
 
         private void GridSplitter_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
             host.Visibility = Visibility.Hidden;
         }
-
-
 
         private void GridSplitter_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
@@ -105,25 +113,56 @@ namespace Harmony.IDE
 
             host.Height = (relativePoint.Y);
 
-            var oldY = Renderer.Window.GetView().Center.Y;
-
             Renderer.RecreateWindow(host.Child.Handle);
+        }
 
-            Try(oldY);
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (drawMeta.IsChecked.Value)
+            {
+                Renderer.Keyboard.DisplayKeyMetadata();
+            }
+            else
+            {
+                Renderer.Keyboard.HideKeyMetadata();
+            }
+        }
 
+        private void OpenClick(object sender, RoutedEventArgs e)
+        {
 
         }
-        private void Try(float oldY)
+
+        [WIP("temporary")]
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var view = Renderer.Window.GetView();
-            float v1 = Renderer.Keyboard.Position.Y + (PianoKeyboard.WhiteSize.Y);
+            Sheet sheet = new Sheet();
+            sheet.TotalDuration = 8f;
 
-            float v2 = v1 -view.Size.Y / 2;
+            sheet.Tempo = 50;
 
-            v2 -= oldY;
+            sheet.Notes.Add(new SheetNote(55, 2f, 4f, 100f));
 
-            view.Center = new SFML.System.Vector2f(view.Center.X, v2);
-            Renderer.Window.SetView(view);
+            sheet = Sheet.FromMIDI(@"C:\Users\Skinz\Desktop\Harmony\Harmony.GUI\bin\Debug\Test\Chopin.mid");
+
+            Renderer.Load(sheet);
+        }
+
+        private void PauseClick(object sender, RoutedEventArgs e)
+        {
+            Renderer.Flow.Pause();
+        }
+
+        private void PlayClick(object sender, RoutedEventArgs e)
+        {
+            Renderer.Flow.Play();
+        }
+
+        private void PreferencesClick(object sender, RoutedEventArgs e)
+        {
+            ConfigurationWindow?.Close();
+            this.ConfigurationWindow = new Configuration();
+            ConfigurationWindow.Show();
         }
     }
 }

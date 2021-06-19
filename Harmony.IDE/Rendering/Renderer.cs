@@ -19,7 +19,7 @@ namespace Harmony.IDE.Rendering
         public RenderWindow Window
         {
             get;
-            private set;
+            protected set;
         }
 
         public abstract Color ClearColor
@@ -27,24 +27,16 @@ namespace Harmony.IDE.Rendering
             get;
         }
 
-        private ContextSettings Settings;
+        protected ContextSettings Settings;
 
-        public Renderer(IntPtr handle, ContextSettings settings, uint frameRateLimit = 60)
+        public Renderer(IntPtr handle, ContextSettings settings, uint frameRateLimit)
         {
             this.Settings = settings;
             this.FrameRateLimit = frameRateLimit;
             this.Window = new RenderWindow(handle, this.Settings);
             Initialize();
-            BindEvents();
         }
 
-        public void RecreateWindow(IntPtr handle)
-        {
-            Window.Close();
-            Window = new RenderWindow(handle, this.Settings);
-            BindEvents();
-            Initialize();
-        }
 
         public void Initialize()
         {
@@ -70,9 +62,5 @@ namespace Harmony.IDE.Rendering
         }
 
         public abstract void Draw();
-
-        public abstract void BindEvents();
-
-
     }
 }
