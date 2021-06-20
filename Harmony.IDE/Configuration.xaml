@@ -19,10 +19,6 @@
         <CheckBox  x:Name="drawMeta"  Content="Draw Key Informations" Foreground="#FFF1F1F1" HorizontalAlignment="Left" Margin="214,73,0,0" VerticalAlignment="Top" Width="187" Background="White" BorderBrush="#FF3F3F46" FontFamily="/Harmony.IDE;component/#Caviar Dreams" FontSize="11"/>
         <ListBox BorderThickness="1" x:Name="instruments" ScrollViewer.VerticalScrollBarVisibility="Disabled"  HorizontalAlignment="Left" Height="126" Margin="10,59,0,0" VerticalAlignment="Top" Width="187"  BorderBrush="#FF303036" Background="#FF3F3F46" Foreground="White" FontFamily="/Harmony.IDE;component/#Caviar Dreams" FontSize="11"/>
         <TextBlock TextAlignment="Left" Foreground="#FFF1F1F1"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Instrument " VerticalAlignment="Top" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Width="168" Margin="68,40,0,0"/>
-        <CheckBox   Content="Use double buffering" Foreground="#FFF1F1F1" HorizontalAlignment="Left" Margin="214,91,0,0" VerticalAlignment="Top" Width="187" Background="White" BorderBrush="#FF3F3F46" FontFamily="/Harmony.IDE;component/#Caviar Dreams" FontSize="11"/>
-        <CheckBox  Content="Compile edited line" Foreground="#FFF1F1F1" HorizontalAlignment="Left" Margin="214,109,0,0" VerticalAlignment="Top" Width="187" Background="White" BorderBrush="#FF3F3F46" FontFamily="/Harmony.IDE;component/#Caviar Dreams" FontSize="11"/>
-        <CheckBox   Content="Active autocompletion" Foreground="#FFF1F1F1" HorizontalAlignment="Left" Margin="214,127,0,0" VerticalAlignment="Top" Width="187" Background="White" BorderBrush="#FF3F3F46" FontFamily="/Harmony.IDE;component/#Caviar Dreams" FontSize="11"/>
-        <CheckBox   Content="Allow cross origin requests" Foreground="#FFF1F1F1" HorizontalAlignment="Left" Margin="214,145,0,0" VerticalAlignment="Top" Width="187" Background="White" BorderBrush="#FF3F3F46" FontFamily="/Harmony.IDE;component/#Caviar Dreams" FontSize="11"/>
 
     </Grid>
     <Window.Resources>

@@ -12,8 +12,9 @@
             <MenuItem HorizontalContentAlignment="Center"  Header="_File" Foreground="#FFF1F1F1" Height="28" Width="42" FontFamily="/Harmony.IDE;component/#Caviar Dreams">
                 <MenuItem  HorizontalContentAlignment="Center" Header="_New" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams"  />
                 <MenuItem  HorizontalContentAlignment="Center" Header="_Open" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="OpenClick"  />
-                <MenuItem  HorizontalContentAlignment="Center" Header="_Save" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams"  />
-                <MenuItem  HorizontalContentAlignment="Center" Header="_Save as" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams"  />
+                <MenuItem  HorizontalContentAlignment="Center" Header="_Save" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="SaveClick"  />
+                <MenuItem  HorizontalContentAlignment="Center" Header="_Save as" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="SaveAsClick"  />
+              
             </MenuItem>
             <MenuItem  HorizontalContentAlignment="Center" Header="_Edit" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" />
             <MenuItem  HorizontalContentAlignment="Center" Header="_Options" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams">
@@ -66,9 +67,11 @@
                         Data="M 0,0 L 12,7 0,14 Z"/>
                 </Button>
                 <CheckBox  Name="drawMeta" Click="CheckBox_Click" Content="Draw Key Informations" Foreground="#e8e8e8" HorizontalAlignment="Left" Margin="1453,48,0,0" Grid.Row="2" VerticalAlignment="Top" Width="160" Background="#FFF1F1F1" BorderBrush="#FF3F3F46" FontFamily="/Harmony.IDE;component/#Caviar Dreams"/>
-                <Button Content="Test"  HorizontalAlignment="Left" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="1517,167,0,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="1.82,4.292" Grid.Row="2" Click="Button_Click" FontFamily="/Harmony.IDE;component/#Caviar Dreams">
+                <Button Content="Test"  HorizontalAlignment="Left" Width="105" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="1453,81,0,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="1.82,4.292" Grid.Row="2" Click="Button_Click" FontFamily="/Harmony.IDE;component/#Caviar Dreams">
 
                 </Button>
+                <Button Content="Compile"  HorizontalAlignment="Left" Width="105" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="1453,110,0,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="1.82,4.292" Grid.Row="2" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="CompileClick"/>
+                <ListBox Name="scriptErrors" HorizontalAlignment="Left" Height="256" Margin="1453,159,0,0" Grid.Row="2" VerticalAlignment="Top" Width="454" Background="#FF3F3F46" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFFF2E2E" BorderBrush="#FF303036"/>
             </Grid>
         </Grid>
     </DockPanel>
@@ -559,7 +562,7 @@
                     <Border x:Name="GlyphPanel" BorderBrush="#CDD3E6" BorderThickness="1" Background="#FFF4E6E6" CornerRadius="3" Height="22" Margin="1" Visibility="Hidden" Width="22">
                         <Path x:Name="Glyph" Data="{StaticResource Checkmark}" Fill="#0C12A1" FlowDirection="LeftToRight" Height="11" Width="9"/>
                     </Border>
-                    <ContentPresenter Grid.Column="2" ContentSource="Header" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    <ContentPresenter  Grid.Column="2" ContentSource="Header" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                     <TextBlock Grid.Column="4" Margin="{TemplateBinding Padding}" Text="{TemplateBinding InputGestureText}" Visibility="Collapsed"/>
                     <Path Grid.Column="5" Data="{StaticResource RightArrow}" Fill="{TemplateBinding Foreground}" Margin="4,0,0,0" VerticalAlignment="Center"/>
                 </Grid>

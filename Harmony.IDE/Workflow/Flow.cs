@@ -1,5 +1,5 @@
-﻿using Harmony.DP;
-using Harmony.IDE.Audio;
+﻿using Harmony.Audio;
+using Harmony.DP;
 using Harmony.IDE.Keys;
 using Harmony.IDE.Rendering;
 using Harmony.Sheets;

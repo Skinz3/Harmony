@@ -1,5 +1,5 @@
 ﻿using Harmony.Chords;
-using Harmony.Compiler.Errors;
+using Harmony.Interpreter.Errors;
 using Harmony.Notes;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Harmony.Compiler
+namespace Harmony.Interpreter
 {
     class Program
     {
@@ -17,7 +17,7 @@ namespace Harmony.Compiler
             ChordsManager.Initialize(@"C:\Users\Skinz\Desktop\Harmony\Harmony.GUI\bin\Debug\chords.json");
 
             HarmonyScript script = new HarmonyScript(@"C:\Users\Skinz\Desktop\Harmony\Harmony.GUI\bin\Debug\Test\test.hm");
-            script.Read();
+            script.Process();
 
             foreach (var error in script.Errors)
             {

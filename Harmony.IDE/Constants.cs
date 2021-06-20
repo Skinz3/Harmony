@@ -37,5 +37,7 @@ namespace Harmony.IDE
         public const float FlowPixelTimeUnit = 150;
 
         public static readonly Color FlowLinesColor = new Color(48, 48, 54);
+
+        public const string ConfigPath = "config.json";
     }
 }

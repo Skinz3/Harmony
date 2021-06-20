@@ -1,5 +1,4 @@
-﻿using Harmony.IDE.Audio;
-using Harmony.IDE.Keys;
+﻿using Harmony.IDE.Keys;
 using Harmony.IDE.Rendering;
 using Harmony.IDE.Workflow;
 using Harmony.Sheets;

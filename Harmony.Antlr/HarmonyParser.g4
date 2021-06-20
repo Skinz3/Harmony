@@ -13,7 +13,6 @@ compilationUnit
 attributes
     : ('name' ':' name=IDENTIFIER) 
       ('author' ':' author=IDENTIFIER)
-      ('duration' ':' duration=number)
       ('tempo' ':' tempo=DECIMAL_LITERAL)
     ;
 

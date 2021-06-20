@@ -1,4 +1,4 @@
-﻿using Harmony.Compiler;
+﻿using Harmony.Interpreter;
 using NAudio.Midi;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace Harmony.Sheets
         public List<SheetNote> Notes
         {
             get;
-            private set;
+            set;
         }
         public float TotalDuration
         {
@@ -40,7 +40,7 @@ namespace Harmony.Sheets
         public static Sheet FromMIDI(string path)
         {
             MidiFile file = new MidiFile(path);
-            
+
             Sheet result = new Sheet();
 
             result.Name = Path.GetFileNameWithoutExtension(path) + " (MIDI)";

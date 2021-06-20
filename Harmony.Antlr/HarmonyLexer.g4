@@ -12,7 +12,6 @@ UNIT : 'unit';
 
 ATR_NAME : 'name';
 ATR_TEMPO : 'tempo';
-ATR_DURATION : 'duration';
 ATR_AUTHOR : 'author';
 
 //==========================================================

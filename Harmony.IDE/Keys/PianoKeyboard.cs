@@ -1,4 +1,4 @@
-﻿using Harmony.IDE.Audio;
+﻿using Harmony.Audio;
 using Harmony.IDE.Rendering;
 using Harmony.Instruments;
 using Harmony.Notes;

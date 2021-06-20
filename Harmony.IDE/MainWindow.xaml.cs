@@ -25,6 +25,11 @@ using Harmony.IDE.Keys;
 using Key = Harmony.IDE.Keys.Key;
 using Harmony.Sheets;
 using Harmony.DP;
+using Harmony.Interpreter;
+using System.IO;
+using Microsoft.Win32;
+using Harmony.Interpreter.Errors;
+using Harmony.Chords;
 
 namespace Harmony.IDE
 {
@@ -52,9 +57,21 @@ namespace Harmony.IDE
         {
             InitializeComponent();
             NotesManager.Initialize();
+            ChordsManager.Initialize("chords.json");
+            ConfigManager.Initialize();
             InstrumentsManager.Initialize();
             AvalonUtils.ApplySyntaxRules("harmony.xshd", textEditor);
             this.Loaded += OnLoad;
+            this.KeyDown += OnKeyDown;
+        }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.S && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                host.Focus();
+                Save();
+            }
         }
 
         private void OnLoad(object sender, RoutedEventArgs e)
@@ -69,10 +86,23 @@ namespace Harmony.IDE
 
             Renderer.Keyboard.InstrumentPlayer.DefineInstrument(InstrumentsManager.GetInstrument("Reverb Concert Grand"));
 
+            RestoreScript();
+
             var timer = new HighPrecisionTimer((int)(1000d / FramePerSecond));
             timer.Tick += OnTick;
+
         }
 
+
+        private void RestoreScript()
+        {
+            if (File.Exists(ConfigManager.Instance.ScriptPath))
+            {
+                string text = File.ReadAllText(ConfigManager.Instance.ScriptPath);
+                HarmonyScript script = new HarmonyScript(text);
+                LoadScript(script);
+            }
+        }
 
 
         private void Host_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -128,10 +158,6 @@ namespace Harmony.IDE
             }
         }
 
-        private void OpenClick(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         [WIP("temporary")]
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -163,6 +189,100 @@ namespace Harmony.IDE
             ConfigurationWindow?.Close();
             this.ConfigurationWindow = new Configuration();
             ConfigurationWindow.Show();
+        }
+
+        private void LoadScript(HarmonyScript script)
+        {
+            scriptErrors.Items.Clear();
+
+            foreach (var error in script.Errors)
+            {
+                Label label = new Label();
+                label.Content = error;
+
+                switch (error.Type)
+                {
+                    case ErrorType.Semantic:
+                    case ErrorType.Syntaxic:
+                        label.Foreground = Brushes.Red;
+                        break;
+                    case ErrorType.Other:
+                        label.Foreground = Brushes.Orange;
+                        break;
+                    default:
+                        break;
+                }
+
+                scriptErrors.Items.Add(label);
+            }
+
+            textEditor.Text = script.Text;
+
+            if (script.Errors.Count == 0)
+            {
+                Renderer.Load(script.Sheet);
+            }
+        }
+        private void CompileClick(object sender, RoutedEventArgs e)
+        {
+            string text = textEditor.Text;
+            HarmonyScript script = new HarmonyScript(text);
+            LoadScript(script);
+            Renderer.Flow.Play();
+        }
+
+        private void OpenClick(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Harmony Scripts (*.hm)|*.hm";
+            if (dialog.ShowDialog().Value)
+            {
+                string text = File.ReadAllText(dialog.FileName);
+                HarmonyScript script = new HarmonyScript(text);
+                LoadScript(script);
+
+                ConfigManager.Instance.ScriptPath = dialog.FileName;
+                ConfigManager.Save();
+            }
+        }
+
+        private void Save()
+        {
+            if (File.Exists(ConfigManager.Instance.ScriptPath))
+            {
+                string text = textEditor.Text;
+                File.WriteAllText(ConfigManager.Instance.ScriptPath, text);
+                MessageBox.Show("Script saved.", "Informations", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            }
+            else
+            {
+                SaveAs();
+            }
+        }
+        private void SaveAs()
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "Harmony Scripts (*.hm)|*.hm";
+
+            if (dialog.ShowDialog().Value)
+            {
+                ConfigManager.Instance.ScriptPath = dialog.FileName;
+                ConfigManager.Save();
+
+                string text = textEditor.Text;
+                File.WriteAllText(ConfigManager.Instance.ScriptPath, text);
+                MessageBox.Show("Script saved.");
+            }
+        }
+
+        private void SaveClick(object sender, RoutedEventArgs e)
+        {
+            Save();
+        }
+
+        private void SaveAsClick(object sender, RoutedEventArgs e)
+        {
+            SaveAs();
         }
     }
 }

@@ -26,7 +26,7 @@ using Key = Harmony.GUI.Keys.Key;
 using Harmony.GUI.Keys;
 using SFML.System;
 using System.IO;
-using Harmony.Compiler;
+using Harmony.Interpreter;
 
 namespace Harmony.GUI
 {
@@ -244,7 +244,7 @@ namespace Harmony.GUI
         private void LoadScript(HarmonyScript script)
         {
             Reset();
-            script.Read();
+            script.Process();
             Renderer.Flow.Play(script.Sheet);
             this.Script = script;
             this.scriptStatus.Text = "Script : " + script.Sheet.Name;

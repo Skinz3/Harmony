@@ -30,11 +30,10 @@ using DFA = Antlr4.Runtime.Dfa.DFA;
 [System.CLSCompliant(false)]
 public partial class HarmonyParser : Parser {
 	public const int
-		UNIT=1, ATR_NAME=2, ATR_TEMPO=3, ATR_DURATION=4, ATR_AUTHOR=5, NOTE=6, 
-		CHORD=7, TRANSPOSE=8, PROPAGATE=9, ARPEGGIATE=10, PLAYWITH=11, TIMES=12, 
-		LPAREN=13, RPAREN=14, LBRACE=15, RBRACE=16, COMMA=17, DOT=18, SEMI=19, 
-		COLON=20, SHARP=21, FUNC=22, LBRACKET=23, RBRACKET=24, WS=25, IDENTIFIER=26, 
-		DECIMAL_LITERAL=27, FLOAT_LITERAL=28;
+		UNIT=1, ATR_NAME=2, ATR_TEMPO=3, ATR_AUTHOR=4, NOTE=5, CHORD=6, TRANSPOSE=7, 
+		PROPAGATE=8, ARPEGGIATE=9, PLAYWITH=10, TIMES=11, LPAREN=12, RPAREN=13, 
+		LBRACE=14, RBRACE=15, COMMA=16, DOT=17, SEMI=18, COLON=19, SHARP=20, FUNC=21, 
+		LBRACKET=22, RBRACKET=23, WS=24, IDENTIFIER=25, DECIMAL_LITERAL=26, FLOAT_LITERAL=27;
 	public const int
 		RULE_compilationUnit = 0, RULE_attributes = 1, RULE_unitDeclaration = 2, 
 		RULE_block = 3, RULE_blockStatement = 4, RULE_statement = 5, RULE_unitStatement = 6, 
@@ -50,16 +49,16 @@ public partial class HarmonyParser : Parser {
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'unit'", "'name'", "'tempo'", "'duration'", "'author'", "'note'", 
-		"'chord'", "'transpose'", "'propagate'", "'arpeggiate'", "'playWith'", 
-		"'times'", "'('", "')'", "'{'", "'}'", "','", "'.'", "';'", "':'", "'#'", 
-		"'->'", "'['", "']'"
+		null, "'unit'", "'name'", "'tempo'", "'author'", "'note'", "'chord'", 
+		"'transpose'", "'propagate'", "'arpeggiate'", "'playWith'", "'times'", 
+		"'('", "')'", "'{'", "'}'", "','", "'.'", "';'", "':'", "'#'", "'->'", 
+		"'['", "']'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, "UNIT", "ATR_NAME", "ATR_TEMPO", "ATR_DURATION", "ATR_AUTHOR", "NOTE", 
-		"CHORD", "TRANSPOSE", "PROPAGATE", "ARPEGGIATE", "PLAYWITH", "TIMES", 
-		"LPAREN", "RPAREN", "LBRACE", "RBRACE", "COMMA", "DOT", "SEMI", "COLON", 
-		"SHARP", "FUNC", "LBRACKET", "RBRACKET", "WS", "IDENTIFIER", "DECIMAL_LITERAL", 
+		null, "UNIT", "ATR_NAME", "ATR_TEMPO", "ATR_AUTHOR", "NOTE", "CHORD", 
+		"TRANSPOSE", "PROPAGATE", "ARPEGGIATE", "PLAYWITH", "TIMES", "LPAREN", 
+		"RPAREN", "LBRACE", "RBRACE", "COMMA", "DOT", "SEMI", "COLON", "SHARP", 
+		"FUNC", "LBRACKET", "RBRACKET", "WS", "IDENTIFIER", "DECIMAL_LITERAL", 
 		"FLOAT_LITERAL"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
@@ -177,14 +176,10 @@ public partial class HarmonyParser : Parser {
 	public partial class AttributesContext : ParserRuleContext {
 		public IToken name;
 		public IToken author;
-		public NumberContext duration;
 		public IToken tempo;
 		public ITerminalNode[] IDENTIFIER() { return GetTokens(HarmonyParser.IDENTIFIER); }
 		public ITerminalNode IDENTIFIER(int i) {
 			return GetToken(HarmonyParser.IDENTIFIER, i);
-		}
-		public NumberContext number() {
-			return GetRuleContext<NumberContext>(0);
 		}
 		public ITerminalNode DECIMAL_LITERAL() { return GetToken(HarmonyParser.DECIMAL_LITERAL, 0); }
 		public AttributesContext(ParserRuleContext parent, int invokingState)
@@ -220,14 +215,9 @@ public partial class HarmonyParser : Parser {
 			State = 51; _localctx.author = Match(IDENTIFIER);
 			}
 			{
-			State = 53; Match(ATR_DURATION);
+			State = 53; Match(ATR_TEMPO);
 			State = 54; Match(COLON);
-			State = 55; _localctx.duration = number();
-			}
-			{
-			State = 57; Match(ATR_TEMPO);
-			State = 58; Match(COLON);
-			State = 59; _localctx.tempo = Match(DECIMAL_LITERAL);
+			State = 55; _localctx.tempo = Match(DECIMAL_LITERAL);
 			}
 			}
 		}
@@ -271,9 +261,9 @@ public partial class HarmonyParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 61; Match(UNIT);
-			State = 62; _localctx.name = Match(IDENTIFIER);
-			State = 63; block();
+			State = 57; Match(UNIT);
+			State = 58; _localctx.name = Match(IDENTIFIER);
+			State = 59; block();
 			}
 		}
 		catch (RecognitionException re) {
@@ -317,21 +307,21 @@ public partial class HarmonyParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 65; Match(LBRACE);
-			State = 69;
+			State = 61; Match(LBRACE);
+			State = 65;
 			_errHandler.Sync(this);
 			_la = _input.La(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NOTE) | (1L << CHORD) | (1L << IDENTIFIER))) != 0)) {
 				{
 				{
-				State = 66; blockStatement();
+				State = 62; blockStatement();
 				}
 				}
-				State = 71;
+				State = 67;
 				_errHandler.Sync(this);
 				_la = _input.La(1);
 			}
-			State = 72; Match(RBRACE);
+			State = 68; Match(RBRACE);
 			}
 		}
 		catch (RecognitionException re) {
@@ -378,18 +368,18 @@ public partial class HarmonyParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 74; statement();
-			State = 79;
+			State = 70; statement();
+			State = 75;
 			_errHandler.Sync(this);
 			_la = _input.La(1);
 			while (_la==FUNC) {
 				{
 				{
-				State = 75; Match(FUNC);
-				State = 76; function();
+				State = 71; Match(FUNC);
+				State = 72; function();
 				}
 				}
-				State = 81;
+				State = 77;
 				_errHandler.Sync(this);
 				_la = _input.La(1);
 			}
@@ -436,25 +426,25 @@ public partial class HarmonyParser : Parser {
 		StatementContext _localctx = new StatementContext(_ctx, State);
 		EnterRule(_localctx, 10, RULE_statement);
 		try {
-			State = 85;
+			State = 81;
 			_errHandler.Sync(this);
 			switch (_input.La(1)) {
 			case NOTE:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 82; noteStatement();
+				State = 78; noteStatement();
 				}
 				break;
 			case CHORD:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 83; chordStatement();
+				State = 79; chordStatement();
 				}
 				break;
 			case IDENTIFIER:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 84; unitStatement();
+				State = 80; unitStatement();
 				}
 				break;
 			default:
@@ -497,7 +487,7 @@ public partial class HarmonyParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 87; _localctx.name = Match(IDENTIFIER);
+			State = 83; _localctx.name = Match(IDENTIFIER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -548,15 +538,15 @@ public partial class HarmonyParser : Parser {
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
-			State = 89; Match(NOTE);
-			State = 90; noteLiteral();
-			State = 91; Match(LPAREN);
-			State = 92; _localctx.startTime = number();
-			State = 93; Match(COMMA);
-			State = 94; _localctx.duration = number();
-			State = 95; Match(COMMA);
-			State = 96; _localctx.velocity = number();
-			State = 97; Match(RPAREN);
+			State = 85; Match(NOTE);
+			State = 86; noteLiteral();
+			State = 87; Match(LPAREN);
+			State = 88; _localctx.startTime = number();
+			State = 89; Match(COMMA);
+			State = 90; _localctx.duration = number();
+			State = 91; Match(COMMA);
+			State = 92; _localctx.velocity = number();
+			State = 93; Match(RPAREN);
 			}
 			}
 		}
@@ -610,17 +600,17 @@ public partial class HarmonyParser : Parser {
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
-			State = 99; Match(CHORD);
-			State = 100; chordLiteral();
-			State = 101; Match(LPAREN);
-			State = 102; _localctx.startTime = number();
+			State = 95; Match(CHORD);
+			State = 96; chordLiteral();
+			State = 97; Match(LPAREN);
+			State = 98; _localctx.startTime = number();
+			State = 99; Match(COMMA);
+			State = 100; _localctx.duration = number();
+			State = 101; Match(COMMA);
+			State = 102; _localctx.velocity = number();
 			State = 103; Match(COMMA);
-			State = 104; _localctx.duration = number();
-			State = 105; Match(COMMA);
-			State = 106; _localctx.velocity = number();
-			State = 107; Match(COMMA);
-			State = 108; _localctx.octave = Match(DECIMAL_LITERAL);
-			State = 109; Match(RPAREN);
+			State = 104; _localctx.octave = Match(DECIMAL_LITERAL);
+			State = 105; Match(RPAREN);
 			}
 			}
 		}
@@ -671,37 +661,37 @@ public partial class HarmonyParser : Parser {
 		FunctionContext _localctx = new FunctionContext(_ctx, State);
 		EnterRule(_localctx, 18, RULE_function);
 		try {
-			State = 116;
+			State = 112;
 			_errHandler.Sync(this);
 			switch (_input.La(1)) {
 			case TRANSPOSE:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 111; transposeFunction();
+				State = 107; transposeFunction();
 				}
 				break;
 			case PROPAGATE:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 112; propagateFunction();
+				State = 108; propagateFunction();
 				}
 				break;
 			case ARPEGGIATE:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 113; arpeggiateFunction();
+				State = 109; arpeggiateFunction();
 				}
 				break;
 			case PLAYWITH:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 114; playWithFunction();
+				State = 110; playWithFunction();
 				}
 				break;
 			case TIMES:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 115; timesFunction();
+				State = 111; timesFunction();
 				}
 				break;
 			default:
@@ -746,10 +736,10 @@ public partial class HarmonyParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 118; Match(PLAYWITH);
-			State = 119; Match(LPAREN);
-			State = 120; blockStatement();
-			State = 121; Match(RPAREN);
+			State = 114; Match(PLAYWITH);
+			State = 115; Match(LPAREN);
+			State = 116; blockStatement();
+			State = 117; Match(RPAREN);
 			}
 		}
 		catch (RecognitionException re) {
@@ -789,10 +779,10 @@ public partial class HarmonyParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 123; Match(PROPAGATE);
-			State = 124; Match(LPAREN);
-			State = 125; _localctx.amount = Match(DECIMAL_LITERAL);
-			State = 126; Match(RPAREN);
+			State = 119; Match(PROPAGATE);
+			State = 120; Match(LPAREN);
+			State = 121; _localctx.amount = Match(DECIMAL_LITERAL);
+			State = 122; Match(RPAREN);
 			}
 		}
 		catch (RecognitionException re) {
@@ -832,10 +822,10 @@ public partial class HarmonyParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 128; Match(TRANSPOSE);
-			State = 129; Match(LPAREN);
-			State = 130; _localctx.value = Match(DECIMAL_LITERAL);
-			State = 131; Match(RPAREN);
+			State = 124; Match(TRANSPOSE);
+			State = 125; Match(LPAREN);
+			State = 126; _localctx.value = Match(DECIMAL_LITERAL);
+			State = 127; Match(RPAREN);
 			}
 		}
 		catch (RecognitionException re) {
@@ -877,10 +867,10 @@ public partial class HarmonyParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 133; Match(ARPEGGIATE);
-			State = 134; Match(LPAREN);
-			State = 135; _localctx.offset = number();
-			State = 136; Match(RPAREN);
+			State = 129; Match(ARPEGGIATE);
+			State = 130; Match(LPAREN);
+			State = 131; _localctx.offset = number();
+			State = 132; Match(RPAREN);
 			}
 		}
 		catch (RecognitionException re) {
@@ -920,10 +910,10 @@ public partial class HarmonyParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 138; Match(TIMES);
-			State = 139; Match(LPAREN);
-			State = 140; _localctx.amount = Match(DECIMAL_LITERAL);
-			State = 141; Match(RPAREN);
+			State = 134; Match(TIMES);
+			State = 135; Match(LPAREN);
+			State = 136; _localctx.amount = Match(DECIMAL_LITERAL);
+			State = 137; Match(RPAREN);
 			}
 		}
 		catch (RecognitionException re) {
@@ -961,7 +951,7 @@ public partial class HarmonyParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 143; Match(IDENTIFIER);
+			State = 139; Match(IDENTIFIER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -999,7 +989,7 @@ public partial class HarmonyParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 145; Match(IDENTIFIER);
+			State = 141; Match(IDENTIFIER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1039,7 +1029,7 @@ public partial class HarmonyParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 147;
+			State = 143;
 			_la = _input.La(1);
 			if ( !(_la==DECIMAL_LITERAL || _la==FLOAT_LITERAL) ) {
 			_errHandler.RecoverInline(this);
@@ -1065,54 +1055,53 @@ public partial class HarmonyParser : Parser {
 	}
 
 	public static readonly string _serializedATN =
-		"\x3\xAF6F\x8320\x479D\xB75C\x4880\x1605\x191C\xAB37\x3\x1E\x98\x4\x2\t"+
+		"\x3\xAF6F\x8320\x479D\xB75C\x4880\x1605\x191C\xAB37\x3\x1D\x94\x4\x2\t"+
 		"\x2\x4\x3\t\x3\x4\x4\t\x4\x4\x5\t\x5\x4\x6\t\x6\x4\a\t\a\x4\b\t\b\x4\t"+
 		"\t\t\x4\n\t\n\x4\v\t\v\x4\f\t\f\x4\r\t\r\x4\xE\t\xE\x4\xF\t\xF\x4\x10"+
 		"\t\x10\x4\x11\t\x11\x4\x12\t\x12\x4\x13\t\x13\x3\x2\x3\x2\a\x2)\n\x2\f"+
 		"\x2\xE\x2,\v\x2\x3\x2\x3\x2\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3"+
-		"\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x4\x3\x4\x3"+
-		"\x4\x3\x4\x3\x5\x3\x5\a\x5\x46\n\x5\f\x5\xE\x5I\v\x5\x3\x5\x3\x5\x3\x6"+
-		"\x3\x6\x3\x6\a\x6P\n\x6\f\x6\xE\x6S\v\x6\x3\a\x3\a\x3\a\x5\aX\n\a\x3\b"+
-		"\x3\b\x3\t\x3\t\x3\t\x3\t\x3\t\x3\t\x3\t\x3\t\x3\t\x3\t\x3\n\x3\n\x3\n"+
-		"\x3\n\x3\n\x3\n\x3\n\x3\n\x3\n\x3\n\x3\n\x3\n\x3\v\x3\v\x3\v\x3\v\x3\v"+
-		"\x5\vw\n\v\x3\f\x3\f\x3\f\x3\f\x3\f\x3\r\x3\r\x3\r\x3\r\x3\r\x3\xE\x3"+
-		"\xE\x3\xE\x3\xE\x3\xE\x3\xF\x3\xF\x3\xF\x3\xF\x3\xF\x3\x10\x3\x10\x3\x10"+
-		"\x3\x10\x3\x10\x3\x11\x3\x11\x3\x12\x3\x12\x3\x13\x3\x13\x3\x13\x2\x2"+
-		"\x2\x14\x2\x2\x4\x2\x6\x2\b\x2\n\x2\f\x2\xE\x2\x10\x2\x12\x2\x14\x2\x16"+
-		"\x2\x18\x2\x1A\x2\x1C\x2\x1E\x2 \x2\"\x2$\x2\x2\x3\x3\x2\x1D\x1E\x8E\x2"+
-		"&\x3\x2\x2\x2\x4/\x3\x2\x2\x2\x6?\x3\x2\x2\x2\b\x43\x3\x2\x2\x2\nL\x3"+
-		"\x2\x2\x2\fW\x3\x2\x2\x2\xEY\x3\x2\x2\x2\x10[\x3\x2\x2\x2\x12\x65\x3\x2"+
-		"\x2\x2\x14v\x3\x2\x2\x2\x16x\x3\x2\x2\x2\x18}\x3\x2\x2\x2\x1A\x82\x3\x2"+
-		"\x2\x2\x1C\x87\x3\x2\x2\x2\x1E\x8C\x3\x2\x2\x2 \x91\x3\x2\x2\x2\"\x93"+
-		"\x3\x2\x2\x2$\x95\x3\x2\x2\x2&*\x5\x4\x3\x2\')\x5\x6\x4\x2(\'\x3\x2\x2"+
-		"\x2),\x3\x2\x2\x2*(\x3\x2\x2\x2*+\x3\x2\x2\x2+-\x3\x2\x2\x2,*\x3\x2\x2"+
-		"\x2-.\a\x2\x2\x3.\x3\x3\x2\x2\x2/\x30\a\x4\x2\x2\x30\x31\a\x16\x2\x2\x31"+
-		"\x32\a\x1C\x2\x2\x32\x33\x3\x2\x2\x2\x33\x34\a\a\x2\x2\x34\x35\a\x16\x2"+
-		"\x2\x35\x36\a\x1C\x2\x2\x36\x37\x3\x2\x2\x2\x37\x38\a\x6\x2\x2\x38\x39"+
-		"\a\x16\x2\x2\x39:\x5$\x13\x2:;\x3\x2\x2\x2;<\a\x5\x2\x2<=\a\x16\x2\x2"+
-		"=>\a\x1D\x2\x2>\x5\x3\x2\x2\x2?@\a\x3\x2\x2@\x41\a\x1C\x2\x2\x41\x42\x5"+
-		"\b\x5\x2\x42\a\x3\x2\x2\x2\x43G\a\x11\x2\x2\x44\x46\x5\n\x6\x2\x45\x44"+
-		"\x3\x2\x2\x2\x46I\x3\x2\x2\x2G\x45\x3\x2\x2\x2GH\x3\x2\x2\x2HJ\x3\x2\x2"+
-		"\x2IG\x3\x2\x2\x2JK\a\x12\x2\x2K\t\x3\x2\x2\x2LQ\x5\f\a\x2MN\a\x18\x2"+
-		"\x2NP\x5\x14\v\x2OM\x3\x2\x2\x2PS\x3\x2\x2\x2QO\x3\x2\x2\x2QR\x3\x2\x2"+
-		"\x2R\v\x3\x2\x2\x2SQ\x3\x2\x2\x2TX\x5\x10\t\x2UX\x5\x12\n\x2VX\x5\xE\b"+
-		"\x2WT\x3\x2\x2\x2WU\x3\x2\x2\x2WV\x3\x2\x2\x2X\r\x3\x2\x2\x2YZ\a\x1C\x2"+
-		"\x2Z\xF\x3\x2\x2\x2[\\\a\b\x2\x2\\]\x5 \x11\x2]^\a\xF\x2\x2^_\x5$\x13"+
-		"\x2_`\a\x13\x2\x2`\x61\x5$\x13\x2\x61\x62\a\x13\x2\x2\x62\x63\x5$\x13"+
-		"\x2\x63\x64\a\x10\x2\x2\x64\x11\x3\x2\x2\x2\x65\x66\a\t\x2\x2\x66g\x5"+
-		"\"\x12\x2gh\a\xF\x2\x2hi\x5$\x13\x2ij\a\x13\x2\x2jk\x5$\x13\x2kl\a\x13"+
-		"\x2\x2lm\x5$\x13\x2mn\a\x13\x2\x2no\a\x1D\x2\x2op\a\x10\x2\x2p\x13\x3"+
-		"\x2\x2\x2qw\x5\x1A\xE\x2rw\x5\x18\r\x2sw\x5\x1C\xF\x2tw\x5\x16\f\x2uw"+
-		"\x5\x1E\x10\x2vq\x3\x2\x2\x2vr\x3\x2\x2\x2vs\x3\x2\x2\x2vt\x3\x2\x2\x2"+
-		"vu\x3\x2\x2\x2w\x15\x3\x2\x2\x2xy\a\r\x2\x2yz\a\xF\x2\x2z{\x5\n\x6\x2"+
-		"{|\a\x10\x2\x2|\x17\x3\x2\x2\x2}~\a\v\x2\x2~\x7F\a\xF\x2\x2\x7F\x80\a"+
-		"\x1D\x2\x2\x80\x81\a\x10\x2\x2\x81\x19\x3\x2\x2\x2\x82\x83\a\n\x2\x2\x83"+
-		"\x84\a\xF\x2\x2\x84\x85\a\x1D\x2\x2\x85\x86\a\x10\x2\x2\x86\x1B\x3\x2"+
-		"\x2\x2\x87\x88\a\f\x2\x2\x88\x89\a\xF\x2\x2\x89\x8A\x5$\x13\x2\x8A\x8B"+
-		"\a\x10\x2\x2\x8B\x1D\x3\x2\x2\x2\x8C\x8D\a\xE\x2\x2\x8D\x8E\a\xF\x2\x2"+
-		"\x8E\x8F\a\x1D\x2\x2\x8F\x90\a\x10\x2\x2\x90\x1F\x3\x2\x2\x2\x91\x92\a"+
-		"\x1C\x2\x2\x92!\x3\x2\x2\x2\x93\x94\a\x1C\x2\x2\x94#\x3\x2\x2\x2\x95\x96"+
-		"\t\x2\x2\x2\x96%\x3\x2\x2\x2\a*GQWv";
+		"\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x3\x4\x3\x4\x3\x4\x3\x4\x3\x5\x3\x5\a\x5"+
+		"\x42\n\x5\f\x5\xE\x5\x45\v\x5\x3\x5\x3\x5\x3\x6\x3\x6\x3\x6\a\x6L\n\x6"+
+		"\f\x6\xE\x6O\v\x6\x3\a\x3\a\x3\a\x5\aT\n\a\x3\b\x3\b\x3\t\x3\t\x3\t\x3"+
+		"\t\x3\t\x3\t\x3\t\x3\t\x3\t\x3\t\x3\n\x3\n\x3\n\x3\n\x3\n\x3\n\x3\n\x3"+
+		"\n\x3\n\x3\n\x3\n\x3\n\x3\v\x3\v\x3\v\x3\v\x3\v\x5\vs\n\v\x3\f\x3\f\x3"+
+		"\f\x3\f\x3\f\x3\r\x3\r\x3\r\x3\r\x3\r\x3\xE\x3\xE\x3\xE\x3\xE\x3\xE\x3"+
+		"\xF\x3\xF\x3\xF\x3\xF\x3\xF\x3\x10\x3\x10\x3\x10\x3\x10\x3\x10\x3\x11"+
+		"\x3\x11\x3\x12\x3\x12\x3\x13\x3\x13\x3\x13\x2\x2\x2\x14\x2\x2\x4\x2\x6"+
+		"\x2\b\x2\n\x2\f\x2\xE\x2\x10\x2\x12\x2\x14\x2\x16\x2\x18\x2\x1A\x2\x1C"+
+		"\x2\x1E\x2 \x2\"\x2$\x2\x2\x3\x3\x2\x1C\x1D\x8A\x2&\x3\x2\x2\x2\x4/\x3"+
+		"\x2\x2\x2\x6;\x3\x2\x2\x2\b?\x3\x2\x2\x2\nH\x3\x2\x2\x2\fS\x3\x2\x2\x2"+
+		"\xEU\x3\x2\x2\x2\x10W\x3\x2\x2\x2\x12\x61\x3\x2\x2\x2\x14r\x3\x2\x2\x2"+
+		"\x16t\x3\x2\x2\x2\x18y\x3\x2\x2\x2\x1A~\x3\x2\x2\x2\x1C\x83\x3\x2\x2\x2"+
+		"\x1E\x88\x3\x2\x2\x2 \x8D\x3\x2\x2\x2\"\x8F\x3\x2\x2\x2$\x91\x3\x2\x2"+
+		"\x2&*\x5\x4\x3\x2\')\x5\x6\x4\x2(\'\x3\x2\x2\x2),\x3\x2\x2\x2*(\x3\x2"+
+		"\x2\x2*+\x3\x2\x2\x2+-\x3\x2\x2\x2,*\x3\x2\x2\x2-.\a\x2\x2\x3.\x3\x3\x2"+
+		"\x2\x2/\x30\a\x4\x2\x2\x30\x31\a\x15\x2\x2\x31\x32\a\x1B\x2\x2\x32\x33"+
+		"\x3\x2\x2\x2\x33\x34\a\x6\x2\x2\x34\x35\a\x15\x2\x2\x35\x36\a\x1B\x2\x2"+
+		"\x36\x37\x3\x2\x2\x2\x37\x38\a\x5\x2\x2\x38\x39\a\x15\x2\x2\x39:\a\x1C"+
+		"\x2\x2:\x5\x3\x2\x2\x2;<\a\x3\x2\x2<=\a\x1B\x2\x2=>\x5\b\x5\x2>\a\x3\x2"+
+		"\x2\x2?\x43\a\x10\x2\x2@\x42\x5\n\x6\x2\x41@\x3\x2\x2\x2\x42\x45\x3\x2"+
+		"\x2\x2\x43\x41\x3\x2\x2\x2\x43\x44\x3\x2\x2\x2\x44\x46\x3\x2\x2\x2\x45"+
+		"\x43\x3\x2\x2\x2\x46G\a\x11\x2\x2G\t\x3\x2\x2\x2HM\x5\f\a\x2IJ\a\x17\x2"+
+		"\x2JL\x5\x14\v\x2KI\x3\x2\x2\x2LO\x3\x2\x2\x2MK\x3\x2\x2\x2MN\x3\x2\x2"+
+		"\x2N\v\x3\x2\x2\x2OM\x3\x2\x2\x2PT\x5\x10\t\x2QT\x5\x12\n\x2RT\x5\xE\b"+
+		"\x2SP\x3\x2\x2\x2SQ\x3\x2\x2\x2SR\x3\x2\x2\x2T\r\x3\x2\x2\x2UV\a\x1B\x2"+
+		"\x2V\xF\x3\x2\x2\x2WX\a\a\x2\x2XY\x5 \x11\x2YZ\a\xE\x2\x2Z[\x5$\x13\x2"+
+		"[\\\a\x12\x2\x2\\]\x5$\x13\x2]^\a\x12\x2\x2^_\x5$\x13\x2_`\a\xF\x2\x2"+
+		"`\x11\x3\x2\x2\x2\x61\x62\a\b\x2\x2\x62\x63\x5\"\x12\x2\x63\x64\a\xE\x2"+
+		"\x2\x64\x65\x5$\x13\x2\x65\x66\a\x12\x2\x2\x66g\x5$\x13\x2gh\a\x12\x2"+
+		"\x2hi\x5$\x13\x2ij\a\x12\x2\x2jk\a\x1C\x2\x2kl\a\xF\x2\x2l\x13\x3\x2\x2"+
+		"\x2ms\x5\x1A\xE\x2ns\x5\x18\r\x2os\x5\x1C\xF\x2ps\x5\x16\f\x2qs\x5\x1E"+
+		"\x10\x2rm\x3\x2\x2\x2rn\x3\x2\x2\x2ro\x3\x2\x2\x2rp\x3\x2\x2\x2rq\x3\x2"+
+		"\x2\x2s\x15\x3\x2\x2\x2tu\a\f\x2\x2uv\a\xE\x2\x2vw\x5\n\x6\x2wx\a\xF\x2"+
+		"\x2x\x17\x3\x2\x2\x2yz\a\n\x2\x2z{\a\xE\x2\x2{|\a\x1C\x2\x2|}\a\xF\x2"+
+		"\x2}\x19\x3\x2\x2\x2~\x7F\a\t\x2\x2\x7F\x80\a\xE\x2\x2\x80\x81\a\x1C\x2"+
+		"\x2\x81\x82\a\xF\x2\x2\x82\x1B\x3\x2\x2\x2\x83\x84\a\v\x2\x2\x84\x85\a"+
+		"\xE\x2\x2\x85\x86\x5$\x13\x2\x86\x87\a\xF\x2\x2\x87\x1D\x3\x2\x2\x2\x88"+
+		"\x89\a\r\x2\x2\x89\x8A\a\xE\x2\x2\x8A\x8B\a\x1C\x2\x2\x8B\x8C\a\xF\x2"+
+		"\x2\x8C\x1F\x3\x2\x2\x2\x8D\x8E\a\x1B\x2\x2\x8E!\x3\x2\x2\x2\x8F\x90\a"+
+		"\x1B\x2\x2\x90#\x3\x2\x2\x2\x91\x92\t\x2\x2\x2\x92%\x3\x2\x2\x2\a*\x43"+
+		"MSr";
 	public static readonly ATN _ATN =
 		new ATNDeserializer().Deserialize(_serializedATN.ToCharArray());
 }

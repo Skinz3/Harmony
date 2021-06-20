@@ -64,6 +64,18 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SFML.Audio, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SFML.Audio.2.5.0\lib\netstandard2.0\SFML.Audio.dll</HintPath>
+    </Reference>
+    <Reference Include="SFML.Graphics, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SFML.Graphics.2.5.0\lib\netstandard2.0\SFML.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="SFML.System, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SFML.System.2.5.0\lib\netstandard2.0\SFML.System.dll</HintPath>
+    </Reference>
+    <Reference Include="SFML.Window, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SFML.Window.2.5.0\lib\netstandard2.0\SFML.Window.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Security.AccessControl, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -84,17 +96,20 @@
     <Compile Include="Antlr\HarmonyParser.cs" />
     <Compile Include="Antlr\HarmonyParserBaseListener.cs" />
     <Compile Include="Antlr\HarmonyParserListener.cs" />
+    <Compile Include="Audio\InstrumentPlayer.cs" />
+    <Compile Include="Audio\SheetPlayer.cs" />
     <Compile Include="Chords\Chord.cs" />
     <Compile Include="Chords\ChordsManager.cs" />
     <Compile Include="Chords\Notepad.cs" />
-    <Compile Include="Compiler\AST\Functions\ArpeggiateFunction.cs" />
-    <Compile Include="Compiler\AST\Functions\BassFunction.cs" />
-    <Compile Include="Compiler\AST\Functions\PlayWithFunction.cs" />
-    <Compile Include="Compiler\AST\Functions\PropagateFunction.cs" />
-    <Compile Include="Compiler\AST\Functions\TransposeFunction.cs" />
-    <Compile Include="Compiler\AST\Statements\UnitStatement.cs" />
-    <Compile Include="Compiler\Errors\SourceError.cs" />
-    <Compile Include="Compiler\Listeners\UnitListener.cs" />
+    <Compile Include="Interpreter\AST\Functions\ArpeggiateFunction.cs" />
+    <Compile Include="Interpreter\AST\Functions\BassFunction.cs" />
+    <Compile Include="Interpreter\AST\Functions\PlayWithFunction.cs" />
+    <Compile Include="Interpreter\AST\Functions\PropagateFunction.cs" />
+    <Compile Include="Interpreter\AST\Functions\TransposeFunction.cs" />
+    <Compile Include="Interpreter\AST\IExecutable.cs" />
+    <Compile Include="Interpreter\AST\Statements\UnitStatement.cs" />
+    <Compile Include="Interpreter\Errors\SourceError.cs" />
+    <Compile Include="Interpreter\Listeners\UnitListener.cs" />
     <Compile Include="DP\WIPManager.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Instruments\Instrument.cs" />
@@ -106,19 +121,18 @@
     <Compile Include="Scales\Scale.cs" />
     <Compile Include="Scales\ScalesManager.cs" />
     <Compile Include="Antlr\Extensions\AntlrExtensions.cs" />
-    <Compile Include="Compiler\AST\Functions\Function.cs" />
-    <Compile Include="Compiler\AST\ICompilable.cs" />
-    <Compile Include="Compiler\AST\Statements\ChordStatement.cs" />
-    <Compile Include="Compiler\AST\Statements\NoteStatement.cs" />
-    <Compile Include="Compiler\AST\Statements\Statement.cs" />
-    <Compile Include="Compiler\AST\Unit.cs" />
-    <Compile Include="Compiler\Errors\CompilerErrors.cs" />
-    <Compile Include="Compiler\Errors\Error.cs" />
-    <Compile Include="Compiler\Errors\ErrorType.cs" />
-    <Compile Include="Compiler\Listeners\FunctionListener.cs" />
-    <Compile Include="Compiler\HarmonyScript.cs" />
-    <Compile Include="Compiler\Listeners\ScriptListener.cs" />
-    <Compile Include="Compiler\Listeners\StatementListener.cs" />
+    <Compile Include="Interpreter\AST\Functions\Function.cs" />
+    <Compile Include="Interpreter\AST\Statements\ChordStatement.cs" />
+    <Compile Include="Interpreter\AST\Statements\NoteStatement.cs" />
+    <Compile Include="Interpreter\AST\Statements\Statement.cs" />
+    <Compile Include="Interpreter\AST\Unit.cs" />
+    <Compile Include="Interpreter\Errors\CompilerErrors.cs" />
+    <Compile Include="Interpreter\Errors\Error.cs" />
+    <Compile Include="Interpreter\Errors\ErrorType.cs" />
+    <Compile Include="Interpreter\Listeners\FunctionListener.cs" />
+    <Compile Include="Interpreter\HarmonyScript.cs" />
+    <Compile Include="Interpreter\Listeners\ScriptListener.cs" />
+    <Compile Include="Interpreter\Listeners\StatementListener.cs" />
     <Compile Include="Sheets\Sheet.cs" />
     <Compile Include="Sheets\SheetNote.cs" />
   </ItemGroup>
