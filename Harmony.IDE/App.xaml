@@ -735,13 +735,13 @@
 
         <Style x:Key="SliderThumb" TargetType="Thumb">
             <Setter Property="SnapsToDevicePixels"
-          Value="true" />
+          Value="false" />
             <Setter Property="OverridesDefaultStyle"
           Value="true" />
             <Setter Property="Height"
-          Value="16" />
+          Value="14" />
             <Setter Property="Width"
-          Value="16" />
+          Value="14" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Thumb}">

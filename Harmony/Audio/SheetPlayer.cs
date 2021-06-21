@@ -11,6 +11,8 @@ namespace Harmony.Audio
 {
     public class SheetPlayer
     {
+        public event Action Step;
+
         public Sheet Sheet
         {
             get;
@@ -21,10 +23,10 @@ namespace Harmony.Audio
             get;
             private set;
         }
-        private float Position
+        public float Position
         {
             get;
-            set;
+            private set;
         }
         public InstrumentPlayer InstrumentPlayer
         {
@@ -80,7 +82,14 @@ namespace Harmony.Audio
 
             if (Sheet != null)
             {
-                Position += (float)(deltaTime * (Sheet.Tempo / 60d));
+                float delta = (float)(deltaTime * (Sheet.Tempo / 60d));
+
+                if (Math.Truncate(Position) != Math.Truncate(Position + delta))
+                {
+                    Step?.Invoke();
+                }
+
+                Position += delta;
 
                 var notes = Notes.FindAll(x => x.Start <= Position);
 
@@ -100,7 +109,7 @@ namespace Harmony.Audio
                     PlayingNotes.Add(note);
                 }
 
-              
+
             }
         }
 
@@ -108,11 +117,21 @@ namespace Harmony.Audio
         {
             Paused = true;
             StopSounds();
+            PlayingNotes.Clear();
         }
 
         private void StopSounds()
         {
+            PlayingNotes.Clear();
             InstrumentPlayer.Stop();
+        }
+
+        public void Snap(float value)
+        {
+            StopSounds();
+            this.Notes = Sheet.Notes.Where(x => x.Start >= value).ToList();
+            this.PlayingNotes.Clear();
+            this.Position = value;
         }
     }
 }

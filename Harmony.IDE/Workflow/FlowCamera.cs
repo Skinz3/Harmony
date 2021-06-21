@@ -22,7 +22,7 @@ namespace Harmony.IDE.Workflow
         public float Y
         {
             get;
-            private set;
+             set; // private
         }
         private Vector2f KeyboardPosition
         {

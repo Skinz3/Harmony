@@ -50,12 +50,11 @@ namespace Harmony.IDE.Workflow
             get;
             set;
         }
-        private SheetPlayer SheetPlayer
+        public SheetPlayer SheetPlayer
         {
             get;
-            set;
+            private set;
         }
-
         public Vector2f Position => Background.Position;
 
         public event Action<Sheet> OnSheetPlayed;
@@ -77,6 +76,28 @@ namespace Harmony.IDE.Workflow
             this.Background.Size = new Vector2f(Keyboard.GetSize().X, TotalPixelTime);
             this.Background.FillColor = Constants.BlackKeyColor;
         }
+
+        public void Snap(float time)
+        {
+            bool wasPlaying = !SheetPlayer.Paused;
+
+            this.Load(SheetPlayer.Sheet);
+
+
+            SheetPlayer.Snap(time);
+
+
+            foreach (var note in Notes)
+            {
+                note.Shape.Position += new Vector2f(0, time * Constants.FlowPixelTimeUnit);
+            }
+
+            if (wasPlaying)
+            {
+                Play();
+            }
+        }
+
         private void CreateVertexes()
         {
             Color color = Constants.FlowLinesColor;
@@ -149,6 +170,7 @@ namespace Harmony.IDE.Workflow
 
         public void Load(Sheet sheet)
         {
+            Keyboard.UnselectAll();
             this.SheetPlayer.Load(sheet);
             Notes.Clear();
             this.TotalPixelTime = Constants.FlowPixelTimeUnit * sheet.TotalDuration;
@@ -189,6 +211,5 @@ namespace Harmony.IDE.Workflow
 
             this.PixelSpeed = (tempo * Constants.FlowPixelTimeUnit * SheetPlayer.Clock.ElapsedTime.AsSeconds()) / 60f;
         }
-
     }
 }

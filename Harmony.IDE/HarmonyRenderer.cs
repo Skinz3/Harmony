@@ -52,16 +52,8 @@ namespace Harmony.IDE
 
         public override void Draw()
         {
-           
-
             Flow.Draw(Window);
-           
-
             Keyboard.Draw(Window);
-
-
-
-
         }
         private void MouseWheelScrolled(object sender, MouseWheelScrollEventArgs e)
         {
@@ -69,6 +61,10 @@ namespace Harmony.IDE
             Window.SetView(Camera.View);
         }
 
+        public void Snap(float time)
+        {
+            this.Flow.Snap(time);
+        }
         public void Load(Sheet sheet)
         {
             this.Keyboard.UnselectAll();

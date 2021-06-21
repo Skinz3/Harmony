@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="Harmony.IDE.Views.Loader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Harmony.IDE.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="1130" d:DesignWidth="1917">
+    <Grid Background="#FF303036">
+        <Label HorizontalAlignment="Center" HorizontalContentAlignment="Center" Content="Welcome to Harmony" FontSize="20" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Margin="0,0,-0.2,440.6" Height="50" VerticalAlignment="Bottom" Width="1917"/>
+        <ProgressBar IsIndeterminate="True" Foreground="#4b8efa" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,17" Width="1897" Background="#FF3F3F46" Height="6" BorderBrush="#FF303036"/>
+        <Label HorizontalAlignment="Center" HorizontalContentAlignment="Center" Content="Loading..." FontSize="15" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Margin="0,0,-0.2,27.6" Height="29" VerticalAlignment="Bottom" Width="1917"/>
+
+    </Grid>
+</UserControl>
