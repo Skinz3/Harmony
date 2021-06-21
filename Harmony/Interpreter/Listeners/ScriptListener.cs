@@ -14,27 +14,7 @@ namespace Harmony.Interpreter
 {
     public class ScriptListener : HarmonyParserBaseListener
     {
-        public List<Unit> Units
-        {
-            get;
-            set;
-        }
-        public float TotalDuration
-        {
-            get;
-            set;
-        }
-        public string Name
-        {
-            get;
-            set;
-        }
-        public int Tempo
-        {
-            get;
-            set;
-        }
-        public string Author
+        public HarmonyScript Script
         {
             get;
             set;
@@ -44,10 +24,10 @@ namespace Harmony.Interpreter
             get;
             set;
         }
-        public ScriptListener(CompilerErrors errorsHandler)
+        public ScriptListener(HarmonyScript script, CompilerErrors errorsHandler)
         {
             this.ErrorsHandler = errorsHandler;
-            this.Units = new List<Unit>();
+            this.Script = script;
         }
         public override void EnterCompilationUnit([NotNull] HarmonyParser.CompilationUnitContext context)
         {
@@ -55,9 +35,9 @@ namespace Harmony.Interpreter
 
             foreach (var unit in context.unitDeclaration())
             {
-                UnitListener listener = new UnitListener(ErrorsHandler);
+                UnitListener listener = new UnitListener(Script, ErrorsHandler);
                 unit.EnterRule(listener);
-                Units.Add(listener.Result);
+                Script.Units.Add(listener.Result);
             }
         }
 
@@ -78,15 +58,16 @@ namespace Harmony.Interpreter
             {
                 ErrorsHandler.SyntaxError(context, "Missing 'author' attribute.");
             }
-           
+
             if (context.name == null || context.tempo == null || context.author == null)
             {
                 return;
             }
 
-            this.Name = context.name.Text + " (script)";
-            this.Tempo = context.tempo.Get<int>();
-            this.Author = context.author.Text;
+            this.Script.Name = context.name.Text;
+            this.Script.Tempo = context.tempo.Get<int>();
+            this.Script.Author = context.author.Text;
+
             base.EnterAttributes(context);
         }
     }

@@ -8,30 +8,38 @@ using System.Threading.Tasks;
 
 namespace Harmony.Interpreter.AST.Functions
 {
-    public class TransposeFunction : Function
+    public class StrumFunction : Function
     {
-        private int Delta
+        private float Delta
         {
             get;
             set;
         }
-
-        public TransposeFunction(Statement parent, int delta) : base(parent)
+        public StrumFunction(Statement parent, float delta) : base(parent)
         {
-            this.Delta = delta;
+            this.Delta = parent.GetTimeSeconds(delta);
         }
 
         public override void Apply(List<SheetNote> notes)
         {
+            float total = notes.Count * Delta;
+
             foreach (var note in notes)
             {
-                note.Number += Delta;
+                note.Start -= total;
+            }
+            float offset = 0f;
+
+            foreach (var note in notes)
+            {
+                note.Start += offset;
+                offset += Delta;
             }
         }
 
         public override void Prepare()
         {
-           
+
         }
     }
 }

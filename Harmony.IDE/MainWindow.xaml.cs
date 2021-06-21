@@ -169,7 +169,12 @@ namespace Harmony.IDE
 
             sheet.Notes.Add(new SheetNote(55, 2f, 4f, 100f));
 
-            sheet = Sheet.FromMIDI(@"C:\Users\Skinz\Desktop\Harmony\Harmony.GUI\bin\Debug\Test\Chopin.mid");
+            sheet = Sheet.FromMIDI(@"ex.mid");
+
+            foreach (var note in sheet.Notes)
+            {
+                note.Number += 3;
+            }
 
             Renderer.Load(sheet);
         }
@@ -218,8 +223,14 @@ namespace Harmony.IDE
 
             textEditor.Text = script.Text;
 
+
             if (script.Errors.Count == 0)
             {
+
+                notesCount.Content = "Notes : " + script.Sheet.Notes.Count;
+                scriptName.Content = "Script : " + script.Name;
+                totalDuration.Content = "Duration : " + Math.Round(script.Sheet.TotalDuration, 1) + "s";
+
                 Renderer.Load(script.Sheet);
             }
         }
@@ -283,6 +294,11 @@ namespace Harmony.IDE
         private void SaveAsClick(object sender, RoutedEventArgs e)
         {
             SaveAs();
+        }
+
+        private void Minimize(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
         }
     }
 }

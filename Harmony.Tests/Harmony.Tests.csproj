@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Harmony\Harmony.csproj">
+      <Project>{A3FF4884-E1B6-4AC1-B1AC-1E3AAA144658}</Project>
+      <Name>Harmony</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

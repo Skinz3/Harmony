@@ -14,7 +14,7 @@
                 <MenuItem  HorizontalContentAlignment="Center" Header="_Open" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="OpenClick"  />
                 <MenuItem  HorizontalContentAlignment="Center" Header="_Save" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="SaveClick"  />
                 <MenuItem  HorizontalContentAlignment="Center" Header="_Save as" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="SaveAsClick"  />
-              
+
             </MenuItem>
             <MenuItem  HorizontalContentAlignment="Center" Header="_Edit" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" />
             <MenuItem  HorizontalContentAlignment="Center" Header="_Options" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams">
@@ -24,13 +24,17 @@
         </Menu>
 
         <Grid >
-            <TextBlock MouseDown="ExitClick" Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="1892,-56,0,0" TextWrapping="Wrap" Text="x" VerticalAlignment="Top" FontFamily="Consolas" FontSize="20" TextAlignment="Center"  Width="25" Height="27"/>
-            <TextBlock Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="5,-53,0,0" TextWrapping="Wrap" Text="Harmony" VerticalAlignment="Top" FontSize="17" TextDecorations="{x:Null}" FontFamily="/Harmony.IDE;component/#Caviar Dreams"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="176*"/>
+                <ColumnDefinition Width="1741*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock MouseDown="ExitClick" Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="1716,-56,0,0" TextWrapping="Wrap" Text="x" VerticalAlignment="Top" FontFamily="Consolas" FontSize="20" TextAlignment="Center"  Width="25" Height="27" Grid.Column="1"/>
+            <TextBlock Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="7,-53,0,0" TextWrapping="Wrap" Text="Harmony" VerticalAlignment="Top" FontSize="17" TextDecorations="{x:Null}" FontFamily="/Harmony.IDE;component/#Caviar Dreams"/>
 
 
 
 
-            <Grid Name="grid" >
+            <Grid Name="grid" Grid.ColumnSpan="2" >
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -72,8 +76,15 @@
                 </Button>
                 <Button Content="Compile"  HorizontalAlignment="Left" Width="105" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="1453,110,0,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="1.82,4.292" Grid.Row="2" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="CompileClick"/>
                 <ListBox Name="scriptErrors" HorizontalAlignment="Left" Height="256" Margin="1453,159,0,0" Grid.Row="2" VerticalAlignment="Top" Width="454" Background="#FF3F3F46" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFFF2E2E" BorderBrush="#FF303036"/>
+                <Canvas HorizontalAlignment="Left" Height="100" Margin="1629,48,0,0" Grid.Row="2" VerticalAlignment="Top" Width="278">
+                    <Label Name="scriptName" Content="Script name : " FontSize="11" Canvas.Left="10" Canvas.Top="10" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="White"/>
+                    <Label Name="totalDuration" Content="Total Duration : " FontSize="11" Canvas.Left="10" Canvas.Top="33" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="White"/>
+                    <Label Name="notesCount" Content="Notes : " FontSize="11" Canvas.Left="10" Canvas.Top="56" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="White"/>
+                </Canvas>
             </Grid>
+            <TextBlock MouseDown="Minimize" Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="1691,-60,0,0" TextWrapping="Wrap" Text="_" VerticalAlignment="Top" FontFamily="Consolas" FontSize="20" TextAlignment="Center"  Width="25" Height="27" Grid.Column="1"/>
         </Grid>
+
     </DockPanel>
     <Window.Resources>
         <!-- Buttons -->

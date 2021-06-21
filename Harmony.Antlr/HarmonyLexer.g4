@@ -21,6 +21,7 @@ ATR_AUTHOR : 'author';
 
 NOTE : 'note';
 CHORD : 'chord';
+STEP : 'step';
 
 
 //==========================================================
@@ -29,9 +30,9 @@ CHORD : 'chord';
 
 TRANSPOSE : 'transpose';
 PROPAGATE : 'propagate';
-ARPEGGIATE : 'arpeggiate';
-PLAYWITH : 'playWith';
+STRUM : 'strum';
 TIMES : 'times';
+BASS : 'bass';
 
 //==========================================================
 // Tokens
@@ -46,11 +47,13 @@ DOT:                '.';
 SEMI:               ';';
 COLON :             ':';
 SHARP :             '#';
-FUNC :              '->';
 LBRACKET :          '[';
 RBRACKET :          ']';
 
 WS:  [ \t\r\n\u000C]+ -> channel(HIDDEN);
+
+COMMENT:            '/*' .*? '*/'    -> channel(HIDDEN);
+LINE_COMMENT:       '//' ~[\r\n]*    -> channel(HIDDEN);
 
 IDENTIFIER: Letter SHARP? LetterOrDigit*;
 

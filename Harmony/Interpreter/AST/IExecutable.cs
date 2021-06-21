@@ -12,6 +12,6 @@ namespace Harmony.Interpreter.AST
     {
         List<SheetNote> Execute(ref float time);
 
-        void Prepare(HarmonyScript script);
+        void Prepare();
     }
 }

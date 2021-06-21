@@ -15,6 +15,11 @@ namespace Harmony.Interpreter
 {
     public class FunctionListener : HarmonyParserBaseListener
     {
+        private Statement Parent
+        {
+            get;
+            set;
+        }
         public Function Result
         {
             get;
@@ -25,8 +30,9 @@ namespace Harmony.Interpreter
             get;
             set;
         }
-        public FunctionListener(CompilerErrors errors)
+        public FunctionListener(Statement parent, CompilerErrors errors)
         {
+            this.Parent = parent;
             this.ErrorsHandler = errors;
         }
         public override void EnterFunction([NotNull] HarmonyParser.FunctionContext context)
@@ -40,26 +46,26 @@ namespace Harmony.Interpreter
         public override void EnterTransposeFunction([NotNull] HarmonyParser.TransposeFunctionContext context)
         {
             int value = context.value.Get<int>();
-            this.Result = new TransposeFunction(value);
+            this.Result = new TransposeFunction(Parent, value);
         }
         public override void EnterPropagateFunction([NotNull] HarmonyParser.PropagateFunctionContext context)
         {
             int amount = context.amount.Get<int>();
-            this.Result = new PropagateFunction(amount);
+            this.Result = new PropagateFunction(Parent, amount);
         }
-        public override void EnterArpeggiateFunction([NotNull] HarmonyParser.ArpeggiateFunctionContext context)
+        public override void EnterStrumFunction([NotNull] HarmonyParser.StrumFunctionContext context)
         {
             float shift = context.offset.Get<float>();
-            this.Result = new ArpeggiateFunction(shift);
+            this.Result = new StrumFunction(Parent, shift);
         }
-        public override void EnterPlayWithFunction([NotNull] HarmonyParser.PlayWithFunctionContext context)
+        public override void EnterTimesFunction([NotNull] HarmonyParser.TimesFunctionContext context)
         {
-            base.EnterPlayWithFunction(context);
-
-            StatementListener listener = new StatementListener(ErrorsHandler);
-            context.blockStatement().EnterRule(listener);
-
-            this.Result = new PlayWithFunction(listener.Result);
+            int amount = context.amount.Get<int>();
+            this.Result = new TimesFunction(Parent, amount);
+        }
+        public override void EnterBassFunction([NotNull] HarmonyParser.BassFunctionContext context)
+        {
+            this.Result = new BassFunction(Parent);
         }
     }
 }

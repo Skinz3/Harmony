@@ -1,7 +1,9 @@
-﻿using Harmony.Instruments;
+﻿using Harmony.DP;
+using Harmony.Instruments;
 using Harmony.Notes;
 using Harmony.Sheets;
 using SFML.Audio;
+using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +12,13 @@ using System.Threading.Tasks;
 
 namespace Harmony.Audio
 {
+    [WIP("weird implementation...")]
     public class InstrumentPlayer
     {
+        public const int SoundInstanceLimit = 256;
+
+        public static int SoundsInstance = 0;
+
         public Instrument Instrument
         {
             get;
@@ -22,6 +29,12 @@ namespace Harmony.Audio
         {
             get;
             set;
+        }
+
+        public bool SustainPedal
+        {
+            get;
+            private set;
         }
         public InstrumentPlayer()
         {
@@ -42,7 +55,10 @@ namespace Harmony.Audio
             foreach (var noteSound in Instrument.Notes)
             {
                 SoundBuffer buffer = new SoundBuffer(noteSound.WavFile);
+
                 Sound sound = new Sound();
+                SoundsInstance++;
+
                 sound.SoundBuffer = buffer;
 
                 Note note = NotesManager.GetNote(noteSound.Name);
@@ -54,52 +70,162 @@ namespace Harmony.Audio
         {
             KeySounds[keyNumber].Play(volume);
         }
+
+        public void Update()
+        {
+            foreach (var keySound in KeySounds.Values)
+            {
+                keySound.Update(SustainPedal);
+            }
+        }
+        public void Stop()
+        {
+            foreach (var sound in KeySounds)
+            {
+                sound.Value.Stop();
+            }
+        }
+
+        public void End(Note note)
+        {
+            KeySounds[note.Number].End();
+        }
     }
 
     public class KeySound : IDisposable
     {
-        private Sound Sound
+        public Sound MainSound
         {
             get;
             set;
         }
-        private Sound Sound2
+        public List<Sound> AuxiliarSounds
         {
             get;
             set;
         }
+
         private Note Note
         {
             get;
             set;
         }
 
+        private Sound SoundStopping
+        {
+            get;
+            set;
+        }
         public KeySound(Sound sound, Note note)
         {
-            this.Sound = sound;
-            this.Sound2 = new Sound(sound.SoundBuffer);
+            this.MainSound = sound;
+            this.AuxiliarSounds = new List<Sound>();
             this.Note = note;
         }
+        [WIP]
+        public void Update(bool pedal)
+        {
+            foreach (var sound in AuxiliarSounds.Where(x => x.Status != SoundStatus.Playing).ToArray())
+            {
+                sound.Dispose();
+                AuxiliarSounds.Remove(sound);
+                if (SoundStopping == sound)
+                {
+                    SoundStopping = null;
+                }
+                InstrumentPlayer.SoundsInstance--;
+            }
 
+            if (SoundStopping != null)
+            {
+                const float speed = 1.8f;
+
+                const float speed2 = 0.4f;
+
+                if (SoundStopping.Volume > 20f)
+                {
+                    SoundStopping.Volume -= speed;
+
+                   
+                }
+                else
+                {
+                    SoundStopping.Volume -= speed2;
+
+                    if (SoundStopping.Volume <= speed2)
+                    {
+                        SoundStopping.Volume = 0;
+                        SoundStopping = null;
+                    }
+                }
+            }
+        }
         public void Play(float volume)
         {
-            if (Sound.Status == SoundStatus.Playing && Sound2.Status != SoundStatus.Playing)
+            foreach (var sound in AuxiliarSounds.ToArray())
             {
-                Sound.Volume = 0;
-                Sound2.Volume = volume;
-                Sound2.Play();
+                sound.Volume = 0;
+            }
+            if (SoundStopping != null)
+            {
+                SoundStopping.Volume = 0;
+            }
+
+            SoundStopping = null;
+            MainSound.Volume = 0;
+
+            Sound result = null;
+
+            if (MainSound.Status == SoundStatus.Stopped || InstrumentPlayer.SoundsInstance == InstrumentPlayer.SoundInstanceLimit)
+            {
+                result = MainSound;
             }
             else
             {
-                Sound.Volume = volume;
-                Sound.Play();
+                result = new Sound(MainSound.SoundBuffer);
+                InstrumentPlayer.SoundsInstance++;
+                AuxiliarSounds.Add(result);
             }
+
+            result.Volume = volume;
+            result.PlayingOffset = Time.Zero;
+            result.Play();
         }
+
 
         public void Dispose()
         {
-            Sound.SoundBuffer.Dispose();
-            Sound.Dispose();
+            MainSound.Dispose();
+
+            foreach (var sound in AuxiliarSounds)
+            {
+                sound.Dispose();
+                InstrumentPlayer.SoundsInstance--;
+            }
+
+        }
+
+        public void End()
+        {
+            if (MainSound.Volume > 0 && MainSound.Status == SoundStatus.Playing)
+            {
+                this.SoundStopping = MainSound;
+            }
+            else
+            {
+                this.SoundStopping = AuxiliarSounds.FirstOrDefault(x => x.Status == SoundStatus.Playing && x.Volume > 0);
+            }
+
+        }
+        public void Stop()
+        {
+            MainSound.Stop();
+
+            foreach (var sound in AuxiliarSounds)
+            {
+                sound.Stop();
+            }
+
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Harmony.IDE.Workflow
                 this.Shape.FillColor = new Color(68, 105, 171);
             }
             this.Shape.OutlineThickness = 1f;
-            this.Shape.OutlineColor = Color.Transparent;
+            this.Shape.OutlineColor = Color.White;
         }
         [WIP("use delta time")]
         public void Step(float speed)
@@ -94,6 +94,14 @@ namespace Harmony.IDE.Workflow
             /*Text text = new Text("Y : " + Shape.Position.Y, Constants.Font,8);
             text.Position = new Vector2f(Shape.Position.X, Shape.Position.Y);
             window.Draw(text); */
+        }
+
+        public bool IsVisible(float viewTop, float viewBottom)
+        {
+            var top2 = Shape.Position.Y;
+            var bottom2 = Shape.Position.Y + Shape.Size.Y;
+
+            return top2 < viewTop && bottom2 > viewBottom;
         }
     }
 }

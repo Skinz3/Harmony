@@ -12,6 +12,8 @@ namespace Harmony.IDE.Workflow
 {
     public class FlowCamera
     {
+        private const float CameraSpeed = 20;
+
         public View View
         {
             get;
@@ -41,7 +43,7 @@ namespace Harmony.IDE.Workflow
         [WIP("needs douteau (Math.log)")]
         public void Scroll(float scrollDelta)
         {
-            float delta = scrollDelta * ((float)Math.Log(Flow.TotalPixelTime));
+            float delta = scrollDelta * CameraSpeed;
 
             if (delta < 0)
             {

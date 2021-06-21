@@ -16,11 +16,6 @@ namespace Harmony.Interpreter.AST.Statements
             get;
             set;
         }
-        private float Start
-        {
-            get;
-            set;
-        }
         public float Duration
         {
             get;
@@ -31,27 +26,26 @@ namespace Harmony.Interpreter.AST.Statements
             get;
             set;
         }
-        public NoteStatement(ParserRuleContext context, Note note, float start, float duration, float velocity) : base( context)
+
+        public NoteStatement(Unit parent, ParserRuleContext context, Note note, float duration, float velocity) : base(parent, context)
         {
             this.Note = note;
-            this.Start = start;
-            this.Duration = duration;
+            this.Duration = GetTimeSeconds(duration);
             this.Velocity = velocity;
-        }
-
-        public override List<SheetNote> Execute(ref float time)
-        {
-            var result = new SheetNote[1]
-            {
-                new SheetNote(Note.Number,time + Start, time +Start+Duration,Velocity),
-            };
-
-            return result.ToList();
         }
 
         public override float GetDuration()
         {
             return Duration;
+        }
+        public override List<SheetNote> Execute(ref float time)
+        {
+            var result = new SheetNote[1]
+            {
+                new SheetNote(Note.Number,time, time +Duration,Velocity),
+            };
+
+            return result.ToList();
         }
     }
 }

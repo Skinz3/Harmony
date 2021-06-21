@@ -24,10 +24,10 @@ namespace Harmony.Interpreter.Listeners
             set;
         }
 
-        public UnitListener(CompilerErrors errorsHandler)
+        public UnitListener(HarmonyScript script, CompilerErrors errorsHandler)
         {
             this.ErrorsHandler = errorsHandler;
-            this.Result = new Unit();
+            this.Result = new Unit(script);
         }
 
         public override void EnterUnitDeclaration([NotNull] UnitDeclarationContext context)
@@ -37,7 +37,7 @@ namespace Harmony.Interpreter.Listeners
         }
         public override void EnterBlock([NotNull] BlockContext context)
         {
-            StatementListener statementListener = new StatementListener(ErrorsHandler);
+            StatementListener statementListener = new StatementListener(Result, ErrorsHandler);
 
             foreach (var statement in context.blockStatement())
             {
@@ -48,9 +48,6 @@ namespace Harmony.Interpreter.Listeners
                     Result.Statements.Add(statementListener.Result);
                 }
             }
-           
-
-           
         }
     }
 }

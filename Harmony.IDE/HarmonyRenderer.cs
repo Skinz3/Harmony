@@ -7,6 +7,7 @@ using SFML.System;
 using SFML.Window;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +38,10 @@ namespace Harmony.IDE
             this.Flow = new Flow(Keyboard);
             this.Camera = new FlowCamera(Window.GetView(), Keyboard.Position, Flow);
             Keyboard.OnKeyPressed += OnKeyPressed;
+
+
         }
+
 
         private void OnKeyPressed(Key key)
         {
@@ -48,8 +52,16 @@ namespace Harmony.IDE
 
         public override void Draw()
         {
+           
+
             Flow.Draw(Window);
+           
+
             Keyboard.Draw(Window);
+
+
+
+
         }
         private void MouseWheelScrolled(object sender, MouseWheelScrollEventArgs e)
         {
@@ -60,7 +72,7 @@ namespace Harmony.IDE
         public void Load(Sheet sheet)
         {
             this.Keyboard.UnselectAll();
-            this.Flow.Load(sheet); 
+            this.Flow.Load(sheet);
         }
 
         public void RecreateWindow(IntPtr handle)
@@ -74,6 +86,6 @@ namespace Harmony.IDE
             Camera.Restore();
             Window.SetView(Camera.View);
         }
-      
+
     }
 }

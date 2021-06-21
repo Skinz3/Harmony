@@ -25,7 +25,7 @@ block
     ;
 
 blockStatement
-    : statement('->'function)*
+    : statement(DOT function)*
     ;
 
 
@@ -37,6 +37,7 @@ statement
     : noteStatement
     | chordStatement
     | unitStatement
+    | stepStatement
     ;
 
 
@@ -44,11 +45,16 @@ unitStatement
     : name=IDENTIFIER
     ;
 noteStatement
-    : (NOTE  noteLiteral '('  startTime=number ',' duration=number ',' velocity=number  ')' )
+    : (NOTE  noteLiteral '(' duration=number ',' velocity=number  ')' )
     ;
 
 chordStatement
-    : (CHORD  chordLiteral '('  startTime=number ',' duration=number ',' velocity=number  ',' octave=DECIMAL_LITERAL ')' )
+    : (CHORD  chordLiteral '(' duration=number ',' velocity=number  ',' octave=DECIMAL_LITERAL ')' )
+    ;
+
+stepStatement
+    : (STEP target=statement)
+    | (STEP duration=number)
     ;
 
 //==========================================================
@@ -63,14 +69,11 @@ chordStatement
 function
     : transposeFunction
     | propagateFunction
-    | arpeggiateFunction
-    | playWithFunction
+    | strumFunction
     | timesFunction
+    | bassFunction
     ;
 
-playWithFunction:
-    PLAYWITH'('blockStatement')'
-    ;
 propagateFunction:
     PROPAGATE'('amount=DECIMAL_LITERAL')'
     ;
@@ -79,12 +82,16 @@ transposeFunction:
     TRANSPOSE'('value=DECIMAL_LITERAL')'
     ;
 
-arpeggiateFunction:
-    ARPEGGIATE'('offset=number')'
+strumFunction:
+    STRUM'('offset=number')'
     ;
 
 timesFunction:
     TIMES'('amount=DECIMAL_LITERAL')'
+    ;
+
+bassFunction:
+    BASS'(' ')'
     ;
 
 

@@ -7,6 +7,7 @@ using SFML.Graphics;
 using SFML.System;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,7 +67,7 @@ namespace Harmony.IDE.Workflow
             this.Notes = new List<FlowNote>();
             CreateBackground();
             CreateVertexes();
-            this.PixelSpeed = ComputePixelSpeed(60);
+            UpdatePixelSpeed();
         }
 
         private void CreateBackground()
@@ -103,13 +104,19 @@ namespace Harmony.IDE.Workflow
 
         public void Draw(RenderWindow window)
         {
+            UpdatePixelSpeed();
+
             SheetPlayer.Update();
 
             window.Draw(Background);
 
             window.Draw(Lines.ToArray(), PrimitiveType.Lines);
 
-            foreach (var note in Notes)
+            View view = window.GetView();
+            float viewTop = view.Center.Y + (view.Size.Y / 2);
+            float viewBottom = view.Center.Y - (view.Size.Y / 2);
+
+            foreach (var note in Notes.Where(x => x.IsVisible(viewTop, viewBottom)))
             {
                 note.Draw(window);
             }
@@ -153,7 +160,8 @@ namespace Harmony.IDE.Workflow
                 AddNote(note, sheet.TotalDuration);
             }
 
-            this.PixelSpeed = ComputePixelSpeed(sheet.Tempo);
+            UpdatePixelSpeed();
+
             OnSheetPlayed?.Invoke(sheet);
         }
 
@@ -168,9 +176,18 @@ namespace Harmony.IDE.Workflow
             FlowNote flowNote = new FlowNote(note, key.Note.Sharp, position, sizeY);
             Notes.Add(flowNote);
         }
-        private float ComputePixelSpeed(int tempo)
+        private void UpdatePixelSpeed()
         {
-            return (tempo * Constants.FlowPixelTimeUnit / Constants.FramerateLimit) / 60f;
+            var sheet = SheetPlayer.Sheet;
+
+            int tempo = 60;
+
+            if (sheet != null)
+            {
+                tempo = sheet.Tempo;
+            }
+
+            this.PixelSpeed = (tempo * Constants.FlowPixelTimeUnit * SheetPlayer.Clock.ElapsedTime.AsSeconds()) / 60f;
         }
 
     }

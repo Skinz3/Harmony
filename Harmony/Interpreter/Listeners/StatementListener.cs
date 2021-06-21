@@ -28,8 +28,14 @@ namespace Harmony.Interpreter
             get;
             set;
         }
-        public StatementListener(CompilerErrors errorsHandler)
+        private Unit Parent
         {
+            get;
+            set;
+        }
+        public StatementListener(Unit parent, CompilerErrors errorsHandler)
+        {
+            this.Parent = parent;
             this.ErrorsHandler = errorsHandler;
         }
 
@@ -49,9 +55,13 @@ namespace Harmony.Interpreter
 
             foreach (FunctionContext function in context.function())
             {
-                FunctionListener functionListener = new FunctionListener(ErrorsHandler);
+                FunctionListener functionListener = new FunctionListener(Result, ErrorsHandler);
                 function.EnterRule(functionListener);
-                Result.Functions.Add(functionListener.Result);
+
+                if (functionListener.Result != null)
+                {
+                    Result.Functions.Add(functionListener.Result);
+                }
             }
         }
         public override void EnterNoteStatement([NotNull] HarmonyParser.NoteStatementContext context)
@@ -69,18 +79,38 @@ namespace Harmony.Interpreter
                 ErrorsHandler.SemanticError(context, "Invalid note : " + noteName);
                 return;
             }
-            float start = context.startTime.Get<float>();
+
             float duration = context.duration.Get<float>();
             float velocity = context.velocity.Get<float>();
 
-            this.Result = new NoteStatement(context, note, start, duration, velocity);
+            this.Result = new NoteStatement(Parent, context, note, duration, velocity);
         }
         public override void EnterUnitStatement([NotNull] HarmonyParser.UnitStatementContext context)
         {
             string unitName = context.name.Text;
+            this.Result = new UnitStatement(Parent, context, unitName);
 
-            this.Result = new UnitStatement(context, unitName);
+        }
+        public override void EnterStepStatement([NotNull] StepStatementContext context)
+        {
+            if (context.duration != null)
+            {
+                StepStatement statement = new StepStatement(Parent, context, context.duration.Get<float>());
+                Result = statement;
+            }
+            else
+            {
+                StatementContext statementContext = context.statement();
 
+                if (statementContext != null)
+                {
+                    StatementListener listener = new StatementListener(Parent, ErrorsHandler);
+                    statementContext.EnterRule(listener);
+
+                    StepStatement statement = new StepStatement(Parent, context, listener.Result);
+                    Result = statement;
+                }
+            }
         }
         public override void EnterChordStatement([NotNull] HarmonyParser.ChordStatementContext context)
         {
@@ -90,7 +120,6 @@ namespace Harmony.Interpreter
             }
             string chordName = context.chordLiteral().GetText();
             int octave = context.octave.Get<int>();
-            float start = context.startTime.Get<float>();
             float duration = context.duration.Get<float>();
             float velocity = context.velocity.Get<float>();
 
@@ -102,7 +131,7 @@ namespace Harmony.Interpreter
                 return;
             }
 
-            this.Result = new ChordStatement(context, chord, start, duration, velocity, octave);
+            this.Result = new ChordStatement(Parent, context, chord, duration, velocity, octave);
 
         }
 

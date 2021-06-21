@@ -63,6 +63,12 @@ namespace Harmony.Interpreter
             set;
         }
 
+        public string Author
+        {
+            get;
+            set;
+        }
+
         public float BarDuration => (60f / Tempo) * 4f;
 
         public Sheet Sheet
@@ -70,6 +76,7 @@ namespace Harmony.Interpreter
             get;
             private set;
         }
+
 
         private bool Process()
         {
@@ -84,11 +91,9 @@ namespace Harmony.Interpreter
 
             HarmonyParser.CompilationUnitContext ectx = parser.compilationUnit();
 
-            ScriptListener listener = new ScriptListener(Errors);
+            ScriptListener listener = new ScriptListener(this, Errors);
             ectx.EnterRule(listener);
 
-
-            this.Units = listener.Units;
             this.MainUnit = GetUnit(MainUnitName);
 
             if (MainUnit == null)
@@ -98,10 +103,6 @@ namespace Harmony.Interpreter
 
             Prepare();
 
-            this.TotalDuration = listener.TotalDuration;
-            this.Name = listener.Name;
-            this.Tempo = listener.Tempo;
-
             BuildSheet();
 
             return true;
@@ -110,7 +111,7 @@ namespace Harmony.Interpreter
         {
             foreach (var unit in Units)
             {
-                unit.Prepare(this);
+                unit.Prepare();
             }
         }
         public Unit GetUnit(string name)
@@ -129,6 +130,15 @@ namespace Harmony.Interpreter
 
                 float time = 0;
                 this.Sheet.Notes = MainUnit.Execute(ref time).ToList();
+
+                var lastStatement = MainUnit.Statements.LastOrDefault(x => x.GetDuration() > 0f);
+
+                if (lastStatement != null)
+                {
+                    time += lastStatement.GetDuration();
+                }
+                
+
                 this.Sheet.TotalDuration = time;
             }
         }

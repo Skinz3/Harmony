@@ -17,11 +17,6 @@ namespace Harmony.Interpreter.AST.Statements
             get;
             set;
         }
-        private float Start
-        {
-            get;
-            set;
-        }
         private float Duration
         {
             get;
@@ -38,11 +33,10 @@ namespace Harmony.Interpreter.AST.Statements
             set;
         }
 
-        public ChordStatement(ParserRuleContext context, Chord chord, float start, float duration, float velocity, int octave) : base(context)
+        public ChordStatement(Unit statement, ParserRuleContext context, Chord chord, float duration, float velocity, int octave) : base(statement, context)
         {
             this.Chord = chord;
-            this.Start = start;
-            this.Duration = duration;
+            this.Duration = GetTimeSeconds(duration);
             this.Velocity = velocity;
             this.Octave = octave;
         }
@@ -54,15 +48,15 @@ namespace Harmony.Interpreter.AST.Statements
 
             foreach (var note in notes)
             {
-                result.Add(new SheetNote(note.Number, Start, Start + Duration, Velocity));
+                result.Add(new SheetNote(note.Number, time, time + Duration, Velocity));
             }
 
             return result;
         }
+
         public override float GetDuration()
         {
             return Duration;
         }
-
     }
 }

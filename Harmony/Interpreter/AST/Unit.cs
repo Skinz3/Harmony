@@ -21,17 +21,21 @@ namespace Harmony.Interpreter.AST
             get;
             private set;
         }
-        public Unit()
+        public HarmonyScript Script
         {
+            get;
+            private set;
+        }
+        public Unit(HarmonyScript script)
+        {
+            this.Script = script;
             this.Statements = new List<Statement>();
         }
-
-       
-        public void Prepare(HarmonyScript script)
+        public void Prepare()
         {
             foreach (var statement in Statements)
             {
-                statement.Prepare(script);
+                statement.Prepare();
             }
         }
 
@@ -58,5 +62,7 @@ namespace Harmony.Interpreter.AST
         {
             return Statements.Sum(x => x.GetDuration());
         }
+
+        
     }
 }

@@ -101,12 +101,13 @@
     <Compile Include="Chords\Chord.cs" />
     <Compile Include="Chords\ChordsManager.cs" />
     <Compile Include="Chords\Notepad.cs" />
-    <Compile Include="Interpreter\AST\Functions\ArpeggiateFunction.cs" />
+    <Compile Include="Interpreter\AST\Functions\StrumFunction.cs" />
     <Compile Include="Interpreter\AST\Functions\BassFunction.cs" />
-    <Compile Include="Interpreter\AST\Functions\PlayWithFunction.cs" />
     <Compile Include="Interpreter\AST\Functions\PropagateFunction.cs" />
+    <Compile Include="Interpreter\AST\Functions\TimesFunction.cs" />
     <Compile Include="Interpreter\AST\Functions\TransposeFunction.cs" />
     <Compile Include="Interpreter\AST\IExecutable.cs" />
+    <Compile Include="Interpreter\AST\Statements\StepStatement.cs" />
     <Compile Include="Interpreter\AST\Statements\UnitStatement.cs" />
     <Compile Include="Interpreter\Errors\SourceError.cs" />
     <Compile Include="Interpreter\Listeners\UnitListener.cs" />

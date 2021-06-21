@@ -20,7 +20,7 @@ namespace Harmony.Interpreter.AST.Statements
             get;
             set;
         }
-        public UnitStatement(ParserRuleContext context, string name) : base(context)
+        public UnitStatement(Unit parent, ParserRuleContext context, string name) : base(parent, context)
         {
             this.Name = name;
         }
@@ -28,23 +28,26 @@ namespace Harmony.Interpreter.AST.Statements
         public override List<SheetNote> Execute(ref float time)
         {
             var result = TargetUnit.Execute(ref time);
-            time += GetDuration();
             return result;
         }
-        public override void Prepare(HarmonyScript script)
+        public override void Prepare()
         {
-            TargetUnit = script.GetUnit(Name);
+            TargetUnit = Parent.Script.GetUnit(Name);
 
             if (TargetUnit == null)
             {
-                script.Errors.SemanticError(RuleContext, "Unknown unit : " + Name);
+                Parent.Script.Errors.SemanticError(RuleContext, "Unknown unit : " + Name);
             }
 
-            base.Prepare(script);
+            base.Prepare();
         }
 
         public override float GetDuration()
         {
+            if (TargetUnit == null)
+            {
+                return 0f;
+            }
             return TargetUnit.GetDuration();
         }
     }
