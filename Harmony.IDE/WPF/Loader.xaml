@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="Harmony.IDE.WPF.Loader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Harmony.IDE.WPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="1130" d:DesignWidth="1920">
+    <Grid Background="#FF303036" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="1130">
+
+        <ProgressBar IsIndeterminate="True" Name="progress" Foreground="#3d88ff" HorizontalAlignment="Center" Height="8" Margin="60,0,72,26" VerticalAlignment="Bottom" Width="1788"/>
+        <Label  Content="You are almost done ..." HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,532" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="White" FontSize="25" Width="1920" Height="48" VerticalAlignment="Bottom"/>
+
+        <Label Name="status" Content="Loading ..." HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,39" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="White" FontSize="15" Width="1920" Height="31" VerticalAlignment="Bottom"/>
+
+    </Grid>
+</UserControl>

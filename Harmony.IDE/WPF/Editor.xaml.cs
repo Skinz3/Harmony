@@ -1,7 +1,16 @@
-﻿using Harmony.IDE.Avalon;
+﻿using Harmony.Chords;
+using Harmony.DP;
+using Harmony.IDE.Avalon;
+using Harmony.IDE.Rendering;
 using Harmony.Instruments;
+using Harmony.Interpreter;
+using Harmony.Interpreter.Errors;
+using Harmony.Notes;
+using Harmony.Sheets;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,30 +23,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Harmony.Notes;
-using System.Runtime.InteropServices;
-using System.Windows.Interop;
-using Harmony.IDE.Rendering;
-using ICSharpCode.AvalonEdit.CodeCompletion;
-using ICSharpCode.AvalonEdit.Editing;
-using ICSharpCode.AvalonEdit.Document;
-using Harmony.IDE.Keys;
-using Key = Harmony.IDE.Keys.Key;
-using Harmony.Sheets;
-using Harmony.DP;
-using Harmony.Interpreter;
-using System.IO;
-using Microsoft.Win32;
-using Harmony.Interpreter.Errors;
-using Harmony.Chords;
 
-namespace Harmony.IDE
+namespace Harmony.IDE.WPF
 {
-
     /// <summary>
-    /// Logique d'interaction pour MainWindow.xaml
+    /// Logique d'interaction pour Harmony.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Editor : UserControl
     {
         private const int FramePerSecond = 60;
 
@@ -52,18 +44,17 @@ namespace Harmony.IDE
             get;
             set;
         }
-
-        public MainWindow()
+        
+        public Editor()
         {
             InitializeComponent();
-            NotesManager.Initialize();
-            ChordsManager.Initialize("chords.json");
-            ConfigManager.Initialize();
-            InstrumentsManager.Initialize();
+            
             AvalonUtils.ApplySyntaxRules("harmony.xshd", textEditor);
+
             this.Loaded += OnLoad;
             this.KeyDown += OnKeyDown;
         }
+
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
@@ -119,6 +110,7 @@ namespace Harmony.IDE
             {
                 Dispatcher.Invoke(() =>
                 {
+                    //UpdateTime();
                     Renderer.Loop();
                 });
             }
@@ -162,14 +154,14 @@ namespace Harmony.IDE
         [WIP("temporary")]
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Sheet sheet = new Sheet();
-            sheet.TotalDuration = 8f;
+            Sheet sheet = Sheet.FromMIDI(@"ex.mid");
 
-            sheet.Tempo = 50;
+            sheet.Tempo = 60;
 
-            sheet.Notes.Add(new SheetNote(55, 2f, 4f, 100f));
-
-            sheet = Sheet.FromMIDI(@"ex.mid");
+            foreach (var note in sheet.Notes)
+            {
+                note.Number += 6;
+            }
 
             Renderer.Load(sheet);
         }
@@ -187,7 +179,7 @@ namespace Harmony.IDE
         private void PreferencesClick(object sender, RoutedEventArgs e)
         {
             ConfigurationWindow?.Close();
-            this.ConfigurationWindow = new Configuration();
+            this.ConfigurationWindow = new Configuration(Renderer);
             ConfigurationWindow.Show();
         }
 
@@ -218,12 +210,34 @@ namespace Harmony.IDE
 
             textEditor.Text = script.Text;
 
+
             if (script.Errors.Count == 0)
             {
-                scriptName.Content = "Script : " + script.Name;
+                scriptErrors.Items.Add("Script executed successfully.");
+                scriptName.Content = "Script : " + script.Name + " (Notes : " + script.Sheet.Notes.Count + ")";
                 Renderer.Load(script.Sheet);
             }
         }
+        private void UpdateTime()
+        {
+            if (Renderer.Flow.SheetPlayer.Sheet != null)
+            {
+                var current = PrettyPrintFromSeconds(Renderer.Flow.SheetPlayer.Position);
+                var total = PrettyPrintFromSeconds(Renderer.Flow.SheetPlayer.Sheet.TotalDuration);
+
+                timeSlider.Maximum = Renderer.Flow.SheetPlayer.Sheet.TotalDuration;
+                timeSlider.Value = Renderer.Flow.SheetPlayer.Position;
+
+                time.Content = current + " / " + total;
+            }
+        }
+        public static string PrettyPrintFromSeconds(float seconds)
+        {
+            var timeSpan = TimeSpan.FromSeconds(seconds);
+            return timeSpan.Minutes + ":" + timeSpan.Seconds;
+        }
+
+
         private void CompileClick(object sender, RoutedEventArgs e)
         {
             string text = textEditor.Text;
@@ -288,7 +302,7 @@ namespace Harmony.IDE
 
         private void Minimize(object sender, MouseButtonEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            Window.GetWindow(this).WindowState = WindowState.Minimized;
         }
     }
 }

@@ -31,11 +31,6 @@ namespace Harmony.Audio
             set;
         }
 
-        public bool SustainPedal
-        {
-            get;
-            private set;
-        }
         public InstrumentPlayer()
         {
             this.KeySounds = new Dictionary<int, KeySound>();
@@ -75,7 +70,7 @@ namespace Harmony.Audio
         {
             foreach (var keySound in KeySounds.Values)
             {
-                keySound.Update(SustainPedal);
+                keySound.Update();
             }
         }
         public void Stop()
@@ -86,9 +81,9 @@ namespace Harmony.Audio
             }
         }
 
-        public void End(Note note)
+        public void End(int noteNumber)
         {
-            KeySounds[note.Number].End();
+            KeySounds[noteNumber].End();
         }
     }
 
@@ -122,8 +117,7 @@ namespace Harmony.Audio
             this.AuxiliarSounds = new List<Sound>();
             this.Note = note;
         }
-        [WIP]
-        public void Update(bool pedal)
+        public void Update()
         {
             foreach (var sound in AuxiliarSounds.Where(x => x.Status != SoundStatus.Playing).ToArray())
             {

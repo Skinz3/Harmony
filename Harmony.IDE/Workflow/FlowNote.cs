@@ -80,7 +80,7 @@ namespace Harmony.IDE.Workflow
                 this.Shape.FillColor = new Color(68, 105, 171);
             }
             this.Shape.OutlineThickness = 1f;
-            this.Shape.OutlineColor = Color.White;
+            this.Shape.OutlineColor = Color.Transparent;
         }
         [WIP("use delta time")]
         public void Step(float speed)

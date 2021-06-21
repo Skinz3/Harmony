@@ -89,7 +89,7 @@ namespace Harmony.Audio
                     if (playingNote.End < Position)
                     {
                         PlayingNotes.Remove(playingNote);
-                        InstrumentPlayer.End(playingNote.Note);
+                        InstrumentPlayer.End(playingNote.Number);
                     }
                 }
 
