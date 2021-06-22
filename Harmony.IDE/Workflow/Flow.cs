@@ -84,7 +84,7 @@ namespace Harmony.IDE.Workflow
             this.Load(SheetPlayer.Sheet);
 
 
-            SheetPlayer.Snap(time);
+            SheetPlayer.Snap(time); 
 
 
             foreach (var note in Notes)

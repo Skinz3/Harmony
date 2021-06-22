@@ -41,7 +41,6 @@ namespace Harmony.IDE.Views
                   ConfigManager.Initialize();
                   InstrumentsManager.Initialize();
 
-
                   try
                   {
                       window.Dispatcher.Invoke(() =>
@@ -58,7 +57,7 @@ namespace Harmony.IDE.Views
 
             worker.Start();
 
-          
+
         }
     }
 }

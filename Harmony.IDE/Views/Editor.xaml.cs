@@ -75,16 +75,11 @@ namespace Harmony.IDE.Views
 
             RestoreScript();
 
-            Renderer.Flow.SheetPlayer.Step += OnPlayStep;
             var timer = new HighPrecisionTimer((int)(1000d / Constants.FramerateLimit));
             timer.Tick += OnTick;
 
         }
 
-        private void OnPlayStep()
-        {
-            UpdateTime();
-        }
 
         private void RestoreScript()
         {
@@ -155,14 +150,10 @@ namespace Harmony.IDE.Views
         [WIP("temporary")]
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Sheet sheet = new Sheet();
-            sheet.TotalDuration = 8f;
 
-            sheet.Tempo = 50;
+            var sheet = Sheet.FromMIDI(@"ex.mid");
 
-            sheet.Notes.Add(new SheetNote(55, 2f, 4f, 100f));
-
-            sheet = Sheet.FromMIDI(@"ex.mid");
+            sheet.Tempo = 60;
 
             Renderer.Load(sheet);
         }
@@ -220,6 +211,11 @@ namespace Harmony.IDE.Views
         }
         private void UpdateTime()
         {
+            if (Renderer.Flow.SheetPlayer.Sheet == null)
+            {
+                return;
+            }
+
             TimeSpan position = TimeSpan.FromSeconds(Renderer.Flow.SheetPlayer.Position);
             TimeSpan totalDuration = TimeSpan.FromSeconds(Renderer.Flow.SheetPlayer.Sheet.TotalDuration);
 
@@ -299,7 +295,10 @@ namespace Harmony.IDE.Views
 
         private void timeSlider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            Renderer.Snap((float)timeSlider.Value);
+            if (Renderer.Flow.SheetPlayer.Sheet != null)
+            {
+                Renderer.Snap((float)timeSlider.Value);
+            }
         }
     }
 }

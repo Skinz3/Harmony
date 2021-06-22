@@ -11,8 +11,6 @@ namespace Harmony.Audio
 {
     public class SheetPlayer
     {
-        public event Action Step;
-
         public Sheet Sheet
         {
             get;
@@ -83,13 +81,14 @@ namespace Harmony.Audio
             if (Sheet != null)
             {
                 float delta = (float)(deltaTime * (Sheet.Tempo / 60d));
-
-                if (Math.Truncate(Position) != Math.Truncate(Position + delta))
-                {
-                    Step?.Invoke();
-                }
-
                 Position += delta;
+
+                if (Position >= Sheet.TotalDuration)
+                {
+                    Position = Sheet.TotalDuration;
+                    Pause();
+                    return;
+                }
 
                 var notes = Notes.FindAll(x => x.Start <= Position);
 
