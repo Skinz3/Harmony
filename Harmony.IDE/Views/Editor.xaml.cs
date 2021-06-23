@@ -66,6 +66,18 @@ namespace Harmony.IDE.Views
 
             this.KeyDown += OnKeyDown;
 
+
+            mainPanel.MouseDown += (s, e) =>
+            {
+                var window = Window.GetWindow(this);
+
+
+                if (window != null && window.WindowState != WindowState.Maximized)
+                {
+                    window.DragMove();
+                }
+            };
+
             var settings = new SFML.Window.ContextSettings();
             settings.AntialiasingLevel = 7;
 
@@ -96,13 +108,14 @@ namespace Harmony.IDE.Views
             textEditor.TextChanged += TextEditor_TextChanged;
 
             Renderer.Keyboard.OnKeyPressed += OnKeyPressed;
+
         }
 
         private void OnKeyPressed(Keys.Key key)
         {
             if (Keyboard.Modifiers == ModifierKeys.Control)
             {
-                textEditor.Document.Insert(textEditor.CaretOffset, key.Note.ToString()+",");
+                textEditor.Document.Insert(textEditor.CaretOffset, key.Note.ToString() + ",");
             }
         }
 
@@ -130,15 +143,10 @@ namespace Harmony.IDE.Views
                 Renderer.Flow.Pause();
             }
 
-
-
-
         }
         private void Caret_PositionChanged(object sender, EventArgs e)
         {
             LastTimeEdit = DateTime.Now;
-
-          
 
         }
         private void SnapToConcernedLine()
@@ -151,7 +159,7 @@ namespace Harmony.IDE.Views
             foreach (var note in Renderer.Flow.Notes)
             {
                 note.Shape.OutlineColor = SFML.Graphics.Color.Transparent;
-               
+
             }
 
             if (notes.Count() > 0)
@@ -161,11 +169,11 @@ namespace Harmony.IDE.Views
                 foreach (var note in notes)
                 {
                     note.Shape.OutlineColor = SFML.Graphics.Color.White;
-                    note.Shape.OutlineThickness =2f;
+                    note.Shape.OutlineThickness = 2f;
                 }
             }
 
-        
+
         }
 
         public bool LoadInstrument()
@@ -186,6 +194,7 @@ namespace Harmony.IDE.Views
                 ConfigManager.Save();
             }
             Renderer.Keyboard.InstrumentPlayer.DefineInstrument(instrument);
+
             return true;
         }
 
@@ -406,7 +415,26 @@ namespace Harmony.IDE.Views
             Window.GetWindow(this).WindowState = WindowState.Minimized;
         }
 
+        private void Maximize(object sender, MouseButtonEventArgs e)
+        {
+            var window = Window.GetWindow(this);
 
+            if (window.WindowState == WindowState.Maximized)
+            {
+                double screenWidth = SystemParameters.PrimaryScreenWidth;
+                double screenHeight = SystemParameters.PrimaryScreenHeight;
+                double windowWidth = this.Width;
+                double windowHeight = this.Height;
+                window.Left = (screenWidth / 2) - (windowWidth / 2);
+                window.Top = (screenHeight / 2) - (windowHeight / 2);
+
+                window.WindowState = WindowState.Normal;
+            }
+            else
+            {
+                window.WindowState = WindowState.Maximized;
+            }
+        }
         [WIP("temporary")]
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -480,6 +508,14 @@ namespace Harmony.IDE.Views
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             AvalonUtils.ApplySyntaxRules("harmony.xshd", textEditor);
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Renderer.Keyboard.UnselectAll();
+            Renderer.Clear();
+            ConfigManager.Instance.ScriptPath = string.Empty;
+            textEditor.Text = string.Empty;
         }
     }
 }

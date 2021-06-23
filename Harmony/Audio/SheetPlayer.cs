@@ -115,6 +115,14 @@ namespace Harmony.Audio
             }
         }
 
+        public void Clear()
+        {
+            StopSounds();
+            this.Sheet = null;
+            this.Position = 0;
+            this.Notes.Clear();
+        }
+
         public void Pause()
         {
             Paused = true;

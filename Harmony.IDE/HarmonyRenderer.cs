@@ -81,5 +81,10 @@ namespace Harmony.IDE
             Window.SetView(Camera.View);
         }
 
+        public void Clear()
+        {
+            this.Flow.SheetPlayer.Clear();
+            this.Flow.Notes.Clear();
+        }
     }
 }

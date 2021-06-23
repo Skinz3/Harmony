@@ -8,9 +8,9 @@
              d:DesignHeight="1130" d:DesignWidth="1917">
     <DockPanel Name="mainPanel" Background="#FF303036">
 
-        <Menu DockPanel.Dock="Top" Margin="0,30,0,0" Height="28" Background="#FF3F3F46">
+        <Menu Name="menu" DockPanel.Dock="Top" Margin="0,30,0,0" Height="28" Background="#FF3F3F46">
             <MenuItem HorizontalContentAlignment="Center"  Header="_File" Foreground="#FFF1F1F1" Height="28" Width="42" FontFamily="/Harmony.IDE;component/#Caviar Dreams">
-                <MenuItem  HorizontalContentAlignment="Center" Header="_New" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams"  />
+                <MenuItem  HorizontalContentAlignment="Center" Header="_New" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="MenuItem_Click"  />
                 <MenuItem  HorizontalContentAlignment="Center" Header="_Open" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="OpenClick"  />
                 <MenuItem  HorizontalContentAlignment="Center" Header="_Save" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="SaveClick"  />
                 <MenuItem  HorizontalContentAlignment="Center" Header="_Save as" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="SaveAsClick"  />
@@ -25,8 +25,14 @@
 
         <Grid >
 
-            <TextBlock  HorizontalAlignment="Right" MouseDown="ExitClick" Foreground="#FFF1F1F1" Margin="0,-53,8.143,0" TextWrapping="Wrap" Text="x" VerticalAlignment="Top" FontFamily="Consolas" FontSize="20" TextAlignment="Center" Height="27"/>
-            <TextBlock HorizontalAlignment="Right" MouseDown="Minimize" Foreground="#FFF1F1F1" Margin="0,-58,28.143,0" TextWrapping="Wrap" Text="_" VerticalAlignment="Top" FontFamily="Consolas" FontSize="20" TextAlignment="Center" Height="28"/>
+            <TextBlock  HorizontalAlignment="Right" MouseDown="ExitClick" Foreground="#FFF1F1F1" Margin="0,-53,3,0" TextWrapping="Wrap" Text="x" VerticalAlignment="Top" FontFamily="Consolas" FontSize="20" TextAlignment="Center" Height="25" Width="21"/>
+            <TextBlock HorizontalAlignment="Right" MouseDown="Minimize" Foreground="#FFF1F1F1" Margin="0,-57,50,0" TextWrapping="Wrap" Text="_" VerticalAlignment="Top" FontFamily="Consolas" FontSize="20" TextAlignment="Center" Height="28"/>
+            <Rectangle Width="10" Height="10" Fill="#FF303036" Stroke="#FFF1F1F1" StrokeThickness="1.5" HorizontalAlignment="Right" MouseDown="Maximize"  Margin="0,-44,30,0" VerticalAlignment="Top"  >
+            </Rectangle>
+
+
+
+
             <TextBlock Foreground="#FFF1F1F1"  HorizontalAlignment="Left" Margin="7,-53,0,0" TextWrapping="Wrap" Text="Harmony" VerticalAlignment="Top" FontSize="17" TextDecorations="{x:Null}" FontFamily="/Harmony.IDE;component/#Caviar Dreams"/>
 
 
@@ -45,7 +51,7 @@
 
                 <GridSplitter Name="splitter" DragCompleted="GridSplitter_DragCompleted"   DragStarted="GridSplitter_DragStarted" Background="#FF303036" Grid.Row="1" HorizontalAlignment="Stretch" />
 
-                <avalonEdit:TextEditor HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden" ShowLineNumbers="True" Foreground="#FFF1F1F1"  Grid.Row="2" xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"  Name="textEditor" Background="#FF3F3F46"  FontFamily="/Harmony.IDE;component/#Caviar Dreams"  FontSize="10pt" Margin="0,0,770,10" />
+                <avalonEdit:TextEditor HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden" ShowLineNumbers="True" Foreground="#FFF1F1F1"  Grid.Row="2" xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"  Name="textEditor" Background="#FF3F3F46"  FontFamily="/Harmony.IDE;component/#Caviar Dreams"  FontSize="11pt" Margin="0,0,770,10" />
                 <Button   HorizontalAlignment="Right" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="0,0,650,0" FontFamily="/Harmony.GUI;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.647,0.5" Grid.Row="2" Click="PauseClick">
                     <Button.Content>
                         <Grid Width="12">

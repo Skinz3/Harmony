@@ -53,12 +53,14 @@ SHARP :             '#';
 LBRACKET :          '[';
 RBRACKET :          ']';
 
-WS:  [ \t\r\n\u000C]+ -> channel(HIDDEN);
 
 COMMENT:            '/*' .*? '*/'    -> channel(HIDDEN);
 LINE_COMMENT:       '//' ~[\r\n]*    -> channel(HIDDEN);
 
+
 IDENTIFIER: Letter SHARP? LetterOrDigit*;
+
+WS:  [ \t\r\n\u000C]+ -> channel(HIDDEN);
 
 DECIMAL_LITERAL:   '-'? ('0' | [1-9] (Digits? | '_'+ Digits)) [lL]?;
 
