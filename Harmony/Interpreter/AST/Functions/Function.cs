@@ -1,4 +1,5 @@
-﻿using Harmony.Interpreter.AST.Statements;
+﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Statements;
 using Harmony.Notes;
 using Harmony.Sheets;
 using System;
@@ -21,10 +22,16 @@ namespace Harmony.Interpreter.AST.Functions
             get;
             set;
         }
+        public ParserRuleContext Context
+        {
+            get;
+            set;
+        }
 
-        public Function(IEntity parent)
+        public Function(IEntity parent, ParserRuleContext context)
         {
             this.Parent = parent;
+            this.Context = context;
         }
 
         public void Apply(ref float time, List<SheetNote> notes)

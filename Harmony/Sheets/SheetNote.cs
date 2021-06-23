@@ -1,4 +1,5 @@
-﻿using Harmony.Notes;
+﻿using Harmony.Interpreter.AST;
+using Harmony.Notes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,12 @@ namespace Harmony.Sheets
             set;
         }
 
+        public IEntity Entity
+        {
+            get;
+            set;
+        }
+
         public float Duration => End - Start;
 
         public float Velocity
@@ -39,13 +46,14 @@ namespace Harmony.Sheets
             set;
         }
 
-        public SheetNote(int number, float start, float end, float velocity)
+        public SheetNote(int number, float start, float end, float velocity, IEntity entity = null)
         {
             this.Note = NotesManager.GetNote(number);
             this.Number = number;
             this.Start = start;
             this.End = end;
             this.Velocity = velocity;
+            this.Entity = entity;
         }
     }
 }

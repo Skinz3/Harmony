@@ -43,53 +43,55 @@ namespace Harmony.IDE.Views
 
             Thread worker = new Thread(new ThreadStart(() =>
               {
-                  window.Dispatcher.Invoke(() =>
-                   {
-                       state.Content = "Loading data...";
-
-                   });
-
-                  NotesManager.Initialize();
-                  ChordsManager.Initialize("chords.json");
-                  ConfigManager.Initialize();
-                  InstrumentsManager.Initialize();
-
-                  Editor editor = null;
-
-                  var result = window.Dispatcher.BeginInvoke((Action)(() =>
-                  {
-                      editor = new Editor();
-                  }));
-
-                  result.Wait();
-
-                  window.Dispatcher.Invoke(() =>
-                  {
-                      state.Content = "Loading Instrument...";
-                  });
-
-                  if (!editor.LoadInstrument())
+                  try
                   {
                       window.Dispatcher.Invoke(() =>
+                       {
+                           state.Content = "Loading Core...";
+
+                       });
+
+                      NotesManager.Initialize();
+                      ChordsManager.Initialize("chords.json");
+                      ConfigManager.Initialize();
+                      InstrumentsManager.Initialize();
+
+                      Editor editor = null;
+
+                      var result = window.Dispatcher.BeginInvoke((Action)(() =>
                       {
-                          state.Content = "Unable to find any instrument. Aborting.";
-                       
+                          editor = new Editor();
+                      }));
+
+                      result.Wait();
+
+                      window.Dispatcher.Invoke(() =>
+                      {
+                          state.Content = "Loading Instrument...";
                       });
-                  }
-                  else
-                  {
-                      try
+
+                      if (!editor.LoadInstrument())
+                      {
+                          window.Dispatcher.Invoke(() =>
+                          {
+                              state.Content = "Unable to find any instrument. Aborting.";
+
+                          });
+                      }
+                      else
                       {
                           window.Dispatcher.Invoke(() =>
                           {
                               window.Content = editor;
 
                           });
+
                       }
-                      catch
-                      {
-                          Environment.Exit(0);
-                      }
+
+                  }
+                  catch
+                  {
+                      Environment.Exit(0);
                   }
 
 

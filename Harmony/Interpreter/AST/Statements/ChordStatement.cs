@@ -49,7 +49,7 @@ namespace Harmony.Interpreter.AST.Statements
 
             foreach (var note in notes)
             {
-                result.Add(new SheetNote(note.Number, time, time + Duration, Velocity));
+                result.Add(new SheetNote(note.Number, time, time + Duration, Velocity, this));
             }
 
             return result;

@@ -1,4 +1,5 @@
-﻿using Harmony.Interpreter.AST.Statements;
+﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Statements;
 using Harmony.Notes;
 using Harmony.Sheets;
 using System;
@@ -11,7 +12,7 @@ namespace Harmony.Interpreter.AST.Functions
 {
     public class BassFunction : Function
     {
-        public BassFunction(IEntity parent) : base(parent)
+        public BassFunction(IEntity parent, ParserRuleContext context) : base(parent, context)
         {
         }
 
@@ -21,7 +22,7 @@ namespace Harmony.Interpreter.AST.Functions
 
             Note note = NotesManager.AddTone(sheetNote.Note, -6);
 
-            notes.Add(new SheetNote(note.Number, sheetNote.Start, sheetNote.End, sheetNote.Velocity));
+            notes.Add(new SheetNote(note.Number, sheetNote.Start, sheetNote.End, sheetNote.Velocity, this));
         }
 
         public override float GetDuration()
@@ -31,7 +32,7 @@ namespace Harmony.Interpreter.AST.Functions
 
         public override void Prepare()
         {
-           
+
         }
     }
 }

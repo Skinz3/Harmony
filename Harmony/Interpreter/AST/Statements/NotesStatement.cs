@@ -44,7 +44,7 @@ namespace Harmony.Interpreter.AST.Statements
 
             foreach (var note in Notes)
             {
-                SheetNote sheetNote = new SheetNote(note.Number, time, time + Duration, Velocity);
+                SheetNote sheetNote = new SheetNote(note.Number, time, time + Duration, Velocity, this);
                 results.Add(sheetNote);
             }
 

@@ -41,6 +41,7 @@ namespace Harmony.IDE.Rendering
         public void Initialize()
         {
             Window.SetFramerateLimit(FrameRateLimit);
+            Window.SetVerticalSyncEnabled(true);
         }
 
 

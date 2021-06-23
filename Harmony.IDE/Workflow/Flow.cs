@@ -92,8 +92,8 @@ namespace Harmony.IDE.Workflow
 
             this.Load(SheetPlayer.Sheet);
 
+            SheetPlayer.Snap(time);
 
-            SheetPlayer.Snap(time); 
 
 
             foreach (var note in Notes)
@@ -136,7 +136,10 @@ namespace Harmony.IDE.Workflow
         {
             UpdatePixelSpeed();
 
+            
             SheetPlayer.Update();
+
+            
 
             window.Draw(Background);
 
@@ -164,16 +167,18 @@ namespace Harmony.IDE.Workflow
                     Keyboard.SelectKey(key);
                     note.Played = true;
                 }
-                if (note.Shape.Position.Y > Keyboard.Position.Y)
+                if (note.Shape.Position.Y > Keyboard.Position.Y && !note.Disposed)
                 {
                     var key = Keyboard.GetKey(note.SheetNote.Number);
                     Keyboard.UnselectKey(key);
                     key.Stop();
-                    Notes.Remove(note);
+                    note.Disposed = true;
                 }
 
                 note.Step(PixelSpeed);
             }
+
+ 
         }
 
 

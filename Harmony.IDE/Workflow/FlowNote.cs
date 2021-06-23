@@ -30,6 +30,12 @@ namespace Harmony.IDE.Workflow
             get;
             set;
         }
+        public bool Disposed
+        {
+            get;
+            set;
+        }
+
         public FlowNote(SheetNote note, bool sharp, Vector2f position, float sizeY)
         {
             if (sizeY < 0)
@@ -71,7 +77,13 @@ namespace Harmony.IDE.Workflow
                 this.Shape.Position += new Vector2f(Constants.BlackSize.X / 2f, 0);
             }
 
-            if (!sharp)
+            Unfill();
+            this.Shape.OutlineThickness = 1f;
+            this.Shape.OutlineColor = Color.Transparent;
+        }
+        public void Unfill()
+        {
+            if (!SheetNote.Note.Sharp)
             {
                 this.Shape.FillColor = new Color(97, 147, 237);
             }
@@ -79,8 +91,6 @@ namespace Harmony.IDE.Workflow
             {
                 this.Shape.FillColor = new Color(68, 105, 171);
             }
-            this.Shape.OutlineThickness = 1f;
-            this.Shape.OutlineColor = Color.Transparent;
         }
         [WIP("use delta time")]
         public void Step(float speed)

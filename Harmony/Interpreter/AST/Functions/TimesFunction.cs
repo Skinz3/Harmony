@@ -1,4 +1,5 @@
-﻿using Harmony.Interpreter.AST.Statements;
+﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Statements;
 using Harmony.Sheets;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Harmony.Interpreter.AST.Functions
             get;
             set;
         }
-        public TimesFunction(IEntity parent, int amount) : base(parent)
+        public TimesFunction(IEntity parent, ParserRuleContext context, int amount) : base(parent, context)
         {
             this.Amount = amount;
         }
@@ -49,7 +50,7 @@ namespace Harmony.Interpreter.AST.Functions
             {
                 foreach (var note in clonedNotes)
                 {
-                    SheetNote newNote = new SheetNote(note.Number, note.Start + offset, note.End + offset, note.Velocity);
+                    SheetNote newNote = new SheetNote(note.Number, note.Start + offset, note.End + offset, note.Velocity, this);
                     notes.Add(newNote);
                 }
 

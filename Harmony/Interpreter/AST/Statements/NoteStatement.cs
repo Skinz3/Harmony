@@ -42,7 +42,7 @@ namespace Harmony.Interpreter.AST.Statements
         {
             var result = new SheetNote[1]
             {
-                new SheetNote(Note.Number,time, time +Duration,Velocity),
+                new SheetNote(Note.Number,time, time +Duration,Velocity,this),
             };
 
             return result.ToList();

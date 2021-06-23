@@ -1,4 +1,5 @@
-﻿using Harmony.Interpreter.AST.Statements;
+﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Statements;
 using Harmony.Notes;
 using Harmony.Sheets;
 using System;
@@ -16,7 +17,7 @@ namespace Harmony.Interpreter.AST.Functions
             get;
             set;
         }
-        public AddFunction(IEntity parent, Note target) : base(parent)
+        public AddFunction(IEntity parent, ParserRuleContext context, Note target) : base(parent, context)
         {
             this.Target = target;
         }
@@ -28,14 +29,14 @@ namespace Harmony.Interpreter.AST.Functions
 
         public override void Prepare()
         {
-            
+
         }
 
         protected override void Execute(ref float time, List<SheetNote> notes)
         {
             var firstNote = notes.First();
 
-            notes.Add(new SheetNote(Target.Number, firstNote.Start, firstNote.End, firstNote.Velocity));
+            notes.Add(new SheetNote(Target.Number, firstNote.Start, firstNote.End, firstNote.Velocity, this));
         }
     }
 }

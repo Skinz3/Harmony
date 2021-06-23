@@ -1,4 +1,5 @@
-﻿using Harmony.Interpreter.AST.Statements;
+﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Statements;
 using Harmony.Sheets;
 using System;
 using System.Collections.Generic;
@@ -16,16 +17,16 @@ namespace Harmony.Interpreter.AST.Functions
             set;
         }
 
-        public TransposeFunction(IEntity parent, int delta) : base(parent)
+        public TransposeFunction(IEntity parent, ParserRuleContext context, int delta) : base(parent, context)
         {
             this.Delta = delta;
         }
 
-      
+
 
         public override void Prepare()
         {
-           
+
         }
 
         public override float GetDuration()

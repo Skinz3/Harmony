@@ -1,4 +1,5 @@
-﻿using Harmony.Interpreter.AST.Statements;
+﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Statements;
 using Harmony.Sheets;
 using System;
 using System.Collections.Generic;
@@ -23,13 +24,17 @@ namespace Harmony.Interpreter.AST.Functions
             set;
         }
 
-        public ArpeggioFunction(IEntity parent, StrumTypeEnum type) : base(parent)
+        public ArpeggioFunction(IEntity parent, ParserRuleContext context, StrumTypeEnum type) : base(parent, context)
         {
             this.Type = type;
         }
 
         protected override void Execute(ref float time, List<SheetNote> notes)
         {
+            if (notes.Count == 1)
+            {
+                return;
+            }
             if (Type == StrumTypeEnum.backward)
             {
                 float totalDuration = Parent.GetLeftDuration();
@@ -88,7 +93,7 @@ namespace Harmony.Interpreter.AST.Functions
                     float start = offsetStart + noteDuration * (i - 1);
                     float end = start + noteDuration;
 
-                    SheetNote note = new SheetNote(inputNotes[i].Number, start, end, inputNotes[i].Velocity);
+                    SheetNote note = new SheetNote(inputNotes[i].Number, start, end, inputNotes[i].Velocity, this);
                     notes.Add(note);
                 }
             }

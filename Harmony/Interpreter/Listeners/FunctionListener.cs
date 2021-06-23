@@ -49,12 +49,12 @@ namespace Harmony.Interpreter
         public override void EnterTransposeFunction([NotNull] HarmonyParser.TransposeFunctionContext context)
         {
             int value = context.value.Get<int>();
-            this.Result = new TransposeFunction(Parent, value);
+            this.Result = new TransposeFunction(Parent,context, value);
         }
         public override void EnterPropagateFunction([NotNull] HarmonyParser.PropagateFunctionContext context)
         {
             int amount = context.amount.Get<int>();
-            this.Result = new PropagateFunction(Parent, amount);
+            this.Result = new PropagateFunction(Parent, context, amount);
         }
         public override void EnterArpeggioFunction([NotNull] HarmonyParser.ArpeggioFunctionContext context)
         {
@@ -68,7 +68,7 @@ namespace Harmony.Interpreter
 
             if (Enum.TryParse(strumTypeText, out strumType) && strumType != StrumTypeEnum.unknown)
             {
-                this.Result = new ArpeggioFunction(Parent, strumType);
+                this.Result = new ArpeggioFunction(Parent, context, strumType);
             }
             else
             {
@@ -78,7 +78,7 @@ namespace Harmony.Interpreter
         public override void EnterStrumFunction([NotNull] HarmonyParser.StrumFunctionContext context)
         {
             float offset = context.offset.Get<float>();
-            this.Result = new StrumFunction(Parent, offset);
+            this.Result = new StrumFunction(Parent, context, offset);
         }
         public override void EnterBlockFunction([NotNull] HarmonyParser.BlockFunctionContext context)
         {
@@ -108,18 +108,18 @@ namespace Harmony.Interpreter
             {
                 return;
             }
-            Result = new AddFunction(Parent, note);
+            Result = new AddFunction(Parent, context, note);
 
             base.EnterAddFunction(context);
         }
         public override void EnterTimesFunction([NotNull] HarmonyParser.TimesFunctionContext context)
         {
             int amount = context.amount.Get<int>();
-            this.Result = new TimesFunction(Parent, amount);
+            this.Result = new TimesFunction(Parent, context, amount);
         }
         public override void EnterBassFunction([NotNull] HarmonyParser.BassFunctionContext context)
         {
-            this.Result = new BassFunction(Parent);
+            this.Result = new BassFunction(Parent, context);
         }
     }
 }

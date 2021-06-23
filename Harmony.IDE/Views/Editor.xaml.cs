@@ -50,6 +50,12 @@ namespace Harmony.IDE.Views
             set;
         }
 
+        private DateTime? LastTimeEdit
+        {
+            get;
+            set;
+        }
+
         public Editor()
         {
             InitializeComponent();
@@ -86,18 +92,80 @@ namespace Harmony.IDE.Views
                 chords.Items.Add(chord);
             }
 
-            textEditor.TextArea.TextEntered += OnTextEntered;
+            textEditor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
+            textEditor.TextChanged += TextEditor_TextChanged;
+
+            Renderer.Keyboard.OnKeyPressed += OnKeyPressed;
         }
 
-        private void OnTextEntered(object sender, TextCompositionEventArgs e)
+        private void OnKeyPressed(Keys.Key key)
         {
-            Save(false);
+            if (Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                textEditor.Document.Insert(textEditor.CaretOffset, key.Note.ToString()+",");
+            }
+        }
 
+        private void TextEditor_TextChanged(object sender, EventArgs e)
+        {
+            LastTimeEdit = DateTime.Now;
+        }
+
+        private void Compile()
+        {
+            Renderer.Flow.Pause();
             string text = textEditor.Text;
             HarmonyScript script = new HarmonyScript(text);
             LoadScript(script, false);
-            Renderer.Flow.Pause();
 
+
+            if (script.Errors.Count == 0)
+            {
+                SnapToConcernedLine();
+
+                Renderer.Flow.Play();
+            }
+            else
+            {
+                Renderer.Flow.Pause();
+            }
+
+
+
+
+        }
+        private void Caret_PositionChanged(object sender, EventArgs e)
+        {
+            LastTimeEdit = DateTime.Now;
+
+          
+
+        }
+        private void SnapToConcernedLine()
+        {
+            var line = textEditor.TextArea.Caret.Position.Line;
+
+            var notes = Renderer.Flow.Notes.Where(x => x.SheetNote.Entity.Context.Start.Line == line || x.SheetNote.Entity.Context.Stop.Line == line);
+
+
+            foreach (var note in Renderer.Flow.Notes)
+            {
+                note.Shape.OutlineColor = SFML.Graphics.Color.Transparent;
+               
+            }
+
+            if (notes.Count() > 0)
+            {
+                Renderer.Flow.Snap(notes.First().SheetNote.Start - 2f);
+
+                foreach (var note in notes)
+                {
+                    note.Shape.OutlineColor = SFML.Graphics.Color.White;
+                    note.Shape.OutlineThickness =2f;
+                }
+            }
+
+        
         }
 
         public bool LoadInstrument()
@@ -161,6 +229,11 @@ namespace Harmony.IDE.Views
             {
                 Dispatcher.Invoke(() =>
                 {
+                    if (LastTimeEdit.HasValue && (DateTime.Now - LastTimeEdit).Value.TotalSeconds > 1)
+                    {
+                        Compile();
+                        LastTimeEdit = null;
+                    }
                     UpdateTime();
                     Renderer.Loop();
                 });

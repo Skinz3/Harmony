@@ -1,4 +1,5 @@
-﻿using Harmony.Interpreter.AST.Functions;
+﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Functions;
 using Harmony.Notes;
 using Harmony.Sheets;
 using System;
@@ -19,7 +20,11 @@ namespace Harmony.Interpreter.AST
 
         void Prepare();
 
-      
+        ParserRuleContext Context
+        {
+            get;
+            set;
+        }
         Function TargetFunction
         {
             get;

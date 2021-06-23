@@ -1,4 +1,5 @@
-﻿using Harmony.Sheets;
+﻿using Antlr4.Runtime;
+using Harmony.Sheets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Harmony.Interpreter.AST.Functions
             get;
             set;
         }
-        public StrumFunction(IEntity parent, float offset) : base(parent)
+        public StrumFunction(IEntity parent, ParserRuleContext context, float offset) : base(parent, context)
         {
             this.Offset = GetParentStatement().GetTimeSeconds(offset) / 100f;
         }

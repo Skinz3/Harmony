@@ -41,7 +41,7 @@ namespace Harmony.Interpreter.AST.Statements
 
             if (TargetUnit == null)
             {
-                Parent.Script.Errors.SemanticError(RuleContext, "Unknown unit : " + Name);
+                Parent.Script.Errors.SemanticError(Context, "Unknown unit : " + Name);
             }
 
             base.Prepare();

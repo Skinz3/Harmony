@@ -23,15 +23,15 @@ namespace Harmony.Interpreter.AST.Statements
             set;
         }
 
-        protected ParserRuleContext RuleContext
+        public ParserRuleContext Context
         {
             get;
-            private set;
+            set;
         }
         public Statement(Unit parent, ParserRuleContext ruleContext)
         {
             this.Parent = parent;
-            this.RuleContext = ruleContext;
+            this.Context = ruleContext;
         }
 
 
@@ -74,7 +74,7 @@ namespace Harmony.Interpreter.AST.Statements
         public float GetLeftDuration()
         {
             return GetDuration();
-           
+
         }
     }
 }

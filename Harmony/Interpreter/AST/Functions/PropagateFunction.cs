@@ -1,4 +1,5 @@
-﻿using Harmony.Interpreter.AST.Statements;
+﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Statements;
 using Harmony.Notes;
 using Harmony.Sheets;
 using System;
@@ -17,7 +18,7 @@ namespace Harmony.Interpreter.AST.Functions
             set;
         }
 
-        public PropagateFunction(IEntity parent, int delta) : base(parent)
+        public PropagateFunction(IEntity parent, ParserRuleContext context, int delta) : base(parent, context)
         {
             this.Delta = delta;
         }
@@ -43,7 +44,7 @@ namespace Harmony.Interpreter.AST.Functions
 
                     if (addedNote != null)
                     {
-                        notes.Add(new SheetNote(addedNote.Number, sheetNote.Start, sheetNote.End, sheetNote.Velocity));
+                        notes.Add(new SheetNote(addedNote.Number, sheetNote.Start, sheetNote.End, sheetNote.Velocity, this));
                     }
                 }
 
