@@ -20,21 +20,58 @@ namespace Harmony.IDE
     /// </summary>
     public partial class Configuration : Window
     {
-        public Configuration()
+        HarmonyRenderer Renderer
         {
+            get;
+            set;
+        }
+        public Configuration(HarmonyRenderer renderer)
+        {
+            this.Renderer = renderer;
             InitializeComponent();
             headerBar.MouseDown += (s, e) => DragMove();
 
-            foreach (var instrument in InstrumentsManager.GetInstrumentNames())
+            foreach (var instrument in InstrumentsManager.GetInstruments())
             {
                 instruments.Items.Add(instrument);
             }
 
+            drawMeta.IsChecked = ConfigManager.Instance.DisplayKeyMetadata;
         }
 
         private void ExitClick(object sender, MouseButtonEventArgs e)
         {
             this.Close();
+        }
+
+        private void instruments_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var instrument = (Instrument)instruments.SelectedItem;
+
+            if (instrument != null)
+            {
+                ConfigManager.Instance.Instrument = instrument.Name;
+                Renderer.Flow.SheetPlayer.InstrumentPlayer.DefineInstrument(instrument);
+                ConfigManager.Save();
+            }
+
+        }
+
+        private void drawMeta_Click(object sender, RoutedEventArgs e)
+        {
+            if (drawMeta.IsChecked.Value)
+            {
+                Renderer.Keyboard.DisplayKeyMetadata();
+                ConfigManager.Instance.DisplayKeyMetadata = true;
+
+            }
+            else
+            {
+                Renderer.Keyboard.HideKeyMetadata();
+                ConfigManager.Instance.DisplayKeyMetadata = false;
+            }
+
+            ConfigManager.Save();
         }
     }
 }

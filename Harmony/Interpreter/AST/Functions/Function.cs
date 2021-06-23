@@ -22,10 +22,11 @@ namespace Harmony.Interpreter.AST.Functions
             this.Parent = parent;
         }
 
-        public abstract void Apply(List<SheetNote> notes);
+        public abstract void Apply(ref float time, Statement statement, List<SheetNote> notes);
 
         public abstract void Prepare();
 
+        public abstract float GetAdditionalDuration();
 
     }
 }

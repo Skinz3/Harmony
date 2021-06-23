@@ -10,31 +10,27 @@ namespace Harmony.Interpreter.AST.Functions
 {
     public class StrumFunction : Function
     {
-        private float Delta
+    
+        public StrumFunction(Statement parent) : base(parent)
         {
-            get;
-            set;
-        }
-        public StrumFunction(Statement parent, float delta) : base(parent)
-        {
-            this.Delta = parent.GetTimeSeconds(delta);
+             
         }
 
-        public override void Apply(List<SheetNote> notes)
+        public override void Apply(ref float time, Statement statement, List<SheetNote> notes)
         {
-            float total = notes.Count * Delta;
+            float totalDuration = statement.GetTotalDuration();
 
-            foreach (var note in notes)
-            {
-                note.Start -= total;
-            }
-            float offset = 0f;
+            float noteDuration = totalDuration / notes.Count;
 
-            foreach (var note in notes)
+            for (int i = 0; i < notes.Count; i++)
             {
-                note.Start += offset;
-                offset += Delta;
+                notes[i].Start += noteDuration * i;
             }
+        }
+
+        public override float GetAdditionalDuration()
+        {
+            return 0f;
         }
 
         public override void Prepare()

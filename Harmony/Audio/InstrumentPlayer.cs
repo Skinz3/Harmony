@@ -63,7 +63,10 @@ namespace Harmony.Audio
         }
         public void Play(int keyNumber, float volume)
         {
-            KeySounds[keyNumber].Play(volume);
+            if (KeySounds.ContainsKey(keyNumber))
+            {
+                KeySounds[keyNumber].Play(volume);
+            }
         }
 
         public void Update()
@@ -83,7 +86,10 @@ namespace Harmony.Audio
 
         public void End(int noteNumber)
         {
-            KeySounds[noteNumber].End();
+            if (KeySounds.ContainsKey(noteNumber))
+            {
+                KeySounds[noteNumber].End();
+            }
         }
     }
 
@@ -140,7 +146,7 @@ namespace Harmony.Audio
                 {
                     SoundStopping.Volume -= speed;
 
-                   
+
                 }
                 else
                 {

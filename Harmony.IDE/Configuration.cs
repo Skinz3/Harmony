@@ -20,13 +20,18 @@ namespace Harmony.IDE
             get;
             set;
         }
-
+        public string Instrument
+        {
+            get;
+            set;
+        }
         public static Config Default()
         {
             return new Config()
             {
                 ScriptPath = string.Empty,
                 DisplayKeyMetadata = false,
+                Instrument = string.Empty,
             };
         }
     }

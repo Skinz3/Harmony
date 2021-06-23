@@ -27,7 +27,12 @@ namespace Harmony.Interpreter.AST.Statements
 
         public override List<SheetNote> Execute(ref float time)
         {
+            float oldTime = time;
+
             var result = TargetUnit.Execute(ref time);
+
+            time = oldTime;
+
             return result;
         }
         public override void Prepare()
@@ -42,7 +47,7 @@ namespace Harmony.Interpreter.AST.Statements
             base.Prepare();
         }
 
-        public override float GetDuration()
+        protected override float GetDuration()
         {
             if (TargetUnit == null)
             {

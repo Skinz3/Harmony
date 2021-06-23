@@ -54,7 +54,7 @@ namespace Harmony.Interpreter.AST.Statements
             return result;
         }
 
-        public override float GetDuration()
+        protected override float GetDuration()
         {
             return Duration;
         }

@@ -34,7 +34,7 @@ namespace Harmony.Interpreter.AST.Statements
             this.Velocity = velocity;
         }
 
-        public override float GetDuration()
+        protected override float GetDuration()
         {
             return Duration;
         }

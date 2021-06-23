@@ -131,15 +131,7 @@ namespace Harmony.Interpreter
                 float time = 0;
                 this.Sheet.Notes = MainUnit.Execute(ref time).ToList();
 
-                var lastStatement = MainUnit.Statements.LastOrDefault(x => x.GetDuration() > 0f);
-
-                if (lastStatement != null)
-                {
-                    time += lastStatement.GetDuration();
-                }
-                
-
-                this.Sheet.TotalDuration = time;
+                this.Sheet.TotalDuration = MainUnit.GetDuration();
             }
         }
 

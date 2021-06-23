@@ -80,8 +80,6 @@ namespace Harmony.Audio
 
             if (Sheet != null)
             {
-                float delta = (float)(deltaTime * (Sheet.Tempo / 60d));
-                Position += delta;
 
                 if (Position >= Sheet.TotalDuration)
                 {
@@ -89,6 +87,11 @@ namespace Harmony.Audio
                     Pause();
                     return;
                 }
+
+
+                float delta = (float)(deltaTime * (Sheet.Tempo / 60d));
+                Position += delta;
+
 
                 var notes = Notes.FindAll(x => x.Start <= Position);
 

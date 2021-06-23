@@ -20,12 +20,17 @@ namespace Harmony.Interpreter.AST.Functions
             this.Amount = amount;
         }
 
-        public override void Apply(List<SheetNote> notes)
+        public override void Apply(ref float time, Statement statement, List<SheetNote> notes)
         {
             if (notes.Count== 0)
             {
                 return;
             }
+
+
+            var totalDuration = statement.GetTotalDuration();
+
+            time += totalDuration * Amount;
 
             var clonedNotes = notes.ToArray();
 
@@ -42,11 +47,18 @@ namespace Harmony.Interpreter.AST.Functions
 
                 offset = notes.Last().End;
             }
+
+
         }
 
         public override void Prepare()
         {
 
+        }
+
+        public override float GetAdditionalDuration()
+        {
+            return Parent.GetTotalDuration() * Amount;
         }
     }
 }

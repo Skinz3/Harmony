@@ -49,7 +49,7 @@ namespace Harmony.Interpreter.AST
 
                 foreach (var function in statement.Functions)
                 {
-                    function.Apply(result);
+                    function.Apply(ref time,statement,result);
                 }
 
                 results.AddRange(result);
@@ -60,7 +60,7 @@ namespace Harmony.Interpreter.AST
 
         public float GetDuration()
         {
-            return Statements.Sum(x => x.GetDuration());
+            return Statements.Sum(x => x.GetTotalDuration());
         }
 
         

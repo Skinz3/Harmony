@@ -21,7 +21,7 @@ namespace Harmony.Interpreter.AST.Functions
             this.Delta = delta;
         }
 
-        public override void Apply(List<SheetNote> notes)
+        public override void Apply(ref float time, Statement statement, List<SheetNote> notes)
         {
             foreach (var note in notes)
             {
@@ -32,6 +32,11 @@ namespace Harmony.Interpreter.AST.Functions
         public override void Prepare()
         {
            
+        }
+
+        public override float GetAdditionalDuration()
+        {
+            return 0f;
         }
     }
 }

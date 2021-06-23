@@ -79,6 +79,15 @@ namespace Harmony.IDE.Workflow
 
         public void Snap(float time)
         {
+            if (time > SheetPlayer.Sheet.TotalDuration)
+            {
+                time = SheetPlayer.Sheet.TotalDuration;
+            }
+            if (time < 0)
+            {
+                time = 0;
+            }
+
             bool wasPlaying = !SheetPlayer.Paused;
 
             this.Load(SheetPlayer.Sheet);

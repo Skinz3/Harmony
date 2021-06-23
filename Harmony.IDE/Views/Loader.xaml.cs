@@ -3,7 +3,9 @@ using Harmony.Instruments;
 using Harmony.Notes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -29,35 +32,67 @@ namespace Harmony.IDE.Views
             InitializeComponent();
             this.Loaded += OnLoaded;
         }
-
+        public static IntPtr GetHandler(Window window)
+        {
+            var interop = new WindowInteropHelper(window);
+            return interop.Handle;
+        }
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             var window = Window.GetWindow(this);
 
             Thread worker = new Thread(new ThreadStart(() =>
               {
+                  window.Dispatcher.Invoke(() =>
+                   {
+                       state.Content = "Loading data...";
+
+                   });
+
                   NotesManager.Initialize();
                   ChordsManager.Initialize("chords.json");
                   ConfigManager.Initialize();
                   InstrumentsManager.Initialize();
 
-                  try
+                  Editor editor = null;
+
+                  var result = window.Dispatcher.BeginInvoke((Action)(() =>
+                  {
+                      editor = new Editor();
+                  }));
+
+                  result.Wait();
+
+                  window.Dispatcher.Invoke(() =>
+                  {
+                      state.Content = "Loading Instrument...";
+                  });
+
+                  if (!editor.LoadInstrument())
                   {
                       window.Dispatcher.Invoke(() =>
                       {
-                          window.Content = new Editor();
+                          state.Content = "Unable to find any instrument. Aborting.";
+                       
                       });
                   }
-                  catch
+                  else
                   {
-                      Environment.Exit(0);
+
+                      window.Dispatcher.Invoke(() =>
+                      {
+                          window.Content = editor;
+
+                      });
                   }
+
+
 
               }));
 
             worker.Start();
-
-
         }
+
+
     }
 }

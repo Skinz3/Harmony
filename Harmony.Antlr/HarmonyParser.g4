@@ -83,7 +83,7 @@ transposeFunction:
     ;
 
 strumFunction:
-    STRUM'('offset=number')'
+    STRUM'(' ')'
     ;
 
 timesFunction:

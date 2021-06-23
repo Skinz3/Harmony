@@ -34,7 +34,7 @@ namespace Harmony.Interpreter.AST.Statements
             if (Target != null)
             {
                 Target.Prepare();
-                this.Duration = Target.GetDuration();
+                this.Duration = Target.GetTotalDuration();
             }
 
             base.Prepare();
@@ -53,9 +53,9 @@ namespace Harmony.Interpreter.AST.Statements
             return result;
         }
 
-        public override float GetDuration()
+        protected override float GetDuration()
         {
-            return 0f;
+            return Duration;
         }
     }
 }

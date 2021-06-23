@@ -55,8 +55,8 @@ namespace Harmony.Interpreter
         }
         public override void EnterStrumFunction([NotNull] HarmonyParser.StrumFunctionContext context)
         {
-            float shift = context.offset.Get<float>();
-            this.Result = new StrumFunction(Parent, shift);
+           
+            this.Result = new StrumFunction(Parent);
         }
         public override void EnterTimesFunction([NotNull] HarmonyParser.TimesFunctionContext context)
         {

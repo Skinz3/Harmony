@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -43,43 +44,84 @@ namespace Harmony.IDE.Views
             set;
         }
 
+        private Thumb TimeSliderThumb
+        {
+            get;
+            set;
+        }
+
         public Editor()
         {
             InitializeComponent();
 
-            AvalonUtils.ApplySyntaxRules("harmony.xshd", textEditor);
-            this.Loaded += OnLoad;
-            this.KeyDown += OnKeyDown;
-        }
-
-        private void OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == System.Windows.Input.Key.S && Keyboard.Modifiers == ModifierKeys.Control)
-            {
-                host.Focus();
-                Save();
-            }
-        }
-
-        private void OnLoad(object sender, RoutedEventArgs e)
-        {
             host.Child = new DrawingSurface();
             host.SizeChanged += Host_SizeChanged;
+            AvalonUtils.ApplySyntaxRules("harmony.xshd", textEditor);
+
+            this.KeyDown += OnKeyDown;
 
             var settings = new SFML.Window.ContextSettings();
             settings.AntialiasingLevel = 7;
 
             Renderer = new HarmonyRenderer(host.Child.Handle, settings);
 
-            Renderer.Keyboard.InstrumentPlayer.DefineInstrument(InstrumentsManager.GetInstrument("Concert Grand"));
+            this.TimeSliderThumb = GetThumb(timeSlider);
 
             RestoreScript();
 
             var timer = new HighPrecisionTimer((int)(1000d / Constants.FramerateLimit));
             timer.Tick += OnTick;
 
+            if (ConfigManager.Instance.DisplayKeyMetadata)
+            {
+                Renderer.Keyboard.DisplayKeyMetadata();
+            }
+            else
+            {
+                Renderer.Keyboard.HideKeyMetadata();
+            }
+
+            foreach (var chord in ChordsManager.GetChordNames())
+            {
+                chords.Items.Add(chord);
+            }
         }
 
+        public bool LoadInstrument()
+        {
+            Instrument instrument = InstrumentsManager.GetInstrument(ConfigManager.Instance.Instrument);
+
+            if (instrument == null)
+            {
+                var defaultInstrument = InstrumentsManager.GetInstruments().FirstOrDefault();
+
+                if (defaultInstrument == null)
+                {
+                    return false;
+                }
+
+                instrument = defaultInstrument;
+                ConfigManager.Instance.Instrument = defaultInstrument.Name;
+                ConfigManager.Save();
+            }
+            Renderer.Keyboard.InstrumentPlayer.DefineInstrument(instrument);
+            return true;
+        }
+
+        private static Thumb GetThumb(Slider slider)
+        {
+            var track = slider.Template.FindName("PART_Track", slider) as Track;
+            return track == null ? null : track.Thumb;
+        }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                host.Focus();
+                Save();
+            }
+        }
 
         private void RestoreScript()
         {
@@ -117,12 +159,12 @@ namespace Harmony.IDE.Views
             Environment.Exit(0);
         }
 
-        private void GridSplitter_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        private void GridSplitter_DragStarted(object sender, DragStartedEventArgs e)
         {
             host.Visibility = Visibility.Hidden;
         }
 
-        private void GridSplitter_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        private void GridSplitter_DragCompleted(object sender, DragCompletedEventArgs e)
         {
             host.Visibility = Visibility.Visible;
 
@@ -134,29 +176,6 @@ namespace Harmony.IDE.Views
             Renderer.RecreateWindow(host.Child.Handle);
         }
 
-        private void CheckBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (drawMeta.IsChecked.Value)
-            {
-                Renderer.Keyboard.DisplayKeyMetadata();
-            }
-            else
-            {
-                Renderer.Keyboard.HideKeyMetadata();
-            }
-        }
-
-
-        [WIP("temporary")]
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-            var sheet = Sheet.FromMIDI(@"ex.mid");
-
-            sheet.Tempo = 60;
-
-            Renderer.Load(sheet);
-        }
 
         private void PauseClick(object sender, RoutedEventArgs e)
         {
@@ -171,7 +190,7 @@ namespace Harmony.IDE.Views
         private void PreferencesClick(object sender, RoutedEventArgs e)
         {
             ConfigurationWindow?.Close();
-            this.ConfigurationWindow = new Configuration();
+            this.ConfigurationWindow = new Configuration(Renderer);
             ConfigurationWindow.Show();
         }
 
@@ -209,8 +228,13 @@ namespace Harmony.IDE.Views
                 UpdateTime();
             }
         }
+
         private void UpdateTime()
         {
+            if (TimeSliderThumb != null && TimeSliderThumb.IsDragging)
+            {
+                return;
+            }
             if (Renderer.Flow.SheetPlayer.Sheet == null)
             {
                 return;
@@ -218,12 +242,8 @@ namespace Harmony.IDE.Views
 
             TimeSpan position = TimeSpan.FromSeconds(Renderer.Flow.SheetPlayer.Position);
             TimeSpan totalDuration = TimeSpan.FromSeconds(Renderer.Flow.SheetPlayer.Sheet.TotalDuration);
-
-            if (!timeSlider.IsMouseOver)
-            {
-                timeSlider.Maximum = totalDuration.TotalSeconds;
-                timeSlider.Value = position.TotalSeconds;
-            }
+            timeSlider.Maximum = totalDuration.TotalSeconds;
+            timeSlider.Value = position.TotalSeconds;
             time.Content = position.ToString(@"mm\:ss") + " / " + totalDuration.ToString(@"mm\:ss");
         }
         private void CompileClick(object sender, RoutedEventArgs e)
@@ -293,11 +313,74 @@ namespace Harmony.IDE.Views
             Window.GetWindow(this).WindowState = WindowState.Minimized;
         }
 
-        private void timeSlider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+
+        [WIP("temporary")]
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+            var sheet = Sheet.FromMIDI(@"ex.mid");
+
+            sheet.Tempo = 60;
+
+            foreach (var note in sheet.Notes)
+            {
+                //  note.Number++;
+            }
+            Renderer.Load(sheet);
+        }
+
+
+        private void timeSlider_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
             if (Renderer.Flow.SheetPlayer.Sheet != null)
             {
                 Renderer.Snap((float)timeSlider.Value);
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (Renderer.Flow.SheetPlayer.Sheet != null)
+            {
+                Renderer.Snap(Renderer.Flow.SheetPlayer.Position + 3f);
+            }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            if (Renderer.Flow.SheetPlayer.Sheet != null)
+            {
+                Renderer.Snap(Renderer.Flow.SheetPlayer.Position - 3f);
+            }
+        }
+
+        private void chords_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (chords.SelectedItem == null)
+            {
+                return;
+            }
+            Renderer.Flow.SheetPlayer.InstrumentPlayer.Stop();
+            Renderer.Flow.Pause();
+            Renderer.Keyboard.UnselectAll();
+
+            var chord = ChordsManager.BuildChord(chords.SelectedItem.ToString(), 4);
+
+            foreach (var note in chord.Notes)
+            {
+                Renderer.Keyboard.SelectKey(note.Number);
+                Renderer.Flow.SheetPlayer.InstrumentPlayer.Play(note.Number, 100f);
+            }
+        }
+
+        private void chord_TextChanged(object sender, TextChangedEventArgs e)
+        {
+    
+            chords.Items.Clear();
+
+            foreach (var chord in ChordsManager.GetChordNames().Where(x => x.ToLower().Contains(chord.Text.ToLower())))
+            {
+                chords.Items.Add(chord);
             }
         }
     }

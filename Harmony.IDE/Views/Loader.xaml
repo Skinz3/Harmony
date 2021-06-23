@@ -4,12 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Harmony.IDE.Views"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="1130" d:DesignWidth="1917">
-    <Grid Background="#FF303036">
-        <Label HorizontalAlignment="Center" HorizontalContentAlignment="Center" Content="Welcome to Harmony" FontSize="20" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Margin="0,0,-0.2,440.6" Height="50" VerticalAlignment="Bottom" Width="1917"/>
-        <ProgressBar IsIndeterminate="True" Foreground="#4b8efa" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,17" Width="1897" Background="#FF3F3F46" Height="6" BorderBrush="#FF303036"/>
-        <Label HorizontalAlignment="Center" HorizontalContentAlignment="Center" Content="Loading..." FontSize="15" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Margin="0,0,-0.2,27.6" Height="29" VerticalAlignment="Bottom" Width="1917"/>
+    <Grid Background="#FF1C1C22">
+        <local:Spinner VerticalAlignment="Bottom" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Height="100" Margin="0,0,0,415"  Width="1917"/>
+        <Label VerticalAlignment="Bottom"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Content="Welcome to Harmony" FontSize="35" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Margin="0,0,0,545" Height="50" Width="1917"/>
+        <Label VerticalAlignment="Bottom"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Content="Harmony IDE version : 0.0.1 (Pre-release)" FontSize="13" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Height="34"  Width="1917"/>
+        <Label Name="state" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Content="Warming up ..." FontSize="13" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Height="34" VerticalAlignment="Bottom" Width="1917" Margin="0,0,0,506"/>
 
     </Grid>
+
+
+
 </UserControl>

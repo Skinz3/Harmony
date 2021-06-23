@@ -15,7 +15,7 @@ namespace Harmony.Interpreter.AST.Functions
         {
         }
 
-        public override void Apply(List<SheetNote> notes)
+        public override void Apply(ref float time, Statement statement, List<SheetNote> notes)
         {
             var sheetNote = notes.FirstOrDefault();
 
@@ -23,6 +23,11 @@ namespace Harmony.Interpreter.AST.Functions
 
             notes.Add(new SheetNote(note.Number, sheetNote.Start, sheetNote.End, sheetNote.Velocity));
 
+        }
+
+        public override float GetAdditionalDuration()
+        {
+            return 0f;
         }
 
         public override void Prepare()

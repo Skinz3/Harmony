@@ -41,12 +41,16 @@ namespace Harmony.Instruments
         }
         public static Instrument GetInstrument(string name)
         {
+            if (!Instruments.ContainsKey(name))
+            {
+                return null;
+            }
             return Instruments[name];
         }
 
-        public static IEnumerable<string> GetInstrumentNames()
+        public static IEnumerable<Instrument> GetInstruments()
         {
-            return Instruments.Keys;
+            return Instruments.Values;
         }
     }
 }

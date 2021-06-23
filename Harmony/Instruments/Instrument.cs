@@ -28,6 +28,10 @@ namespace Harmony.Instruments
         {
             this.Notes = new List<InstrumentNote>();
         }
+        public override string ToString()
+        {
+            return Name;
+        }
     }
     public class InstrumentNote
     {

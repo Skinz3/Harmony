@@ -59,15 +59,20 @@
                     <Path  Fill="#FFF1F1F1"
                         Data="M 0,0 L 12,7 0,14 Z"/>
                 </Button>
-                <CheckBox  Name="drawMeta" Click="CheckBox_Click" Content="Draw Key Informations" Foreground="#e8e8e8" Margin="1162,173,595,0" Grid.Row="2" VerticalAlignment="Top" Background="#FFF1F1F1" BorderBrush="#FF3F3F46" FontFamily="/Harmony.IDE;component/#Caviar Dreams"/>
-                <Button Content="Test" HorizontalAlignment="Right" Width="105" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="0,174,120,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="1.82,4.292" Grid.Row="2" Click="Button_Click" FontFamily="/Harmony.IDE;component/#Caviar Dreams">
+                <Button Content="Test" HorizontalAlignment="Right" Width="105" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="0,69,430,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="1.82,4.292" Grid.Row="2" Click="Button_Click" FontFamily="/Harmony.IDE;component/#Caviar Dreams">
 
                 </Button>
-                <Button Content="Compile"  HorizontalAlignment="Right" Width="105" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="0,174,10,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="1.82,4.292" Grid.Row="2" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="CompileClick"/>
-                <ListBox Name="scriptErrors" HorizontalAlignment="Right" Height="114" Margin="0,55,10,0" Grid.Row="2" VerticalAlignment="Top" Width="745" Background="#FF3F3F46" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFFF2E2E" BorderBrush="#FF303036"/>
-                <Label x:Name="scriptName" HorizontalAlignment="Right" Content="Script name : " FontSize="11" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Margin="0,31,677,0" Grid.Row="2" Height="24" VerticalAlignment="Top"/>
-                <Slider Thumb.DragCompleted="timeSlider_DragCompleted"  Name="timeSlider" HorizontalAlignment="Right"  Margin="0,9.6,9.8,0" Grid.Row="1" VerticalAlignment="Top" Width="549" Value="0" Height="24" Grid.RowSpan="2"/>
-                <Label x:Name="time" HorizontalAlignment="Right" Content="00:00 / 00:00" FontSize="10" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Margin="0,0,564,0" Grid.Row="2" Height="24" VerticalAlignment="Top"/>
+                <Button Content="Compile"  HorizontalAlignment="Right" Width="105" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="0,98,430,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="1.82,4.292" Grid.Row="2" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="CompileClick"/>
+                <ListBox Name="scriptErrors" HorizontalAlignment="Right" Height="103" Margin="0,199,10,0" Grid.Row="2" VerticalAlignment="Top" Width="745" Background="#FF3F3F46" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFFF2E2E" BorderBrush="#FF303036"/>
+                <Label x:Name="scriptName" HorizontalAlignment="Right" Content="Script name : " FontSize="11" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Margin="0,1,456,0" Grid.Row="2" Height="24" VerticalAlignment="Top"/>
+                <Slider  Thumb.DragDelta="timeSlider_DragDelta" Name="timeSlider" HorizontalAlignment="Right"  Margin="0,29,10,0" Grid.Row="2" VerticalAlignment="Top" Width="667" Value="0" Height="24"/>
+                <Label x:Name="time" HorizontalAlignment="Right" Content="00:00 / 00:00" FontSize="10" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Margin="0,29,682,0" Grid.Row="2" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.37,0.542"/>
+                <Button Content="-3s"   HorizontalAlignment="Right" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="0,0,595,0" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.647,0.5" Grid.Row="2" Click="Button_Click_2">
+                </Button>
+                <Button Content="+3s"   HorizontalAlignment="Right" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="0,0,540,0" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.84,0.5" Grid.Row="2" Click="Button_Click_1">
+                </Button>
+                <ListBox SelectionChanged="chords_SelectionChanged" Name="chords" Background="#FF3F3F46" HorizontalAlignment="Left" Height="86" Margin="1162,97,0,0" Grid.Row="2" VerticalAlignment="Top" Width="210" BorderBrush="#FF303036" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams"/>
+                <TextBox TextChanged="chord_TextChanged" Name="chord" HorizontalAlignment="Left" Height="24" Margin="1162,69,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="210" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF303036"/>
             </Grid>
 
         </Grid>

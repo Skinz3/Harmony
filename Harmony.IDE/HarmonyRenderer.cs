@@ -38,8 +38,6 @@ namespace Harmony.IDE
             this.Flow = new Flow(Keyboard);
             this.Camera = new FlowCamera(Window.GetView(), Keyboard.Position, Flow);
             Keyboard.OnKeyPressed += OnKeyPressed;
-
-
         }
 
 
