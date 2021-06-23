@@ -165,6 +165,19 @@ public partial class HarmonyParserBaseListener : IHarmonyParserListener {
 	public virtual void ExitStepStatement([NotNull] HarmonyParser.StepStatementContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.notesStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterNotesStatement([NotNull] HarmonyParser.NotesStatementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.notesStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitNotesStatement([NotNull] HarmonyParser.NotesStatementContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.blockFunction"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -215,6 +228,19 @@ public partial class HarmonyParserBaseListener : IHarmonyParserListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitTransposeFunction([NotNull] HarmonyParser.TransposeFunctionContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.arpeggioFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterArpeggioFunction([NotNull] HarmonyParser.ArpeggioFunctionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.arpeggioFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitArpeggioFunction([NotNull] HarmonyParser.ArpeggioFunctionContext context) { }
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.strumFunction"/>.

@@ -123,6 +123,7 @@ namespace Harmony.Audio
             this.AuxiliarSounds = new List<Sound>();
             this.Note = note;
         }
+        [WIP("aled cancer...")]
         public void Update()
         {
             foreach (var sound in AuxiliarSounds.Where(x => x.Status != SoundStatus.Playing).ToArray())
@@ -145,7 +146,6 @@ namespace Harmony.Audio
                 if (SoundStopping.Volume > 20f)
                 {
                     SoundStopping.Volume -= speed;
-
 
                 }
                 else
@@ -225,7 +225,6 @@ namespace Harmony.Audio
             {
                 sound.Stop();
             }
-
         }
     }
 }

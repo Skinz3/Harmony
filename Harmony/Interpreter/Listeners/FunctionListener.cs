@@ -56,7 +56,7 @@ namespace Harmony.Interpreter
             int amount = context.amount.Get<int>();
             this.Result = new PropagateFunction(Parent, amount);
         }
-        public override void EnterStrumFunction([NotNull] HarmonyParser.StrumFunctionContext context)
+        public override void EnterArpeggioFunction([NotNull] HarmonyParser.ArpeggioFunctionContext context)
         {
             if (context.IDENTIFIER() == null)
             {
@@ -68,13 +68,17 @@ namespace Harmony.Interpreter
 
             if (Enum.TryParse(strumTypeText, out strumType) && strumType != StrumTypeEnum.unknown)
             {
-                this.Result = new StrumFunction(Parent, strumType);
+                this.Result = new ArpeggioFunction(Parent, strumType);
             }
             else
             {
                 ErrorsHandler.SemanticError(context, "Unknown strum type : " + strumTypeText);
             }
-
+        }
+        public override void EnterStrumFunction([NotNull] HarmonyParser.StrumFunctionContext context)
+        {
+            float offset = context.offset.Get<float>();
+            this.Result = new StrumFunction(Parent, offset);
         }
         public override void EnterBlockFunction([NotNull] HarmonyParser.BlockFunctionContext context)
         {
@@ -84,7 +88,11 @@ namespace Harmony.Interpreter
             {
                 FunctionListener listener = new FunctionListener(this.Result, ErrorsHandler);
                 context.next.EnterRule(listener);
-                Result.TargetFunction = listener.Result;
+
+                if (listener.Result != null && Result != null)
+                {
+                    Result.TargetFunction = listener.Result;
+                }
             }
         }
         public override void EnterAddFunction([NotNull] HarmonyParser.AddFunctionContext context)

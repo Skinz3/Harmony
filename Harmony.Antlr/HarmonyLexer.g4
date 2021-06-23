@@ -22,6 +22,7 @@ ATR_AUTHOR : 'author';
 NOTE : 'note';
 CHORD : 'chord';
 STEP : 'step';
+NOTES : 'notes';
 
 
 //==========================================================
@@ -31,7 +32,7 @@ STEP : 'step';
 TRANSPOSE : 'transpose';
 PROPAGATE : 'propagate';
 STRUM : 'strum';
-
+ARPEGGIO : 'arpeggio';
 TIMES : 'times';
 BASS : 'bass';
 ADD : 'add';

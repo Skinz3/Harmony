@@ -239,7 +239,7 @@ namespace Harmony.IDE.Views
 
             if (script.Errors.Count == 0)
             {
-                scriptName.Content = "Script : " + script.Name;
+                scriptName.Content = "Script : " + script.Name + " (" + script.Sheet.Notes.Count + " notes)";
                 Renderer.Load(script.Sheet);
                 UpdateTime();
             }

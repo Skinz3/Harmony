@@ -141,6 +141,17 @@ public interface IHarmonyParserListener : IParseTreeListener {
 	void ExitStepStatement([NotNull] HarmonyParser.StepStatementContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.notesStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNotesStatement([NotNull] HarmonyParser.NotesStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.notesStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNotesStatement([NotNull] HarmonyParser.NotesStatementContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.blockFunction"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -183,6 +194,17 @@ public interface IHarmonyParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitTransposeFunction([NotNull] HarmonyParser.TransposeFunctionContext context);
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.arpeggioFunction"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterArpeggioFunction([NotNull] HarmonyParser.ArpeggioFunctionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.arpeggioFunction"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitArpeggioFunction([NotNull] HarmonyParser.ArpeggioFunctionContext context);
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.strumFunction"/>.

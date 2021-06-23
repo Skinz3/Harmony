@@ -20,7 +20,7 @@ namespace Harmony.Interpreter.AST.Functions
             this.Amount = amount;
         }
 
-        
+
         public override void Prepare()
         {
 
@@ -28,7 +28,8 @@ namespace Harmony.Interpreter.AST.Functions
 
         public override float GetDuration()
         {
-            return Parent.GetDuration() * (Amount-1);
+            var result = Parent.GetLeftDuration() * (Amount - 1);
+            return result;
         }
 
         protected override void Execute(ref float time, List<SheetNote> notes)
@@ -38,29 +39,13 @@ namespace Harmony.Interpreter.AST.Functions
                 return;
             }
 
-
-            float minStart = float.MaxValue;
-            float maxEnd = 0;
-
-            foreach (var note in notes)
-            {
-                if (note.Start < minStart)
-                {
-                    minStart = note.Start;
-                }
-                if (note.End > maxEnd)
-                {
-                    maxEnd = note.End;
-                }
-            }
-
-            var totalDuration = Parent.GetDuration();
+            var totalDuration = Parent.GetLeftDuration();
 
             var clonedNotes = notes.ToArray();
 
-            float offset = 0;
+            float offset = totalDuration;
 
-            for (int i = 1; i <= Amount; i++)
+            for (int i = 1; i < Amount; i++)
             {
                 foreach (var note in clonedNotes)
                 {

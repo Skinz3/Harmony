@@ -19,6 +19,10 @@ namespace Harmony.Antlr.Extensions
         }
         public static T Get<T>(this ParserRuleContext rule)
         {
+            if (rule == null)
+            {
+                return default;
+            }
             return Get<T>(rule.GetText());
         }
         public static T Get<T>(string text)

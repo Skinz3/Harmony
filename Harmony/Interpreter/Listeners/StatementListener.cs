@@ -136,5 +136,25 @@ namespace Harmony.Interpreter
 
         }
 
+        public override void EnterNotesStatement([NotNull] NotesStatementContext context)
+        {
+            List<Note> notes = new List<Note>();
+
+            foreach (var noteLiteral in context.noteLiteral())
+            {
+                Note note = NotesManager.GetNote(noteLiteral.GetText());
+
+                if (note == null)
+                {
+                    ErrorsHandler.SemanticError(context, "Invalid note : " + noteLiteral.GetText());
+                    return;
+                }
+                notes.Add(note);
+            }
+            float duration = context.duration.Get<float>();
+            float velocity = context.velocity.Get<float>();
+
+            this.Result = new NotesStatement(Parent, context, notes, duration, velocity);
+        }
     }
 }

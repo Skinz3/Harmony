@@ -38,6 +38,7 @@ statement
     | noteStatement
     | chordStatement
     | unitStatement
+    | notesStatement
     ;
 
 
@@ -57,9 +58,10 @@ stepStatement
     | (STEP duration=number)
     ;
 
-//==========================================================
-// Statements
-//==========================================================
+notesStatement
+    :
+     NOTES (note= noteLiteral',')* lastNote=noteLiteral '(' duration=number ',' velocity=number ')'
+    ;
 
 
 //==========================================================
@@ -68,12 +70,13 @@ stepStatement
 
 blockFunction
     :
-    current=function (DOT next=function)?
+    current=function (DOT next=blockFunction)?
     ;
 
 function
     : transposeFunction
     | propagateFunction
+    | arpeggioFunction
     | strumFunction
     | timesFunction
     | bassFunction
@@ -89,8 +92,12 @@ transposeFunction:
     TRANSPOSE'('value=DECIMAL_LITERAL')'
     ;
 
+arpeggioFunction:
+    ARPEGGIO'(' IDENTIFIER ')'
+    ;
+
 strumFunction:
-    STRUM'(' IDENTIFIER ')'
+    STRUM'(' offset=number ')'
     ;
 
 timesFunction:

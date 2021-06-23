@@ -38,11 +38,48 @@ namespace Harmony.Interpreter.AST.Functions
 
         public abstract void Prepare();
 
+        /*
+         * The amount of duration the function add to the expression
+         */
         public abstract float GetDuration();
 
-        public float GetTotalDuration()
+        /*
+         * expr2.GetRightDuration() =  expr1.[expr2.expr3.expr4]
+         *
+         */
+        public float GetRightDuration()
         {
-            return Parent.GetTotalDuration() + GetDuration();
+            if (this is ArpeggioFunction)
+            {
+
+            }
+            float result = GetDuration();
+
+            if (TargetFunction != null)
+            {
+                result += TargetFunction.GetRightDuration();
+            }
+            return result;
+        }
+        /*
+         * expr2.GetLeftDuration =  [expr1.expr2].expr3.expr4
+         *
+         */
+        public float GetLeftDuration()
+        {
+            return GetDuration() + Parent.GetLeftDuration();
+        }
+
+        protected Statement GetParentStatement()
+        {
+            IEntity parent = Parent;
+
+            while (!(parent is Statement))
+            {
+                parent = ((Function)parent).Parent;
+            }
+
+            return (Statement)parent;
         }
     }
 }

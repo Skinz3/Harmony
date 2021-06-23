@@ -40,7 +40,6 @@ namespace Harmony.Interpreter.AST.Statements
             return 60f / Parent.Script.Tempo * value;
         }
 
-        public abstract float GetDuration();
 
         protected abstract List<SheetNote> Execute(ref float time);
 
@@ -58,16 +57,24 @@ namespace Harmony.Interpreter.AST.Statements
             TargetFunction?.Prepare();
         }
 
-        public float GetTotalDuration()
+        public abstract float GetDuration();
+
+        public float GetRightDuration()
         {
             var result = GetDuration();
 
             if (TargetFunction != null)
             {
-                result += TargetFunction.GetDuration();
+                result += TargetFunction.GetRightDuration();
             }
 
             return result;
+        }
+
+        public float GetLeftDuration()
+        {
+            return GetDuration();
+           
         }
     }
 }

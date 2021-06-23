@@ -54,7 +54,7 @@ namespace Harmony.Interpreter.AST.Statements
                 return 0f;
             }
 
-            return TargetUnit.GetTotalDuration();
+            return TargetUnit.GetSteppedDuration();
         }
     }
 }

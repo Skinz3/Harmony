@@ -46,7 +46,7 @@ namespace Harmony.Interpreter.AST.Statements
             if (Target != null && !TargetPrepared)
             {
                 Target.Prepare();
-                this.Duration = Target.GetDuration();
+                this.Duration = Target.GetRightDuration();
                 TargetPrepared = true;
             }
         }

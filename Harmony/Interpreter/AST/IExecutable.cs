@@ -13,14 +13,18 @@ namespace Harmony.Interpreter.AST
     {
         float GetDuration();
 
-        float GetTotalDuration();
+        float GetRightDuration();
+
+        float GetLeftDuration();
 
         void Prepare();
 
+      
         Function TargetFunction
         {
             get;
             set;
         }
+
     }
 }

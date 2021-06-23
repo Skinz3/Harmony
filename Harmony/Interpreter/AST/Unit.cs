@@ -52,9 +52,15 @@ namespace Harmony.Interpreter.AST
             return results;
         }
 
+        public float GetSteppedDuration()
+        {
+            float result = Statements.OfType<StepStatement>().Sum(x => x.GetRightDuration());
+
+            return result;
+        }
         public float GetTotalDuration()
         {
-            float result = Statements.Sum(x => x.GetTotalDuration());
+            float result = Statements.Sum(x => x.GetRightDuration());
 
             return result;
         }
