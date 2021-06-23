@@ -9,7 +9,7 @@ using Harmony.Sheets;
 
 namespace Harmony.Interpreter.AST
 {
-    public class Unit : IExecutable
+    public class Unit  
     {
         public string Name
         {
@@ -39,30 +39,26 @@ namespace Harmony.Interpreter.AST
             }
         }
 
-        public List<SheetNote> Execute(ref float time)
+        public List<SheetNote> Apply(ref float time)
         {
             List<SheetNote> results = new List<SheetNote>();
 
             foreach (var statement in Statements)
             {
-                var result = statement.Execute(ref time);
-
-                foreach (var function in statement.Functions)
-                {
-                    function.Apply(ref time,statement,result);
-                }
-
+                var result = statement.Apply(ref time);
                 results.AddRange(result);
             }
 
             return results;
         }
 
-        public float GetDuration()
+        public float GetTotalDuration()
         {
-            return Statements.Sum(x => x.GetTotalDuration());
+            float result = Statements.Sum(x => x.GetTotalDuration());
+
+            return result;
         }
 
-        
+
     }
 }

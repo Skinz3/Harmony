@@ -1,4 +1,5 @@
-﻿using Harmony.Notes;
+﻿using Harmony.Interpreter.AST.Functions;
+using Harmony.Notes;
 using Harmony.Sheets;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,18 @@ using System.Threading.Tasks;
 
 namespace Harmony.Interpreter.AST
 {
-    public interface IExecutable
+    public interface IEntity
     {
-        List<SheetNote> Execute(ref float time);
+        float GetDuration();
+
+        float GetTotalDuration();
 
         void Prepare();
+
+        Function TargetFunction
+        {
+            get;
+            set;
+        }
     }
 }

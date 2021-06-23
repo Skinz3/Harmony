@@ -15,50 +15,61 @@ namespace Harmony.Interpreter.AST.Functions
             get;
             set;
         }
-        public TimesFunction(Statement parent, int amount) : base(parent)
+        public TimesFunction(IEntity parent, int amount) : base(parent)
         {
             this.Amount = amount;
         }
 
-        public override void Apply(ref float time, Statement statement, List<SheetNote> notes)
-        {
-            if (notes.Count== 0)
-            {
-                return;
-            }
-
-
-            var totalDuration = statement.GetTotalDuration();
-
-            time += totalDuration * Amount;
-
-            var clonedNotes = notes.ToArray();
-
-            float offset = notes.Last().End;
-
-            for (int i = 1; i < Amount; i++)
-            {
-                foreach (var note in clonedNotes)
-                {
-                    SheetNote newNote = new SheetNote(note.Number, note.Start + offset, note.End + offset, note.Velocity);
-                    notes.Add(newNote);
-
-                }
-
-                offset = notes.Last().End;
-            }
-
-
-        }
-
+        
         public override void Prepare()
         {
 
         }
 
-        public override float GetAdditionalDuration()
+        public override float GetDuration()
         {
-            return Parent.GetTotalDuration() * Amount;
+            return Parent.GetDuration() * (Amount-1);
+        }
+
+        protected override void Execute(ref float time, List<SheetNote> notes)
+        {
+            if (notes.Count == 0)
+            {
+                return;
+            }
+
+
+            float minStart = float.MaxValue;
+            float maxEnd = 0;
+
+            foreach (var note in notes)
+            {
+                if (note.Start < minStart)
+                {
+                    minStart = note.Start;
+                }
+                if (note.End > maxEnd)
+                {
+                    maxEnd = note.End;
+                }
+            }
+
+            var totalDuration = Parent.GetDuration();
+
+            var clonedNotes = notes.ToArray();
+
+            float offset = 0;
+
+            for (int i = 1; i <= Amount; i++)
+            {
+                foreach (var note in clonedNotes)
+                {
+                    SheetNote newNote = new SheetNote(note.Number, note.Start + offset, note.End + offset, note.Velocity);
+                    notes.Add(newNote);
+                }
+
+                offset += totalDuration;
+            }
         }
     }
 }

@@ -31,8 +31,10 @@ STEP : 'step';
 TRANSPOSE : 'transpose';
 PROPAGATE : 'propagate';
 STRUM : 'strum';
+
 TIMES : 'times';
 BASS : 'bass';
+ADD : 'add';
 
 //==========================================================
 // Tokens

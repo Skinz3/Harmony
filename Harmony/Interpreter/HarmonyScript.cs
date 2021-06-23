@@ -129,9 +129,9 @@ namespace Harmony.Interpreter
                 this.Sheet.Name = this.Name;
 
                 float time = 0;
-                this.Sheet.Notes = MainUnit.Execute(ref time).ToList();
+                this.Sheet.Notes = MainUnit.Apply(ref time).ToList();
 
-                this.Sheet.TotalDuration = MainUnit.GetDuration();
+                this.Sheet.TotalDuration = MainUnit.GetTotalDuration();
             }
         }
 

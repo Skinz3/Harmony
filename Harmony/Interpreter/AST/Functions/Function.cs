@@ -9,24 +9,40 @@ using System.Threading.Tasks;
 
 namespace Harmony.Interpreter.AST.Functions
 {
-    public abstract class Function
+    public abstract class Function : IEntity
     {
-        protected Statement Parent
+        protected IEntity Parent
+        {
+            get;
+            set;
+        }
+        public Function TargetFunction
         {
             get;
             set;
         }
 
-        public Function(Statement parent)
+        public Function(IEntity parent)
         {
             this.Parent = parent;
         }
 
-        public abstract void Apply(ref float time, Statement statement, List<SheetNote> notes);
+        public void Apply(ref float time, List<SheetNote> notes)
+        {
+            Execute(ref time, notes);
+
+            TargetFunction?.Apply(ref time, notes);
+        }
+
+        protected abstract void Execute(ref float time, List<SheetNote> notes);
 
         public abstract void Prepare();
 
-        public abstract float GetAdditionalDuration();
+        public abstract float GetDuration();
 
+        public float GetTotalDuration()
+        {
+            return Parent.GetTotalDuration() + GetDuration();
+        }
     }
 }

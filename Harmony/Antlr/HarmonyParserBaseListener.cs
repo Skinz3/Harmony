@@ -165,6 +165,19 @@ public partial class HarmonyParserBaseListener : IHarmonyParserListener {
 	public virtual void ExitStepStatement([NotNull] HarmonyParser.StepStatementContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.blockFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterBlockFunction([NotNull] HarmonyParser.BlockFunctionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.blockFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitBlockFunction([NotNull] HarmonyParser.BlockFunctionContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.function"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -241,6 +254,19 @@ public partial class HarmonyParserBaseListener : IHarmonyParserListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitBassFunction([NotNull] HarmonyParser.BassFunctionContext context) { }
+
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.addFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterAddFunction([NotNull] HarmonyParser.AddFunctionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.addFunction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitAddFunction([NotNull] HarmonyParser.AddFunctionContext context) { }
 
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.noteLiteral"/>.

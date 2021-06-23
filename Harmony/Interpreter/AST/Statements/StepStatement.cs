@@ -20,6 +20,11 @@ namespace Harmony.Interpreter.AST.Statements
             get;
             set;
         }
+        private bool TargetPrepared
+        {
+            get;
+            set;
+        }
         public StepStatement(Unit parent, ParserRuleContext ruleContext, float duration) : base(parent, ruleContext)
         {
             this.Duration = GetTimeSeconds(duration);
@@ -31,21 +36,27 @@ namespace Harmony.Interpreter.AST.Statements
 
         public override void Prepare()
         {
-            if (Target != null)
-            {
-                Target.Prepare();
-                this.Duration = Target.GetTotalDuration();
-            }
+            PrepareTarget();
 
             base.Prepare();
         }
-        public override List<SheetNote> Execute(ref float time)
+
+        private void PrepareTarget()
+        {
+            if (Target != null && !TargetPrepared)
+            {
+                Target.Prepare();
+                this.Duration = Target.GetDuration();
+                TargetPrepared = true;
+            }
+        }
+        protected override List<SheetNote> Execute(ref float time)
         {
             List<SheetNote> result = new List<SheetNote>();
 
             if (Target != null)
             {
-                result = Target.Execute(ref time);
+                result = Target.Apply(ref time);
             }
 
             time += Duration;
@@ -53,8 +64,10 @@ namespace Harmony.Interpreter.AST.Statements
             return result;
         }
 
-        protected override float GetDuration()
+        public override float GetDuration()
         {
+            PrepareTarget();
+
             return Duration;
         }
     }

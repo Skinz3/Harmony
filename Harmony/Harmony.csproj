@@ -101,6 +101,7 @@
     <Compile Include="Chords\Chord.cs" />
     <Compile Include="Chords\ChordsManager.cs" />
     <Compile Include="Chords\Notepad.cs" />
+    <Compile Include="Interpreter\AST\Functions\AddFunction.cs" />
     <Compile Include="Interpreter\AST\Functions\StrumFunction.cs" />
     <Compile Include="Interpreter\AST\Functions\BassFunction.cs" />
     <Compile Include="Interpreter\AST\Functions\PropagateFunction.cs" />

@@ -1,9 +1,12 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Harmony.Antlr.Extensions;
+using Harmony.Extensions;
+using Harmony.Interpreter.AST;
 using Harmony.Interpreter.AST.Functions;
 using Harmony.Interpreter.AST.Statements;
 using Harmony.Interpreter.Errors;
+using Harmony.Notes;
 using Harmony.Sheets;
 using System;
 using System.Collections.Generic;
@@ -15,7 +18,7 @@ namespace Harmony.Interpreter
 {
     public class FunctionListener : HarmonyParserBaseListener
     {
-        private Statement Parent
+        private IEntity Parent
         {
             get;
             set;
@@ -30,7 +33,7 @@ namespace Harmony.Interpreter
             get;
             set;
         }
-        public FunctionListener(Statement parent, CompilerErrors errors)
+        public FunctionListener(IEntity parent, CompilerErrors errors)
         {
             this.Parent = parent;
             this.ErrorsHandler = errors;
@@ -55,8 +58,51 @@ namespace Harmony.Interpreter
         }
         public override void EnterStrumFunction([NotNull] HarmonyParser.StrumFunctionContext context)
         {
-           
-            this.Result = new StrumFunction(Parent);
+            if (context.IDENTIFIER() == null)
+            {
+                return;
+            }
+            string strumTypeText = context.IDENTIFIER().GetText();
+
+            StrumTypeEnum strumType = StrumTypeEnum.unknown;
+
+            if (Enum.TryParse(strumTypeText, out strumType) && strumType != StrumTypeEnum.unknown)
+            {
+                this.Result = new StrumFunction(Parent, strumType);
+            }
+            else
+            {
+                ErrorsHandler.SemanticError(context, "Unknown strum type : " + strumTypeText);
+            }
+
+        }
+        public override void EnterBlockFunction([NotNull] HarmonyParser.BlockFunctionContext context)
+        {
+            context.current.EnterRule(this);
+
+            if (context.next != null)
+            {
+                FunctionListener listener = new FunctionListener(this.Result, ErrorsHandler);
+                context.next.EnterRule(listener);
+                Result.TargetFunction = listener.Result;
+            }
+        }
+        public override void EnterAddFunction([NotNull] HarmonyParser.AddFunctionContext context)
+        {
+            if (context.noteLiteral() == null)
+            {
+                return;
+            }
+
+            Note note = NotesManager.GetNote(context.noteLiteral().GetText());
+
+            if (note == null)
+            {
+                return;
+            }
+            Result = new AddFunction(Parent, note);
+
+            base.EnterAddFunction(context);
         }
         public override void EnterTimesFunction([NotNull] HarmonyParser.TimesFunctionContext context)
         {

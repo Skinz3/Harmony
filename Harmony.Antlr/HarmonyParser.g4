@@ -25,7 +25,7 @@ block
     ;
 
 blockStatement
-    : statement(DOT function)*
+    : statement(DOT blockFunction)?
     ;
 
 
@@ -34,10 +34,10 @@ blockStatement
 //==========================================================
 
 statement
-    : noteStatement
+    : stepStatement
+    | noteStatement
     | chordStatement
     | unitStatement
-    | stepStatement
     ;
 
 
@@ -53,7 +53,7 @@ chordStatement
     ;
 
 stepStatement
-    : (STEP target=statement)
+    : (STEP target=blockStatement)
     | (STEP duration=number)
     ;
 
@@ -66,13 +66,20 @@ stepStatement
 // Functions
 //==========================================================
 
+blockFunction
+    :
+    current=function (DOT next=function)?
+    ;
+
 function
     : transposeFunction
     | propagateFunction
     | strumFunction
     | timesFunction
     | bassFunction
+    | addFunction
     ;
+
 
 propagateFunction:
     PROPAGATE'('amount=DECIMAL_LITERAL')'
@@ -83,7 +90,7 @@ transposeFunction:
     ;
 
 strumFunction:
-    STRUM'(' ')'
+    STRUM'(' IDENTIFIER ')'
     ;
 
 timesFunction:
@@ -92,6 +99,10 @@ timesFunction:
 
 bassFunction:
     BASS'(' ')'
+    ;
+
+addFunction:
+    ADD '(' noteLiteral ')'
     ;
 
 

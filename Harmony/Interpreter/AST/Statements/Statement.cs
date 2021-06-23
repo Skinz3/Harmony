@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Harmony.Interpreter.AST.Statements
 {
-    public abstract class Statement : IExecutable
+    public abstract class Statement : IEntity
     {
         public Unit Parent
         {
             get;
             private set;
         }
-        public List<Function> Functions
+        public Function TargetFunction
         {
             get;
-            private set;
+            set;
         }
 
         protected ParserRuleContext RuleContext
@@ -32,7 +32,6 @@ namespace Harmony.Interpreter.AST.Statements
         {
             this.Parent = parent;
             this.RuleContext = ruleContext;
-            this.Functions = new List<Function>();
         }
 
 
@@ -41,21 +40,34 @@ namespace Harmony.Interpreter.AST.Statements
             return 60f / Parent.Script.Tempo * value;
         }
 
-        protected abstract float GetDuration();
+        public abstract float GetDuration();
 
-        public float GetTotalDuration()
+        protected abstract List<SheetNote> Execute(ref float time);
+
+        public List<SheetNote> Apply(ref float time)
         {
-            return GetDuration() + Functions.Sum(x => x.GetAdditionalDuration());
-        }
+            var result = Execute(ref time);
 
-        public abstract List<SheetNote> Execute(ref float time);
+            TargetFunction?.Apply(ref time, result);
+
+            return result;
+        }
 
         public virtual void Prepare()
         {
-            foreach (var function in Functions)
+            TargetFunction?.Prepare();
+        }
+
+        public float GetTotalDuration()
+        {
+            var result = GetDuration();
+
+            if (TargetFunction != null)
             {
-                function.Prepare();
+                result += TargetFunction.GetDuration();
             }
+
+            return result;
         }
     }
 }

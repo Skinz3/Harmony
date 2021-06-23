@@ -78,12 +78,18 @@ namespace Harmony.IDE.Views
                   }
                   else
                   {
-
-                      window.Dispatcher.Invoke(() =>
+                      try
                       {
-                          window.Content = editor;
+                          window.Dispatcher.Invoke(() =>
+                          {
+                              window.Content = editor;
 
-                      });
+                          });
+                      }
+                      catch
+                      {
+                          Environment.Exit(0);
+                      }
                   }
 
 

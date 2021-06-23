@@ -11,21 +11,20 @@ namespace Harmony.Interpreter.AST.Functions
 {
     public class BassFunction : Function
     {
-        public BassFunction(Statement parent) : base(parent)
+        public BassFunction(IEntity parent) : base(parent)
         {
         }
 
-        public override void Apply(ref float time, Statement statement, List<SheetNote> notes)
+        protected override void Execute(ref float time, List<SheetNote> notes)
         {
             var sheetNote = notes.FirstOrDefault();
 
             Note note = NotesManager.AddTone(sheetNote.Note, -6);
 
             notes.Add(new SheetNote(note.Number, sheetNote.Start, sheetNote.End, sheetNote.Velocity));
-
         }
 
-        public override float GetAdditionalDuration()
+        public override float GetDuration()
         {
             return 0f;
         }

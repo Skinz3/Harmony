@@ -8,27 +8,93 @@ using System.Threading.Tasks;
 
 namespace Harmony.Interpreter.AST.Functions
 {
+    public enum StrumTypeEnum
+    {
+        unknown,
+        forward,
+        backward,
+        bidirectional,
+    }
     public class StrumFunction : Function
     {
-    
-        public StrumFunction(Statement parent) : base(parent)
+        private StrumTypeEnum Type
         {
-             
+            get;
+            set;
         }
 
-        public override void Apply(ref float time, Statement statement, List<SheetNote> notes)
+        public StrumFunction(IEntity parent, StrumTypeEnum type) : base(parent)
         {
-            float totalDuration = statement.GetTotalDuration();
+            this.Type = type;
+        }
 
-            float noteDuration = totalDuration / notes.Count;
-
-            for (int i = 0; i < notes.Count; i++)
+        protected override void Execute(ref float time, List<SheetNote> notes)
+        {
+            if (Type == StrumTypeEnum.backward)
             {
-                notes[i].Start += noteDuration * i;
+                float totalDuration = Parent.GetTotalDuration();
+
+                float noteDuration = totalDuration / notes.Count;
+
+                var inputNotes = notes.ToArray().Reverse().ToArray();
+
+                var firstNote = inputNotes.First();
+
+                for (int i = 0; i < inputNotes.Length; i++)
+                {
+                    inputNotes[i].Start = firstNote.Start + noteDuration * i;
+                    inputNotes[i].End = inputNotes[i].Start + noteDuration;
+
+                }
+            }
+            if (Type == StrumTypeEnum.forward)
+            {
+                float totalDuration = Parent.GetTotalDuration();
+
+                float noteDuration = totalDuration / notes.Count;
+
+                var firstNote = notes.First();
+
+                for (int i = 0; i < notes.Count; i++)
+                {
+                    notes[i].Start = firstNote.Start + noteDuration * i;
+                    notes[i].End = notes[i].Start + noteDuration;
+
+                }
+            }
+            if (Type == StrumTypeEnum.bidirectional)
+            {
+                var inputNotes = notes.ToArray();
+
+                float totalDuration = Parent.GetTotalDuration();
+
+
+                int resultNotesCount = notes.Count + (inputNotes.Length - 2);
+
+                float noteDuration = (totalDuration / resultNotesCount);
+
+                for (int i = 0; i < inputNotes.Length; i++)
+                {
+                    inputNotes[i].Start += noteDuration * i;
+                    inputNotes[i].End = inputNotes[i].Start + noteDuration;
+                }
+
+                var offsetStart = notes.Last().End;
+
+                inputNotes = inputNotes.Reverse().ToArray();
+
+                for (int i = 1; i < inputNotes.Length - 1; i++)
+                {
+                    float start = offsetStart + noteDuration * (i - 1);
+                    float end = start + noteDuration;
+
+                    SheetNote note = new SheetNote(inputNotes[i].Number, start, end, inputNotes[i].Velocity);
+                    notes.Add(note);
+                }
             }
         }
 
-        public override float GetAdditionalDuration()
+        public override float GetDuration()
         {
             return 0f;
         }

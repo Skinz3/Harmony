@@ -48,21 +48,22 @@ namespace Harmony.Interpreter
         }
         public override void EnterBlockStatement([NotNull] HarmonyParser.BlockStatementContext context)
         {
-            foreach (var statement in context.GetRuleContexts<ParserRuleContext>())
-            {
-                statement.EnterRule(this);
-            }
+            context.statement().EnterRule(this);
 
-            foreach (FunctionContext function in context.function())
+            if (Result == null)
+            {
+                return;
+            }
+            var functionContext = context.blockFunction();
+
+            if (functionContext != null)
             {
                 FunctionListener functionListener = new FunctionListener(Result, ErrorsHandler);
-                function.EnterRule(functionListener);
+                functionContext.EnterRule(functionListener);
 
-                if (functionListener.Result != null)
-                {
-                    Result.Functions.Add(functionListener.Result);
-                }
+                Result.TargetFunction = functionListener.Result;
             }
+
         }
         public override void EnterNoteStatement([NotNull] HarmonyParser.NoteStatementContext context)
         {
@@ -100,7 +101,7 @@ namespace Harmony.Interpreter
             }
             else
             {
-                StatementContext statementContext = context.statement();
+                BlockStatementContext statementContext = context.blockStatement();
 
                 if (statementContext != null)
                 {

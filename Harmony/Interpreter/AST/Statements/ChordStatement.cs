@@ -40,7 +40,8 @@ namespace Harmony.Interpreter.AST.Statements
             this.Velocity = velocity;
             this.Octave = octave;
         }
-        public override List<SheetNote> Execute(ref float time)
+
+        protected override List<SheetNote> Execute(ref float time)
         {
             List<SheetNote> result = new List<SheetNote>();
 
@@ -54,7 +55,7 @@ namespace Harmony.Interpreter.AST.Statements
             return result;
         }
 
-        protected override float GetDuration()
+        public override float GetDuration()
         {
             return Duration;
         }

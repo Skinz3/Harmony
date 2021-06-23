@@ -85,6 +85,19 @@ namespace Harmony.IDE.Views
             {
                 chords.Items.Add(chord);
             }
+
+            textEditor.TextArea.TextEntered += OnTextEntered;
+        }
+
+        private void OnTextEntered(object sender, TextCompositionEventArgs e)
+        {
+            Save(false);
+
+            string text = textEditor.Text;
+            HarmonyScript script = new HarmonyScript(text);
+            LoadScript(script, false);
+            Renderer.Flow.Pause();
+
         }
 
         public bool LoadInstrument()
@@ -119,7 +132,7 @@ namespace Harmony.IDE.Views
             if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
             {
                 host.Focus();
-                Save();
+                Save(true);
             }
         }
 
@@ -129,7 +142,7 @@ namespace Harmony.IDE.Views
             {
                 string text = File.ReadAllText(ConfigManager.Instance.ScriptPath);
                 HarmonyScript script = new HarmonyScript(text);
-                LoadScript(script);
+                LoadScript(script, true);
             }
         }
 
@@ -194,7 +207,7 @@ namespace Harmony.IDE.Views
             ConfigurationWindow.Show();
         }
 
-        private void LoadScript(HarmonyScript script)
+        private void LoadScript(HarmonyScript script, bool loadText)
         {
             scriptErrors.Items.Clear();
 
@@ -219,7 +232,10 @@ namespace Harmony.IDE.Views
                 scriptErrors.Items.Add(label);
             }
 
-            textEditor.Text = script.Text;
+            if (loadText)
+            {
+                textEditor.Text = script.Text;
+            }
 
             if (script.Errors.Count == 0)
             {
@@ -250,7 +266,7 @@ namespace Harmony.IDE.Views
         {
             string text = textEditor.Text;
             HarmonyScript script = new HarmonyScript(text);
-            LoadScript(script);
+            LoadScript(script, false);
             Renderer.Flow.Play();
         }
 
@@ -262,20 +278,24 @@ namespace Harmony.IDE.Views
             {
                 string text = File.ReadAllText(dialog.FileName);
                 HarmonyScript script = new HarmonyScript(text);
-                LoadScript(script);
+                LoadScript(script, true);
 
                 ConfigManager.Instance.ScriptPath = dialog.FileName;
                 ConfigManager.Save();
             }
         }
 
-        private void Save()
+        private void Save(bool notify)
         {
             if (File.Exists(ConfigManager.Instance.ScriptPath))
             {
                 string text = textEditor.Text;
                 File.WriteAllText(ConfigManager.Instance.ScriptPath, text);
-                MessageBox.Show("Script saved.", "Informations", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+
+                if (notify)
+                {
+                    MessageBox.Show("Script saved.", "Informations", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                }
             }
             else
             {
@@ -300,7 +320,7 @@ namespace Harmony.IDE.Views
 
         private void SaveClick(object sender, RoutedEventArgs e)
         {
-            Save();
+            Save(true);
         }
 
         private void SaveAsClick(object sender, RoutedEventArgs e)
@@ -375,13 +395,18 @@ namespace Harmony.IDE.Views
 
         private void chord_TextChanged(object sender, TextChangedEventArgs e)
         {
-    
+
             chords.Items.Clear();
 
             foreach (var chord in ChordsManager.GetChordNames().Where(x => x.ToLower().Contains(chord.Text.ToLower())))
             {
                 chords.Items.Add(chord);
             }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            AvalonUtils.ApplySyntaxRules("harmony.xshd", textEditor);
         }
     }
 }

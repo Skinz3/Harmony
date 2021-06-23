@@ -25,11 +25,11 @@ namespace Harmony.Interpreter.AST.Statements
             this.Name = name;
         }
 
-        public override List<SheetNote> Execute(ref float time)
+        protected override List<SheetNote> Execute(ref float time)
         {
-            float oldTime = time;
+            var oldTime = time;
 
-            var result = TargetUnit.Execute(ref time);
+            var result = TargetUnit.Apply(ref time);
 
             time = oldTime;
 
@@ -47,13 +47,14 @@ namespace Harmony.Interpreter.AST.Statements
             base.Prepare();
         }
 
-        protected override float GetDuration()
+        public override float GetDuration()
         {
             if (TargetUnit == null)
             {
                 return 0f;
             }
-            return TargetUnit.GetDuration();
+
+            return TargetUnit.GetTotalDuration();
         }
     }
 }

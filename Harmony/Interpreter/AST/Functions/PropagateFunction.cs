@@ -17,12 +17,23 @@ namespace Harmony.Interpreter.AST.Functions
             set;
         }
 
-        public PropagateFunction(Statement parent, int delta) : base(parent)
+        public PropagateFunction(IEntity parent, int delta) : base(parent)
         {
             this.Delta = delta;
         }
 
-        public override void Apply(ref float time, Statement statement, List<SheetNote> notes)
+
+        public override void Prepare()
+        {
+
+        }
+
+        public override float GetDuration()
+        {
+            return 0f;
+        }
+
+        protected override void Execute(ref float time, List<SheetNote> notes)
         {
             for (int i = 1; i <= Delta; i++)
             {
@@ -37,16 +48,6 @@ namespace Harmony.Interpreter.AST.Functions
                 }
 
             }
-        }
-
-        public override void Prepare()
-        {
-
-        }
-
-        public override float GetAdditionalDuration()
-        {
-            return 0f;
         }
     }
 }

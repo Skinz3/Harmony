@@ -11,6 +11,10 @@ namespace Harmony.Antlr.Extensions
     {
         public static T Get<T>(this IToken token)
         {
+            if (token == null)
+            {
+                return default;
+            }
             return Get<T>(token.Text);
         }
         public static T Get<T>(this ParserRuleContext rule)
@@ -23,8 +27,14 @@ namespace Harmony.Antlr.Extensions
             {
                 text = text.Replace(".", ",");
             }
-
-            return (T)Convert.ChangeType(text, typeof(T));
+            try
+            {
+                return (T)Convert.ChangeType(text, typeof(T));
+            }
+            catch
+            {
+                return default;
+            }
         }
       
     }

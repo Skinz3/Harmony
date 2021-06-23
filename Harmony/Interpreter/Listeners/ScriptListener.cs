@@ -37,7 +37,11 @@ namespace Harmony.Interpreter
             {
                 UnitListener listener = new UnitListener(Script, ErrorsHandler);
                 unit.EnterRule(listener);
-                Script.Units.Add(listener.Result);
+
+                if (listener.Result != null)
+                {
+                    Script.Units.Add(listener.Result);
+                }
             }
         }
 

@@ -32,8 +32,11 @@ namespace Harmony.Interpreter.Listeners
 
         public override void EnterUnitDeclaration([NotNull] UnitDeclarationContext context)
         {
-            Result.Name = context.name.Text;
-            EnterBlock(context.block());
+            if (context.name != null)
+            {
+                Result.Name = context.name.Text;
+                EnterBlock(context.block());
+            }
         }
         public override void EnterBlock([NotNull] BlockContext context)
         {

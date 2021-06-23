@@ -34,11 +34,11 @@ namespace Harmony.Interpreter.AST.Statements
             this.Velocity = velocity;
         }
 
-        protected override float GetDuration()
+        public override float GetDuration()
         {
             return Duration;
         }
-        public override List<SheetNote> Execute(ref float time)
+        protected override List<SheetNote> Execute(ref float time)
         {
             var result = new SheetNote[1]
             {

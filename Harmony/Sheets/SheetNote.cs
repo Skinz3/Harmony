@@ -24,6 +24,9 @@ namespace Harmony.Sheets
             get;
             set;
         }
+
+        public float Duration => End - Start;
+
         public float Velocity
         {
             get;

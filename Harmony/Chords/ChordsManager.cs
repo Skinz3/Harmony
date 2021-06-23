@@ -108,6 +108,11 @@ namespace Harmony.Chords
             Note fundamental = NotesManager.GetNote(rawNotes[0].ToString(), octave);
             notes.Add(fundamental);
 
+            if (fundamental == null)
+            {
+                return null;
+            }
+
             for (int i = 1; i < rawNotes.Length; i++)
             {
                 var rawNote = rawNotes[i];

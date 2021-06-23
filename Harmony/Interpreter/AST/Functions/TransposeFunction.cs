@@ -16,27 +16,29 @@ namespace Harmony.Interpreter.AST.Functions
             set;
         }
 
-        public TransposeFunction(Statement parent, int delta) : base(parent)
+        public TransposeFunction(IEntity parent, int delta) : base(parent)
         {
             this.Delta = delta;
         }
 
-        public override void Apply(ref float time, Statement statement, List<SheetNote> notes)
-        {
-            foreach (var note in notes)
-            {
-                note.Number += Delta;
-            }
-        }
+      
 
         public override void Prepare()
         {
            
         }
 
-        public override float GetAdditionalDuration()
+        public override float GetDuration()
         {
             return 0f;
+        }
+
+        protected override void Execute(ref float time, List<SheetNote> notes)
+        {
+            foreach (var note in notes)
+            {
+                note.Number += Delta;
+            }
         }
     }
 }
