@@ -27,21 +27,23 @@
 
  | Keyword      | Parameters    | Description    |
 | ------------- |:-------------:| :-------------:|
-| step      | Wait for the end of the instruction or the specified time to go to the next line  | 
-| notes | Play a set of notes  |
-| note | Play a note |
-| chord | Joue un accord | 
-| AMQP | *     |   
-| ExpressJs | * |
-| body-parser | * | 
-| uuid | * |
-| StompJs      |
-| D3Js | 4.0 |
-| Bootstrap | 5.0.1 |
+| step      | Statement or number |  Wait for the end of the instruction or the specified time to go to the next line | 
+| notes |   | note list (duration,velocity) |
+| note | note (duration,velocity) | Play a note |
+| chord | chord (duration,velocity) | Play a chord |
+| pedal | on/off | Defines the sustain pedal active/inactive |
 
 
-## Keywords
+## Functions
 
+ | Keyword      | Parameters    | Description    |
+| ------------- |:-------------:| :-------------:|
+| strum      | number |  Strum a set of notes | 
+| transpose | number  | Transpose a set of note |
+| propagate | number | Propagate a set of note to the amount of octave(s) specified |
+| times | number | Repeat the set of note X times |
+| bass | none | Add a fundamental bass to the set of notes |
+| add | note | Add the specified note to a set of notes |
 
 # Technologies
 
