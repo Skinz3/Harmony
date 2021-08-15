@@ -25,11 +25,12 @@
 
 ## Statements
 
- | Keyword        | Description           |
-| ------------- |:-------------:| 
-| RabbitMQ (Docker setup recommanded)      | 3.8.19 | 
-| node | 14.17.1 |
-| Npm | 6.14.13 | 
+ | Keyword      | Parameters    | Description    |
+| ------------- |:-------------:| :-------------:|
+| step      | Wait for the end of the instruction or the specified time to go to the next line  | 
+| notes | Play a set of notes  |
+| note | Play a note |
+| chord | Joue un accord | 
 | AMQP | *     |   
 | ExpressJs | * |
 | body-parser | * | 
