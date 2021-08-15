@@ -25,26 +25,26 @@
 
 ## Statements
 
- | Keyword      | Parameters    | Description    |
-| ------------- |:-------------:| :-------------:|
-| step      | Statement or number |  Wait for the end of the instruction or the specified time to go to the next line | 
-| notes |   | note list (duration,velocity) |
-| note | note (duration,velocity) | Play a note |
-| chord | chord (duration,velocity) | Play a chord |
-| pedal | on/off | Defines the sustain pedal active/inactive |
+ | Keyword      | Parameters    | Description    | Exemple | 
+| ------------- |:-------------:| :-------------:| :-------------:|
+| step      | Statement or number |  Wait for the end of the instruction or the specified time to go to the next line | step note G2 (1,100)
+| notes | notes list  | note list (duration,velocity) | notes F3,F2 (1,70)
+| note | note (duration,velocity) | Play a note | note F2 (1,60)
+| chord | chord (duration,velocity) | Play a chord | chord Dm7 (2,40)
+| pedal | on/off | Defines the sustain pedal active/inactive | pedal on
 
 
 ## Functions
 
- | Keyword      | Parameters    | Description    |
+ | Keyword      | Parameters    | Description    | Exemple | 
 | ------------- |:-------------:| :-------------:|
-| strum      | number |  Strum a set of notes | 
-| transpose | number  | Transpose a set of note |
-| propagate | number | Propagate a set of note to the amount of octave(s) specified |
-| times | number | Repeat the set of note X times |
-| bass | none | Add a fundamental bass to the set of notes |
-| add | note | Add the specified note to a set of notes |
-| arpeggio | number | Create an arpeggio from a set of notes |
+| strum      | number |  Strum a set of notes | .strum(7)
+| transpose | number  | Transpose a set of note | .transpose(2)
+| propagate | number | Propagate a set of note to the amount of octave(s) specified | .propagate(1)
+| times | number | Repeat the set of note X times | .times(2)
+| bass | none | Add a fundamental bass to the set of notes | .bass()
+| add | note | Add the specified note to a set of notes | .add(C3)
+| arpeggio | [forward,backward,bidirectional] | Create an arpeggio from a set of notes | .arpeggio(forward)
 
 # Technologies
 
