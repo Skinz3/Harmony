@@ -1,6 +1,6 @@
 # Welcome to Harmony
 
-  Harmony is a tool for writing piano pieces using a dedicated language.
+  Harmony is a tool for writing piano pieces using a dedicated language. It also allows you to view the notes of a midi song 
 
   ![alt text](https://i.imgur.com/Zd3DzsO.png)
     
@@ -44,7 +44,7 @@
 | times | number | Repeat the set of note X times | ```.times(2)```
 | bass | none | Add a fundamental bass to the set of notes | ```.bass()```
 | add | note | Add the specified note to a set of notes | ```.add(C3)```
-| arpeggio | [forward,backward,bidirectional] | Create an arpeggio from a set of notes | ```.arpeggio(forward)
+| arpeggio | [forward,backward,bidirectional] | Create an arpeggio from a set of notes | ```.arpeggio(forward)```
 
 # Technologies
 
