@@ -21,6 +21,26 @@
 	  step chord C#maj7 (4,100,4).propagate(2).arpeggio(forward)
   }
   ```
+# Harmony Language
+
+## Statements
+
+ | Keyword        | Description           |
+| ------------- |:-------------:| 
+| RabbitMQ (Docker setup recommanded)      | 3.8.19 | 
+| node | 14.17.1 |
+| Npm | 6.14.13 | 
+| AMQP | *     |   
+| ExpressJs | * |
+| body-parser | * | 
+| uuid | * |
+| StompJs      |
+| D3Js | 4.0 |
+| Bootstrap | 5.0.1 |
+
+
+## Keywords
+
 
 # Technologies
 
