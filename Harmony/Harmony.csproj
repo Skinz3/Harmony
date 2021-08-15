@@ -109,7 +109,9 @@
     <Compile Include="Interpreter\AST\Functions\TimesFunction.cs" />
     <Compile Include="Interpreter\AST\Functions\TransposeFunction.cs" />
     <Compile Include="Interpreter\AST\IExecutable.cs" />
+    <Compile Include="Interpreter\AST\Meta\NoteMetaProvider.cs" />
     <Compile Include="Interpreter\AST\Statements\NotesStatement.cs" />
+    <Compile Include="Interpreter\AST\Statements\PedalStatement.cs" />
     <Compile Include="Interpreter\AST\Statements\StepStatement.cs" />
     <Compile Include="Interpreter\AST\Statements\UnitStatement.cs" />
     <Compile Include="Interpreter\Errors\SourceError.cs" />

@@ -139,9 +139,9 @@ namespace Harmony.Audio
 
             if (SoundStopping != null)
             {
-                const float speed = 1.8f;
+                const float speed = 4.2f;
 
-                const float speed2 = 0.4f;
+                const float speed2 = 1.2f;
 
                 if (SoundStopping.Volume > 20f)
                 {

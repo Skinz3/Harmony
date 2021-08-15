@@ -46,6 +46,7 @@ namespace Harmony.Audio
             get;
             private set;
         }
+        
         public SheetPlayer(InstrumentPlayer instrumentPlayer)
         {
             this.InstrumentPlayer = instrumentPlayer;
@@ -100,7 +101,11 @@ namespace Harmony.Audio
                     if (playingNote.End < Position)
                     {
                         PlayingNotes.Remove(playingNote);
-                        InstrumentPlayer.End(playingNote.Number);
+
+                        if (!playingNote.Pedal)
+                        {
+                            InstrumentPlayer.End(playingNote.Number);
+                        }
                     }
                 }
 

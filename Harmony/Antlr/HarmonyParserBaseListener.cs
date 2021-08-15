@@ -178,6 +178,19 @@ public partial class HarmonyParserBaseListener : IHarmonyParserListener {
 	public virtual void ExitNotesStatement([NotNull] HarmonyParser.NotesStatementContext context) { }
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.pedalStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterPedalStatement([NotNull] HarmonyParser.PedalStatementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.pedalStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitPedalStatement([NotNull] HarmonyParser.PedalStatementContext context) { }
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.blockFunction"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Meta;
 using Harmony.Interpreter.AST.Statements;
 using Harmony.Notes;
 using Harmony.Sheets;
@@ -16,13 +17,13 @@ namespace Harmony.Interpreter.AST.Functions
         {
         }
 
-        protected override void Execute(ref float time, List<SheetNote> notes)
+        protected override void Execute(ref float time, List<SheetNote> notes, NoteMetaProvider provider)
         {
             var sheetNote = notes.FirstOrDefault();
 
             Note note = NotesManager.AddTone(sheetNote.Note, -6);
 
-            notes.Add(new SheetNote(note.Number, sheetNote.Start, sheetNote.End, sheetNote.Velocity, this));
+            notes.Add(new SheetNote(note.Number, sheetNote.Start, sheetNote.End, sheetNote.Velocity, this,provider.SustainPedal));
         }
 
         public override float GetDuration()

@@ -1,5 +1,7 @@
 ﻿using Antlr4.Runtime;
+using Harmony.DP;
 using Harmony.Interpreter.AST;
+using Harmony.Interpreter.AST.Meta;
 using Harmony.Interpreter.Errors;
 using Harmony.Sheets;
 using System;
@@ -77,7 +79,6 @@ namespace Harmony.Interpreter
             private set;
         }
 
-
         private bool Process()
         {
             var inputStream = new AntlrInputStream(Text);
@@ -129,7 +130,10 @@ namespace Harmony.Interpreter
                 this.Sheet.Name = this.Name;
 
                 float time = 0;
-                this.Sheet.Notes = MainUnit.Apply(ref time).ToList();
+
+                NoteMetaProvider provider = new NoteMetaProvider();
+
+                this.Sheet.Notes = MainUnit.Apply(ref time, provider).ToList();
 
                 this.Sheet.TotalDuration = MainUnit.GetTotalDuration();
             }

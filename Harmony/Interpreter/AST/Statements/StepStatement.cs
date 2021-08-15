@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Meta;
 using Harmony.Sheets;
 using System;
 using System.Collections.Generic;
@@ -50,13 +51,13 @@ namespace Harmony.Interpreter.AST.Statements
                 TargetPrepared = true;
             }
         }
-        protected override List<SheetNote> Execute(ref float time)
+        protected override List<SheetNote> Execute(ref float time, NoteMetaProvider metaProvider)
         {
             List<SheetNote> result = new List<SheetNote>();
 
             if (Target != null)
             {
-                result = Target.Apply(ref time);
+                result = Target.Apply(ref time, metaProvider);
             }
 
             time += Duration;

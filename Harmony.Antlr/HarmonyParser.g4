@@ -39,6 +39,7 @@ statement
     | chordStatement
     | unitStatement
     | notesStatement
+    | pedalStatement
     ;
 
 
@@ -61,6 +62,11 @@ stepStatement
 notesStatement
     :
      NOTES (note= noteLiteral',')* lastNote=noteLiteral '(' duration=number ',' velocity=number ')'
+    ;
+
+pedalStatement
+    :
+    PEDAL (ON | OFF)
     ;
 
 

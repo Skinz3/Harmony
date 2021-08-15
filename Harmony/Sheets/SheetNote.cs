@@ -46,8 +46,14 @@ namespace Harmony.Sheets
             set;
         }
 
-        public SheetNote(int number, float start, float end, float velocity, IEntity entity = null)
+        public bool Pedal
         {
+            get;
+            set;
+        }
+        public SheetNote(int number, float start, float end, float velocity, IEntity entity = null, bool pedal = false)
+        {
+            this.Pedal = pedal;
             this.Note = NotesManager.GetNote(number);
             this.Number = number;
             this.Start = start;

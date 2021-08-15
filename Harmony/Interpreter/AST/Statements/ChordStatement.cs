@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Harmony.Chords;
+using Harmony.Interpreter.AST.Meta;
 using Harmony.Notes;
 using Harmony.Sheets;
 using System;
@@ -41,7 +42,7 @@ namespace Harmony.Interpreter.AST.Statements
             this.Octave = octave;
         }
 
-        protected override List<SheetNote> Execute(ref float time)
+        protected override List<SheetNote> Execute(ref float time, NoteMetaProvider provider)
         {
             List<SheetNote> result = new List<SheetNote>();
 
@@ -49,7 +50,7 @@ namespace Harmony.Interpreter.AST.Statements
 
             foreach (var note in notes)
             {
-                result.Add(new SheetNote(note.Number, time, time + Duration, Velocity, this));
+                result.Add(new SheetNote(note.Number, time, time + Duration, Velocity, this, provider.SustainPedal)); ;
             }
 
             return result;

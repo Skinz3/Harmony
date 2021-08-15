@@ -8,6 +8,7 @@ using Harmony.Interpreter.Errors;
 using Harmony.Notes;
 using Harmony.Sheets;
 using Microsoft.Win32;
+using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -435,20 +436,7 @@ namespace Harmony.IDE.Views
                 window.WindowState = WindowState.Maximized;
             }
         }
-        [WIP("temporary")]
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
 
-            var sheet = Sheet.FromMIDI(@"ex.mid");
-
-            sheet.Tempo = 60;
-
-            foreach (var note in sheet.Notes)
-            {
-                //  note.Number++;
-            }
-            Renderer.Load(sheet);
-        }
 
 
         private void timeSlider_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
@@ -463,7 +451,7 @@ namespace Harmony.IDE.Views
         {
             if (Renderer.Flow.SheetPlayer.Sheet != null)
             {
-                Renderer.Snap(Renderer.Flow.SheetPlayer.Position + 3f);
+                Renderer.Snap(Renderer.Flow.SheetPlayer.Position + 1f);
             }
         }
 
@@ -471,7 +459,7 @@ namespace Harmony.IDE.Views
         {
             if (Renderer.Flow.SheetPlayer.Sheet != null)
             {
-                Renderer.Snap(Renderer.Flow.SheetPlayer.Position - 3f);
+                Renderer.Snap(Renderer.Flow.SheetPlayer.Position - 1f);
             }
         }
 
@@ -516,6 +504,72 @@ namespace Harmony.IDE.Views
             Renderer.Clear();
             ConfigManager.Instance.ScriptPath = string.Empty;
             textEditor.Text = string.Empty;
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "MIDI File (*.mid)|*.mid";
+
+            if (dialog.ShowDialog().Value)
+            {
+                var sheet = Sheet.FromMIDI(dialog.FileName);
+                sheet.Tempo = 60;
+                Renderer.Load(sheet);
+                tempoLabel.Content = Renderer.Flow.SheetPlayer.Sheet.Tempo.ToString();
+            }
+        }
+
+        private void timeSlider_Copy_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+
+        }
+
+        private void tempoSlider_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+            Renderer.Flow.SheetPlayer.Sheet.Tempo = (int)tempoSlider.Value;
+            tempoLabel.Content = Renderer.Flow.SheetPlayer.Sheet.Tempo.ToString();
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (Renderer.Flow.SheetPlayer.Sheet.Notes.All(x => x.Number + 1 <= 88))
+            {
+                Renderer.Keyboard.UnselectAll();
+                foreach (var note in Renderer.Flow.SheetPlayer.Sheet.Notes)
+                {
+                    note.Number++;
+                }
+
+                foreach (var note in Renderer.Flow.Notes)
+                {
+                    var next = Renderer.Keyboard.GetKey(note.SheetNote.Number);
+                    note.Shape.Position = new Vector2f(next.Rectangle.Position.X, note.Shape.Position.Y);
+                }
+            }
+
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            if (Renderer.Flow.SheetPlayer.Sheet.Notes.All(x => x.Number - 1 > 0))
+            {
+                Renderer.Keyboard.UnselectAll();
+
+                foreach (var note in Renderer.Flow.SheetPlayer.Sheet.Notes)
+                {
+                    note.Number--;
+                }
+
+                foreach (var note in Renderer.Flow.Notes)
+                {
+                    var previous = Renderer.Keyboard.GetKey(note.SheetNote.Number);
+
+                    note.Shape.Position = new Vector2f(previous.Rectangle.Position.X, note.Shape.Position.Y);
+                }
+            }
+
         }
     }
 }

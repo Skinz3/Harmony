@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Meta;
 using Harmony.Notes;
 using Harmony.Sheets;
 using System;
@@ -38,13 +39,13 @@ namespace Harmony.Interpreter.AST.Statements
             return Duration;
         }
 
-        protected override List<SheetNote> Execute(ref float time)
+        protected override List<SheetNote> Execute(ref float time,NoteMetaProvider provider)
         {
             List<SheetNote> results = new List<SheetNote>();
 
             foreach (var note in Notes)
             {
-                SheetNote sheetNote = new SheetNote(note.Number, time, time + Duration, Velocity, this);
+                SheetNote sheetNote = new SheetNote(note.Number, time, time + Duration, Velocity, this,provider.SustainPedal);
                 results.Add(sheetNote);
             }
 

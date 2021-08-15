@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Meta;
 using Harmony.Interpreter.AST.Statements;
 using Harmony.Notes;
 using Harmony.Sheets;
@@ -34,14 +35,14 @@ namespace Harmony.Interpreter.AST.Functions
             this.Context = context;
         }
 
-        public void Apply(ref float time, List<SheetNote> notes)
+        public void Apply(ref float time, List<SheetNote> notes, NoteMetaProvider metaProvider)
         {
-            Execute(ref time, notes);
+            Execute(ref time, notes, metaProvider);
 
-            TargetFunction?.Apply(ref time, notes);
+            TargetFunction?.Apply(ref time, notes, metaProvider);
         }
 
-        protected abstract void Execute(ref float time, List<SheetNote> notes);
+        protected abstract void Execute(ref float time, List<SheetNote> notes, NoteMetaProvider metaProvider);
 
         public abstract void Prepare();
 
@@ -72,10 +73,12 @@ namespace Harmony.Interpreter.AST.Functions
          * expr2.GetLeftDuration =  [expr1.expr2].expr3.expr4
          *
          */
-        public float GetLeftDuration()
+        public float GetLeftDuration() 
         {
             return GetDuration() + Parent.GetLeftDuration();
         }
+
+      
 
         protected Statement GetParentStatement()
         {
@@ -87,6 +90,11 @@ namespace Harmony.Interpreter.AST.Functions
             }
 
             return (Statement)parent;
+        }
+
+        public IEntity GetParent()
+        {
+            return Parent;
         }
     }
 }

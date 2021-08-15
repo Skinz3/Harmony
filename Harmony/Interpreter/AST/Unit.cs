@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Harmony.Sheets;
+using Harmony.Interpreter.AST.Meta;
 
 namespace Harmony.Interpreter.AST
 {
-    public class Unit  
+    public class Unit
     {
         public string Name
         {
@@ -39,13 +40,13 @@ namespace Harmony.Interpreter.AST
             }
         }
 
-        public List<SheetNote> Apply(ref float time)
+        public List<SheetNote> Apply(ref float time, NoteMetaProvider metaProvider)
         {
             List<SheetNote> results = new List<SheetNote>();
 
             foreach (var statement in Statements)
             {
-                var result = statement.Apply(ref time);
+                var result = statement.Apply(ref time, metaProvider);
                 results.AddRange(result);
             }
 

@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Meta;
 using Harmony.Sheets;
 using System;
 using System.Collections.Generic;
@@ -25,11 +26,11 @@ namespace Harmony.Interpreter.AST.Statements
             this.Name = name;
         }
 
-        protected override List<SheetNote> Execute(ref float time)
+        protected override List<SheetNote> Execute(ref float time, NoteMetaProvider metaProvider)
         {
             var oldTime = time;
 
-            var result = TargetUnit.Apply(ref time);
+            var result = TargetUnit.Apply(ref time, metaProvider);
 
             time = oldTime;
 

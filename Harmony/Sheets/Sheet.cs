@@ -1,4 +1,5 @@
 ﻿using Harmony.Interpreter;
+using Harmony.Interpreter.AST.Meta;
 using NAudio.Midi;
 using System;
 using System.Collections.Generic;
@@ -125,23 +126,40 @@ namespace Harmony.Sheets
 
             eventsTimes = eventsTimes.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 
-            foreach (var noteOnEvent in eventsTimes.Keys.OfType<NoteOnEvent>())
+            NoteMetaProvider noteMeta = new NoteMetaProvider();
+
+            foreach (var @event in eventsTimes.Keys)
             {
-                float start = (float)eventsTimes[noteOnEvent];
-
-                float end = start + 0.2f;
-
-                if (noteOnEvent.OffEvent != null)
+                if (@event is ControlChangeEvent)
                 {
-                    end = (float)eventsTimes[noteOnEvent.OffEvent];
-                }
+                    var controlChangeEvent = (ControlChangeEvent)@event;
 
-                if (noteOnEvent.Velocity == 0)
-                {
-                    continue;
+                    if (controlChangeEvent.Controller == MidiController.Sustain)
+                    {
+                        noteMeta.SustainPedal = controlChangeEvent.ControllerValue > 0;
+                    }
                 }
-                SheetNote note = new SheetNote(noteOnEvent.NoteNumber - 20, start, end, noteOnEvent.Velocity);
-                result.Notes.Add(note);
+                if (@event is NoteOnEvent)
+                {
+                    var noteOnEvent = (NoteOnEvent)@event;
+
+                    float start = (float)eventsTimes[noteOnEvent];
+
+                    float end = start + 0.2f;
+
+                    if (noteOnEvent.OffEvent != null)
+                    {
+                        end = (float)eventsTimes[noteOnEvent.OffEvent];
+                    }
+
+                    if (noteOnEvent.Velocity == 0)
+                    {
+                        continue;
+                    }
+
+                    SheetNote note = new SheetNote(noteOnEvent.NoteNumber - 20, start, end, noteOnEvent.Velocity, null, noteMeta.SustainPedal);
+                    result.Notes.Add(note);
+                }
             }
 
             result.Tempo = 60;

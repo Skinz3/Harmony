@@ -12,6 +12,7 @@
             <MenuItem HorizontalContentAlignment="Center"  Header="_File" Foreground="#FFF1F1F1" Height="28" Width="42" FontFamily="/Harmony.IDE;component/#Caviar Dreams">
                 <MenuItem  HorizontalContentAlignment="Center" Header="_New" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="MenuItem_Click"  />
                 <MenuItem  HorizontalContentAlignment="Center" Header="_Open" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="OpenClick"  />
+                <MenuItem  HorizontalContentAlignment="Center" Header="_Open MIDI" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="MenuItem_Click_1"  />
                 <MenuItem  HorizontalContentAlignment="Center" Header="_Save" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="SaveClick"  />
                 <MenuItem  HorizontalContentAlignment="Center" Header="_Save as" Background="#FF3F3F46" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Click="SaveAsClick"  />
 
@@ -65,20 +66,23 @@
                     <Path  Fill="#FFF1F1F1"
                         Data="M 0,0 L 12,7 0,14 Z"/>
                 </Button>
-                <Button Content="Test" HorizontalAlignment="Right" Width="105" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="0,69,430,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="1.82,4.292" Grid.Row="2" Click="Button_Click" FontFamily="/Harmony.IDE;component/#Caviar Dreams">
-
-                </Button>
                 <ListBox Name="scriptErrors" HorizontalAlignment="Right" Height="103" Margin="0,199,10,0" Grid.Row="2" VerticalAlignment="Top" Width="745" Background="#FF3F3F46" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFFF2E2E" BorderBrush="#FF303036"/>
                 <Label x:Name="scriptName" HorizontalAlignment="Right" Width="525" HorizontalContentAlignment="Left" Content="Script name : " FontSize="11" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Margin="0,0,10,0" Grid.Row="2" Height="24" VerticalAlignment="Top"/>
                 <Slider  Thumb.DragDelta="timeSlider_DragDelta" Name="timeSlider" HorizontalAlignment="Right"  Margin="0,29,10,0" Grid.Row="2" VerticalAlignment="Top" Width="667" Value="0" Height="24"/>
                 <Label x:Name="time" HorizontalAlignment="Right" Content="00:00 / 00:00" FontSize="10" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Margin="0,29,682,0" Grid.Row="2" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.37,0.542"/>
-                <Button Content="-3s"   HorizontalAlignment="Right" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="0,0,595,0" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.647,0.5" Grid.Row="2" Click="Button_Click_2">
+                <Button Content="-1s"   HorizontalAlignment="Right" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="0,0,595,0" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.647,0.5" Grid.Row="2" Click="Button_Click_2">
                 </Button>
-                <Button Content="+3s"   HorizontalAlignment="Right" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="0,0,540,0" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.84,0.5" Grid.Row="2" Click="Button_Click_1">
+                <Button Content="+1s"   HorizontalAlignment="Right" Width="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="0,0,540,0" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.84,0.5" Grid.Row="2" Click="Button_Click_1">
                 </Button>
                 <ListBox HorizontalAlignment="Right" SelectionChanged="chords_SelectionChanged" Name="chords" Background="#FF3F3F46" Height="86" Margin="0,97.2,544.8,0" Grid.Row="2" VerticalAlignment="Top" Width="210" BorderBrush="#FF303036" Foreground="#FFF1F1F1" FontFamily="/Harmony.IDE;component/#Caviar Dreams"/>
                 <TextBox HorizontalAlignment="Right" TextChanged="chord_TextChanged" Name="chord"  Height="24" Margin="0,68.2,544.8,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="210" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Background="#FF3F3F46" BorderBrush="#FF303036"/>
-                <Button Content="Apply Syntax" HorizontalAlignment="Right" Width="105" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="0,98.2,429.8,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="1.82,4.292" Grid.Row="2" Click="Button_Click_3" FontFamily="/Harmony.IDE;component/#Caviar Dreams"/>
+                <Button Content="Apply Syntax" HorizontalAlignment="Right" Width="105" HorizontalContentAlignment="Left" BorderBrush="{x:Null}"  Margin="0,68,430,0"  Height="24" VerticalAlignment="Top" RenderTransformOrigin="1.82,4.292" Grid.Row="2" Click="Button_Click_3" FontFamily="/Harmony.IDE;component/#Caviar Dreams"/>
+
+                <Slider  Thumb.DragDelta="tempoSlider_DragDelta" x:Name="tempoSlider" HorizontalAlignment="Right"  Margin="0,307,53,0" Grid.Row="2" VerticalAlignment="Top" Width="619" Value="60" Maximum="200" Height="24"/>
+                <Label HorizontalAlignment="Right" Width="78" HorizontalContentAlignment="Left" Content="Sheet tempo :" FontSize="11" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Margin="0,307,677,0" Grid.Row="2" Height="24" VerticalAlignment="Top"/>
+                <Label Name="tempoLabel" HorizontalAlignment="Right" Width="38" HorizontalContentAlignment="Left" Content="60" FontSize="11" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Foreground="#FFF1F1F1" Margin="0,307,10,0" Grid.Row="2" Height="24" VerticalAlignment="Top"/>
+                <Button Content="Transpose +1"   HorizontalAlignment="Right" Width="78" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="0,336,581,0" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.84,0.5" Grid.Row="2" Click="Button_Click" />
+                <Button Content="Transpose -1"   HorizontalAlignment="Right" Width="91" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="#FFF1F1F1" Margin="0,336,664,0" FontFamily="/Harmony.IDE;component/#Caviar Dreams" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.647,0.5" Grid.Row="2" Click="Button_Click_4" />
             </Grid>
 
         </Grid>

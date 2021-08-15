@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Meta;
 using Harmony.Sheets;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace Harmony.Interpreter.AST.Functions
 
         }
 
-        protected override void Execute(ref float time, List<SheetNote> notes)
+        protected override void Execute(ref float time, List<SheetNote> notes, NoteMetaProvider provider)
         {
             float delta = 0;
 

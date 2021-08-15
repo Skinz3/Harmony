@@ -152,6 +152,17 @@ public interface IHarmonyParserListener : IParseTreeListener {
 	void ExitNotesStatement([NotNull] HarmonyParser.NotesStatementContext context);
 
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="HarmonyParser.pedalStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterPedalStatement([NotNull] HarmonyParser.PedalStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="HarmonyParser.pedalStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitPedalStatement([NotNull] HarmonyParser.PedalStatementContext context);
+
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="HarmonyParser.blockFunction"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

@@ -156,5 +156,18 @@ namespace Harmony.Interpreter
 
             this.Result = new NotesStatement(Parent, context, notes, duration, velocity);
         }
+        public override void EnterPedalStatement([NotNull] PedalStatementContext context)
+        {
+            var on = context.ON() != null;
+
+            var off = context.OFF() != null;
+
+            if (!on && !off)
+            {
+                return;
+            }
+
+            this.Result = new PedalStatement(Parent, context, on);
+        }
     }
 }

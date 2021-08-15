@@ -74,14 +74,14 @@ namespace Harmony.GUI
                 chords.Items.Add(chord);
             }
 
-            foreach (var instrument in InstrumentsManager.GetInstrumentNames())
+            foreach (var instrument in InstrumentsManager.GetInstruments())
             {
                 instruments.Items.Add(instrument);
             }
 
-            string defaultInstrument = instruments.Items[0].ToString();
+            Instrument defaultInstrument = (Instrument)instruments.Items[0];
 
-            Renderer.Keyboard.SetInstrument(InstrumentsManager.GetInstrument(defaultInstrument));
+            Renderer.Keyboard.SetInstrument(defaultInstrument);
             instruments.SelectedItem = defaultInstrument;
 
             var timer = new HighPrecisionTimer((int)(1000 / FramePerSecond));
@@ -244,7 +244,6 @@ namespace Harmony.GUI
         private void LoadScript(HarmonyScript script)
         {
             Reset();
-            script.Process();
             Renderer.Flow.Play(script.Sheet);
             this.Script = script;
             this.scriptStatus.Text = "Script : " + script.Sheet.Name;

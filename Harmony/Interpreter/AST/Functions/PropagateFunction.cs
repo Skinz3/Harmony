@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Meta;
 using Harmony.Interpreter.AST.Statements;
 using Harmony.Notes;
 using Harmony.Sheets;
@@ -34,7 +35,7 @@ namespace Harmony.Interpreter.AST.Functions
             return 0f;
         }
 
-        protected override void Execute(ref float time, List<SheetNote> notes)
+        protected override void Execute(ref float time, List<SheetNote> notes, NoteMetaProvider provider)
         {
             for (int i = 1; i <= Delta; i++)
             {
@@ -44,7 +45,7 @@ namespace Harmony.Interpreter.AST.Functions
 
                     if (addedNote != null)
                     {
-                        notes.Add(new SheetNote(addedNote.Number, sheetNote.Start, sheetNote.End, sheetNote.Velocity, this));
+                        notes.Add(new SheetNote(addedNote.Number, sheetNote.Start, sheetNote.End, sheetNote.Velocity, this, provider.SustainPedal));
                     }
                 }
 

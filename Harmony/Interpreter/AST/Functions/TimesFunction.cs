@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using Harmony.Interpreter.AST.Meta;
 using Harmony.Interpreter.AST.Statements;
 using Harmony.Sheets;
 using System;
@@ -33,13 +34,12 @@ namespace Harmony.Interpreter.AST.Functions
             return result;
         }
 
-        protected override void Execute(ref float time, List<SheetNote> notes)
+        protected override void Execute(ref float time, List<SheetNote> notes, NoteMetaProvider provider)
         {
             if (notes.Count == 0)
             {
                 return;
             }
-
             var totalDuration = Parent.GetLeftDuration();
 
             var clonedNotes = notes.ToArray();
@@ -50,7 +50,7 @@ namespace Harmony.Interpreter.AST.Functions
             {
                 foreach (var note in clonedNotes)
                 {
-                    SheetNote newNote = new SheetNote(note.Number, note.Start + offset, note.End + offset, note.Velocity, this);
+                    SheetNote newNote = new SheetNote(note.Number, note.Start + offset, note.End + offset, note.Velocity, this, provider.SustainPedal);
                     notes.Add(newNote);
                 }
 

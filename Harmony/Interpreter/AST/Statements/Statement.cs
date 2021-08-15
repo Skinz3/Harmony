@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Harmony.Interpreter.AST.Functions;
+using Harmony.Interpreter.AST.Meta;
 using Harmony.Notes;
 using Harmony.Sheets;
 using System;
@@ -41,13 +42,13 @@ namespace Harmony.Interpreter.AST.Statements
         }
 
 
-        protected abstract List<SheetNote> Execute(ref float time);
+        protected abstract List<SheetNote> Execute(ref float time, NoteMetaProvider metaProvider);
 
-        public List<SheetNote> Apply(ref float time)
+        public List<SheetNote> Apply(ref float time, NoteMetaProvider metaProvider)
         {
-            var result = Execute(ref time);
+            var result = Execute(ref time, metaProvider);
 
-            TargetFunction?.Apply(ref time, result);
+            TargetFunction?.Apply(ref time, result, metaProvider);
 
             return result;
         }
