@@ -44,6 +44,7 @@
 | times | number | Repeat the set of note X times |
 | bass | none | Add a fundamental bass to the set of notes |
 | add | note | Add the specified note to a set of notes |
+| arpeggio | number | Create an arpeggio from a set of notes |
 
 # Technologies
 
