@@ -37,7 +37,7 @@
 ## Functions
 
  | Keyword      | Parameters    | Description    | Exemple | 
-| ------------- |:-------------:| :-------------:|
+| ------------- |:-------------:| :-------------:| :-------------:|
 | strum      | number |  Strum a set of notes | .strum(7)
 | transpose | number  | Transpose a set of note | .transpose(2)
 | propagate | number | Propagate a set of note to the amount of octave(s) specified | .propagate(1)
